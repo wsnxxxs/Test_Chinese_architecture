@@ -1,0 +1,18 @@
+{
+  "name": "qwen3.8-flash-next",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Voxel-style 3D Chinese classical temple complex rendered with Three.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "vite": "^7.1.9"
+  }
+}

@@ -16,6 +16,7 @@
 | --- | --- | --- | --- |
 | Grok 4.6 | 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/grok-4.6) | [项目说明](results/grok-4.6/README.md) |
 | Qwen3.8 Max 0902 | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-max-0902) | [项目说明](results/qwen3.8-max-0902/README.md) |
+| Qwen3.8 Flash next | 体素古建 · 中轴殿宇 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-flash-next) | [项目说明](results/qwen3.8-flash-next/README.md) |
 | Seed 2.1 Pro | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/seed-2.1-pro) | [项目说明](results/seed-2.1-pro/README.md) |
 | Step 5 Preview | 体素 · 中式古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/step-5-preview) | [项目说明](results/step-5-preview/README.md) |
 | Claude Opus 5.5 High | 云山古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/opus-5.5-high) | [项目说明](results/opus-5.5-high/README.md) |
@@ -44,7 +45,7 @@
 | GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
 | GPT-6 Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
 
-共 29 个结果，27 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen、Seed 和 Gemini 3.7 Flash 四份新增结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。原有 4 个作品保留统一条件截图；新增作品先展示项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
+共 30 个结果，28 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份新增结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。原有 4 个作品保留统一条件截图；新增作品先展示项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
 
 ## 运行
 
@@ -67,8 +68,8 @@ npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 gallery.json                              站点名称与模型注册表
 tasks/chinese-architecture/task.json     题目信息、原有作品的详细数据与截图条件
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
-results/manifest.json                    29 个结果的简要目录
-results/                                  29 个独立前端项目
+results/manifest.json                    30 个结果的简要目录
+results/                                  30 个独立前端项目
 site/                                     “同题异答”作品画廊与对比界面
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 .github/workflows/                        GitHub Pages 自动发布

@@ -14,6 +14,13 @@
     "cover": "docs/cover.png"
   },
   {
+    "id": "qwen3.8-flash-next",
+    "model": "Qwen3.8 Flash next",
+    "title": "体素古建 · 中轴殿宇",
+    "description": "多重院落、重檐主殿、七层宝塔与钟鼓楼组成的体素古寺，提供四种光照和六个预设机位。",
+    "cover": "docs/cover.png"
+  },
+  {
     "id": "seed-2.1-pro",
     "model": "Seed 2.1 Pro",
     "title": "体素中国古典建筑群",

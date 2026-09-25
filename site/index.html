@@ -2,24 +2,36 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>同题异答 · 模型前端效果对比</title>
   <meta name="description" content="同一份提示词，不同模型的前端表达。浏览作品、并排体验、查看截图与源码。" />
-  <meta name="color-scheme" content="light" />
-  <meta name="theme-color" content="#f7f7f8" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f5f4f0" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <script>
+    // Resolve the theme before first paint: a saved choice wins, otherwise follow the system.
+    (() => {
+      let saved = null;
+      try { saved = localStorage.getItem('theme'); } catch { /* storage blocked */ }
+      const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app" aria-live="polite"></div>
-  <div id="lightbox" class="lightbox" hidden>
-    <button class="lb-close icon-btn" data-lb="close" aria-label="关闭（Esc）">✕</button>
-    <button class="lb-nav lb-prev icon-btn" data-lb="prev" aria-label="上一张（←）">‹</button>
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="图片浏览" hidden>
+    <div class="lb-top">
+      <span class="lb-count" aria-live="polite"></span>
+      <button class="lb-btn lb-close" data-lb="close" aria-label="关闭（Esc）"></button>
+    </div>
+    <button class="lb-btn lb-nav lb-prev" data-lb="prev" aria-label="上一张（←）"></button>
     <figure class="lb-figure">
       <img class="lb-img" alt="" />
       <figcaption class="lb-caption"></figcaption>
     </figure>
-    <button class="lb-nav lb-next icon-btn" data-lb="next" aria-label="下一张（→）">›</button>
+    <button class="lb-btn lb-nav lb-next" data-lb="next" aria-label="下一张（→）"></button>
   </div>
   <noscript>此页面需要启用 JavaScript。</noscript>
   <script type="module" src="app.js"></script>

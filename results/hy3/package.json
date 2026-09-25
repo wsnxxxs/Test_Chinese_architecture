@@ -10,8 +10,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^5.4.0",
-    "@esbuild/win32-x64": "0.21.5"
+    "vite": "^5.4.0"
   },
   "dependencies": {
     "three": "^0.169.0"

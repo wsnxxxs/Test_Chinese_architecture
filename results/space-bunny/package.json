@@ -1,0 +1,19 @@
+{
+  "name": "yunlu-voxel-palace",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Three.js 体素风格中国古典建筑群 —— 云麓宫（主殿 / 配殿 / 山门 / 钟鼓楼 / 宝塔 / 角楼）",
+  "scripts": {
+    "dev": "vite --port 5273 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 4273 --strictPort",
+    "verify": "node scripts/verify-fps.mjs"
+  },
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

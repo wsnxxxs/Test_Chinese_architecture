@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>云麓宫 · 体素汉风建筑群</title>
+<link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- 载入遮罩：打开即自动进入场景，无需任何操作 -->
+  <div id="loading">
+    <div class="loading-inner">
+      <div class="loading-title">云麓宫</div>
+      <div class="loading-sub">正在叠石筑基 · 营造殿宇…</div>
+      <div class="loading-bar"><i></i></div>
+    </div>
+  </div>
+
+  <!-- 标题 -->
+  <header class="hud hud-title">
+    <h1>云麓宫</h1>
+    <p>体素汉风建筑群 · Three.js</p>
+  </header>
+
+  <!-- 控制面板 -->
+  <section class="hud hud-panel">
+    <div class="panel-group">
+      <span class="panel-label">时辰</span>
+      <div class="btn-row" id="time-row">
+        <button class="btn" data-time="morning">晨</button>
+        <button class="btn" data-time="dusk">暮</button>
+        <button class="btn" data-time="night">夜</button>
+      </div>
+    </div>
+    <div class="panel-group">
+      <span class="panel-label">机位</span>
+      <div class="btn-row" id="view-row">
+        <button class="btn" data-view="overview">全景</button>
+        <button class="btn" data-view="gate">山门</button>
+        <button class="btn" data-view="hall">主殿</button>
+        <button class="btn" data-view="aerial">鸟瞰</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 操作提示 -->
+  <footer class="hud hud-hint">
+    <span>左键拖拽 · 旋转</span><i></i><span>滚轮 · 推拉</span><i></i><span>右键拖拽 · 平移</span><i></i><span>数字键 1/2/3 切换时辰</span>
+  </footer>
+
+  <!-- 性能信息 -->
+  <aside class="hud hud-stats" id="stats">
+    <span id="stat-fps">-- FPS</span><i></i><span id="stat-voxel">体素 --</span><i></i><span id="stat-draw">Draw --</span>
+  </aside>
+
+  <div class="vignette"></div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

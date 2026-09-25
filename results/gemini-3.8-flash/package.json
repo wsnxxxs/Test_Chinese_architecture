@@ -1,0 +1,8 @@
+{
+  "name": "gemini-3.8-flash",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node ../../scripts/build-static-result.mjs"
+  }
+}

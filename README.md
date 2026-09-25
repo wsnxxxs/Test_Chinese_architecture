@@ -13,7 +13,7 @@
 | Claude Sonnet 5.5 High | 体素古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/sonnet-5.5-high/) | [项目说明](results/sonnet-5.5-high/README.md) |
 | MIMO V2.6 Pro | 体素中华 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/mimo-v2.6-pro/) | [项目说明](results/mimo-v2.6-pro/README.md) |
 
-四个结果均为独立的 Three.js + Vite 项目。具体建筑、交互与原作者记录见各项目说明。在线新增页面会在本仓库下一次 GitHub Pages 发布后生效。
+四个结果均为独立的 Three.js + Vite 项目。具体建筑、交互与原作者记录见各项目说明。
 
 ## 运行
 

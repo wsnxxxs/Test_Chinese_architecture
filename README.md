@@ -2,6 +2,8 @@
 
 用 **Three.js + Vite**（原生 JS，无后端）实现的 3D 体素（Voxel）风格中国古典寺院建筑群。页面打开即自动生成整座寺院并进入黄昏场景，镜头缓慢环游，无需任何操作即可看到全貌。
 
+**在线访问：<https://wsnxxxs.github.io/Test_Chinese_architecture/>**（GitHub Pages，每次推送后由 GitHub Actions 自动构建并发布到 `gh-pages` 分支）
+
 ![黄昏全景](docs/dusk.jpg)
 
 | 清晨薄雾 | 夜晚灯火（开启建筑标注） |

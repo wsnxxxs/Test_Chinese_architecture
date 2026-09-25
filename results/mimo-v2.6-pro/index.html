@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>体素中华 · 中国古典建筑群</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23111'/><path d='M2 7L8 3l6 4M4 8h8v5H4z' fill='%23d8aa62'/></svg>" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #14161d; }
+    #app { position: fixed; inset: 0; }
+    #app canvas { display: block; }
+
+    .hud {
+      position: fixed; top: 22px; left: 26px; z-index: 10;
+      color: #f3e6cd; pointer-events: none; user-select: none;
+      font-family: "STKaiti", "KaiTi", "Noto Serif SC", "Songti SC", serif;
+      text-shadow: 0 2px 10px rgba(0,0,0,.55);
+    }
+    .hud h1 { font-size: 30px; font-weight: 600; letter-spacing: 8px; }
+    .hud h1 .seal { color: #e8b33a; }
+    .hud p { margin-top: 8px; font-size: 13px; letter-spacing: 3px; opacity: .85; }
+
+    .panel {
+      position: fixed; top: 22px; right: 26px; z-index: 10;
+      display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+      font-family: "STKaiti", "KaiTi", "Noto Serif SC", serif;
+    }
+    .btn-row { display: flex; gap: 8px; }
+    .btn {
+      appearance: none; border: 1px solid rgba(232,179,58,.55);
+      background: rgba(20, 18, 22, .55); color: #f0e2c4;
+      padding: 7px 16px; font-size: 14px; letter-spacing: 3px; cursor: pointer;
+      border-radius: 2px; backdrop-filter: blur(6px);
+      transition: background .2s, border-color .2s, color .2s;
+      font-family: inherit;
+    }
+    .btn:hover { background: rgba(60, 48, 30, .7); }
+    .btn.active {
+      background: rgba(232,179,58,.92); color: #241c10; border-color: #e8b33a;
+    }
+
+    .hint {
+      position: fixed; left: 26px; bottom: 20px; z-index: 10;
+      color: #e8dcc2; font-size: 12px; letter-spacing: 2px; opacity: .75;
+      font-family: "STKaiti", "KaiTi", "Noto Serif SC", serif;
+      pointer-events: none; user-select: none;
+    }
+    .stats {
+      position: fixed; right: 26px; bottom: 20px; z-index: 10;
+      color: #cfc3a8; font-size: 11.5px; letter-spacing: 1px; opacity: .7;
+      font-family: Consolas, Menlo, monospace;
+      pointer-events: none; user-select: none; text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div class="hud">
+    <h1>体素中华<span class="seal">·</span>建筑群</h1>
+    <p>VOXEL CHINESE CLASSICAL ARCHITECTURE</p>
+  </div>
+
+  <div class="panel">
+    <div class="btn-row" id="paletteBtns">
+      <button class="btn" data-pal="dawn">晨曦</button>
+      <button class="btn active" data-pal="dusk">暮色</button>
+      <button class="btn" data-pal="night">夜景</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn active" id="rotateBtn">自动旋转</button>
+    </div>
+  </div>
+
+  <div class="hint">左键拖拽旋转 · 滚轮缩放 · 右键平移</div>
+  <div class="stats" id="stats">--</div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

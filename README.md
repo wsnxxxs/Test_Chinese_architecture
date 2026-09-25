@@ -9,8 +9,11 @@
 | 模型 | 作品 | 在线场景 | 源码与说明 |
 | --- | --- | --- | --- |
 | Claude Opus 5.5 High | 云山古刹 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/opus-5.5-high/) | [项目说明](results/opus-5.5-high/README.md) |
+| Claude Sonnet 5.5 Max | 云栖古刹 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/sonnet-5.5-max/) | [项目说明](results/sonnet-5.5-max/README.md) |
+| Claude Sonnet 5.5 High | 体素古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/sonnet-5.5-high/) | [项目说明](results/sonnet-5.5-high/README.md) |
+| MIMO V2.6 Pro | 体素中华 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/mimo-v2.6-pro/) | [项目说明](results/mimo-v2.6-pro/README.md) |
 
-Opus 作品有 12 座建筑，包含中轴布局、程序化体素屋顶、庭院道路、昼夜光照与相机环游。具体构成、控制方式、原始运行记录见其独立说明。在线链接会在本仓库下一次 GitHub Pages 发布后生效。
+四个结果均为独立的 Three.js + Vite 项目。具体建筑、交互与原作者记录见各项目说明。在线新增页面会在本仓库下一次 GitHub Pages 发布后生效。
 
 ## 运行
 
@@ -21,18 +24,18 @@ npm install
 npm run dev       # 构建全部结果并在 http://localhost:5173 打开作品目录
 npm run build     # 将作品目录和全部结果构建到 dist/
 npm run preview   # 预览已构建的 dist/，默认 http://localhost:4173
-npm run check     # 运行当前 Opus 作品的体素检查
+npm run check     # 运行 Opus 作品的体素检查
 npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 ```
 
-也可以进入 `results/opus-5.5-high/`，独立运行 `npm install`、`npm run dev` 和 `npm run build`。
+也可以进入任一 `results/<模型标识>/` 目录，独立运行 `npm install`、`npm run dev` 和 `npm run build`。
 
 ## 仓库结构
 
 ```text
 PROMPT.md                  共用任务提示词
 results/manifest.json      作品目录元数据
-results/opus-5.5-high/     Opus 5.5 High 原作品（独立 Vite 项目）
+results/                   四个独立 Vite 项目，每个目录对应一个模型结果
 site/                     作品目录静态页面
 scripts/assemble.mjs      将各结果汇总到 dist/
 .github/workflows/         GitHub Pages 自动发布

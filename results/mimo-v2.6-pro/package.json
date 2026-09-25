@@ -1,0 +1,18 @@
+{
+  "name": "mimo-v2.6-pro",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "体素风格中国古典建筑群 · Three.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}

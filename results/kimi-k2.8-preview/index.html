@@ -1,55 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-<head>
+<head><script data-aob-probe>(function(){if(window.parent===window)return;var d=!1;function s(){if(d)return;d=!0;try{parent.postMessage("aob:work-ready","*")}catch(e){}}var r=window.requestAnimationFrame;window.requestAnimationFrame=function(c){s();return r.call(window,c)};if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){setTimeout(s,250)},{once:!0})}else{setTimeout(s,250)}})();</script>
   <meta charset="UTF-8" />
+  <style data-aob-ui>html.aob-hide-ui #toggleLight,html.aob-hide-ui #fps,html.aob-hide-ui #hint{display:none !important;}</style>
+  <script data-aob-ui>(function(){if(document.documentElement.dataset.aobUi!==undefined)return;document.documentElement.dataset.aobUi="1";var held=/(?:^|[?&])aob=prev(?:&|$)/.test(location.search);function apply(){document.documentElement.classList.toggle("aob-hide-ui",held)}apply();window.addEventListener("keydown",function(e){if(e.key!=="h"&&e.key!=="H")return;var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.isContentEditable))return;held=!held;apply()});window.addEventListener("message",function(e){if(e.data==="aob-ui-show"){held=false;apply()}if(e.data==="aob-ui-hold"){held=true;apply()}})})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>体素 · 中国古典建筑群</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23b03a2e'/%3E%3Crect y='3' width='16' height='4' fill='%23e3a93f'/%3E%3C/svg%3E" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; overflow: hidden; background: #0d0d0f; }
-    #app { position: fixed; inset: 0; }
-    .hud {
-      position: fixed; top: 18px; left: 18px; padding: 14px 18px;
-      background: rgba(13, 13, 15, 0.72); border: 1px solid #26262a;
-      border-radius: 10px; color: #e8e8e6; backdrop-filter: blur(8px);
-      font-family: ui-monospace, "Geist Mono", SFMono-Regular, Menlo, Consolas, monospace;
-      max-width: 320px; user-select: none;
-    }
-    .hud h1 { font-size: 15px; font-weight: 600; letter-spacing: 0.08em; color: #f2f2f0; }
-    .hud .en { font-size: 10px; color: #8a8a92; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 2px; }
-    .hud ul { list-style: none; margin: 10px 0 0; font-size: 12px; line-height: 1.9; color: #b9b9c0; }
-    .hud li b { color: #d9a53a; font-weight: 600; }
-    .hint {
-      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-      padding: 8px 16px; background: rgba(13, 13, 15, 0.66); border: 1px solid #26262a;
-      border-radius: 999px; color: #9a9aa2; font-size: 11px; letter-spacing: 0.06em;
-      font-family: ui-monospace, "Geist Mono", Menlo, Consolas, monospace;
-      backdrop-filter: blur(8px); user-select: none; white-space: nowrap;
-    }
-    .fps {
-      position: fixed; top: 18px; right: 18px; padding: 8px 14px;
-      background: rgba(13, 13, 15, 0.66); border: 1px solid #26262a; border-radius: 8px;
-      color: #7ec87e; font-size: 12px; font-family: ui-monospace, Menlo, Consolas, monospace;
-      backdrop-filter: blur(8px); user-select: none;
-    }
-  </style>
+  <script type="module" crossorigin src="./assets/index-BE79mCaN.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CqTZWte3.css">
 </head>
 <body>
   <div id="app"></div>
-  <div class="hud">
+
+  <div id="info">
     <h1>体素 · 中国古典建筑群</h1>
-    <div class="en">Voxel Classical Chinese Complex</div>
-    <ul>
-      <li><b>山门</b> — 歇山顶 · 五开间</li>
-      <li><b>主殿</b> — 重檐庑殿顶 · 五开间</li>
-      <li><b>东西配殿</b> — 歇山顶 · 三开间</li>
-      <li><b>钟楼 / 鼓楼</b> — 攒尖顶 · 青瓦</li>
-      <li><b>石狮 · 灯笼 · 庭院</b></li>
-    </ul>
+    <p>山门 → 庭院 → 主殿 · 中轴对称 · 飞檐斗拱</p>
+    <p class="sub">主殿(重檐歇山顶) / 配殿×2 / 山门(重檐) / 钟楼·鼓楼 / 五层宝塔 / 石狮·灯笼·松柏</p>
   </div>
-  <div class="hint">左键拖拽旋转 · 右键平移 · 滚轮缩放</div>
-  <div class="fps" id="fps">-- fps</div>
-  <script type="module" src="/src/main.js"></script>
+
+  <button id="toggleLight">切换: 黄昏</button>
+  <div id="fps"></div>
+  <div id="hint">拖拽旋转 · 滚轮缩放 · 右键平移</div>
+
 </body>
 </html>

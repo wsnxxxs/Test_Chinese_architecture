@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#18232f" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>云岚寺 · Voxel Heritage</title>
+  </head>
+  <body>
+    <main id="app" aria-label="云岚寺体素建筑群"></main>
+
+    <div id="hud">
+      <header class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-mark"></span> VOXEL HERITAGE · 006</div>
+        <h1>云岚寺</h1>
+        <p>一座在晨昏之间呼吸的<br />体素古典建筑群</p>
+      </header>
+
+      <section class="info-card" aria-label="场景信息">
+        <div class="card-heading">
+          <span class="live-badge"><i></i> LIVE SCENE</span>
+          <span class="card-number">山门 · 中轴 · 六殿</span>
+        </div>
+        <div class="stat-grid">
+          <div>
+            <strong id="building-count">06</strong>
+            <span>建筑节点</span>
+          </div>
+          <div>
+            <strong id="voxel-count">000</strong>
+            <span>体素构件</span>
+          </div>
+          <div>
+            <strong>1 : 1.25</strong>
+            <span>院落比例</span>
+          </div>
+        </div>
+        <p class="card-note">晨雾落在青瓦上，中央道路将山门、配殿与主殿串成一条安静的礼序。</p>
+      </section>
+
+      <div class="bottom-bar">
+        <div class="interaction-hint">
+          <span class="key-hint">拖拽</span> 旋转视角
+          <span class="hint-separator">·</span>
+          <span class="key-hint">滚轮</span> 拉近 / 拉远
+        </div>
+        <div class="control-panel" aria-label="场景控制">
+          <button class="mode-button active" id="dawn-button" type="button">晨光</button>
+          <button class="mode-button" id="dusk-button" type="button">暮色</button>
+          <button class="mode-button icon-button" id="orbit-button" type="button" aria-pressed="false" title="自动旋转">↻</button>
+        </div>
+      </div>
+
+      <div class="corner-label corner-label-left">云岚山 · 北望</div>
+      <div class="corner-label corner-label-right">1024 × 1024 / realtime</div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

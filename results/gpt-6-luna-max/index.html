@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d89a70" />
+    <meta name="description" content="云岚宫阙：一座晨昏中的体素风格中国古典建筑群。" />
+    <title>云岚宫阙 · Voxel Sanctuary</title>
+  </head>
+  <body>
+    <div id="scene-root" aria-label="云岚宫阙体素建筑群 3D 场景"></div>
+
+    <main class="interface">
+      <header class="masthead">
+        <a class="wordmark" href="#top" aria-label="云岚宫阙首页">
+          <span class="seal">雲</span>
+          <span class="wordmark-text"><strong>云岚宫阙</strong><small>YUNLAN SANCTUARY</small></span>
+        </a>
+        <div class="top-caption"><span class="caption-rule"></span> 山水之间 · 千年一梦</div>
+        <div class="time-chip"><span class="sun-dot"></span><span>卯时 · 晨雾初醒</span></div>
+      </header>
+
+      <section class="intro" id="top">
+        <p class="eyebrow"><span>✳</span> VOXEL ARCHITECTURE · 001</p>
+        <h1>云岚<br /><em>宫阙</em></h1>
+        <p class="intro-copy">循着青石长阶，走进一场<br />关于东方秩序与山水的梦。</p>
+        <div class="intro-divider"></div>
+        <p class="micro-copy">一轴贯南北，殿宇映晨光<br /><span>DRAG TO EXPLORE THE COURTYARD</span></p>
+      </section>
+
+      <aside class="detail-card">
+        <div class="card-kicker"><span>建筑志 · 甲辰</span><span class="card-index">NO. 01 / 07</span></div>
+        <div class="card-heading"><span class="card-ornament">⌁</span><div><h2>太和正殿</h2><p>主殿 · 重檐庑殿顶</p></div></div>
+        <p class="card-description">宫城中轴上的礼制核心，朱柱承檐，金脊含辉。殿前庭院开阔，视线自山门一路向北，层层递进。</p>
+        <div class="card-meta"><span><i>⌖</i> 中轴 · 正北</span><span><i>▦</i> 斗拱七铺</span></div>
+        <div class="card-foot"><span>建于 · 永乐年间</span><span class="card-stamp">宫</span></div>
+      </aside>
+
+      <div class="location-pill"><span class="location-cross">✣</span><span>中轴御道</span><span class="pill-separator"></span><span>庭院全景</span></div>
+
+      <footer class="bottom-bar">
+        <div class="scene-count"><strong>01</strong><span>/</span><span>07 建筑群</span></div>
+        <div class="scroll-cue"><span class="scroll-line"></span> <span>拖动以环游宫城</span></div>
+        <div class="controls">
+          <button class="control-button" id="reset-view" type="button" aria-label="重置视角" title="重置视角">↺</button>
+          <button class="control-button" id="toggle-motion" type="button" aria-label="暂停自动环游" title="暂停自动环游">Ⅱ</button>
+          <span class="control-label">沉浸漫游</span>
+        </div>
+      </footer>
+      <div class="drag-hint" aria-hidden="true"><span>↔</span> 拖动旋转 · 滚轮缩放</div>
+      <div class="vignette"></div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

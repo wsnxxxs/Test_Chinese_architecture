@@ -12,12 +12,27 @@
 | Claude Sonnet 5.5 Max | 云栖古刹 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/sonnet-5.5-max/) | [项目说明](results/sonnet-5.5-max/README.md) |
 | Claude Sonnet 5.5 High | 体素古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/sonnet-5.5-high/) | [项目说明](results/sonnet-5.5-high/README.md) |
 | MIMO V2.6 Pro | 体素中华 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/mimo-v2.6-pro/) | [项目说明](results/mimo-v2.6-pro/README.md) |
+| DeepSeek V4.1 Flash | 古城 · 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/deepseek-v4.1-flash/) | [项目说明](results/deepseek-v4.1-flash/README.md) |
+| GLM 5.3 Flash | 体素古刹 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/glm-5.3-flash/) | [项目说明](results/glm-5.3-flash/README.md) |
+| GLM 5.3 | 古刹夕照 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/glm-5.3/) | [项目说明](results/glm-5.3/README.md) |
+| HY3 | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/hy3/) | [项目说明](results/hy3/README.md) |
+| Kimi K3 | 体素 · 中式古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/kimi-k3/) | [项目说明](results/kimi-k3/README.md) |
+| Kimi K2.8 Preview | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/kimi-k2.8-preview/) | [项目说明](results/kimi-k2.8-preview/README.md) |
+| DeepSeek V4 Pro | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/deepseek-v4-pro/) | [项目说明](results/deepseek-v4-pro/README.md) |
+| MiniMax M3 | 体素中式院落 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/minimax-m3/) | [项目说明](results/minimax-m3/README.md) |
+| GPT-6 Sol Max | 云阙宫 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/gpt-6-sol-max/) | [项目说明](results/gpt-6-sol-max/README.md) |
+| GPT-6 Sol High | 云阙 · 体素古建 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/gpt-6-sol-high/) | [项目说明](results/gpt-6-sol-high/README.md) |
+| GPT-6 Luna Max | 云岚宫阙 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/gpt-6-luna-max/) | [项目说明](results/gpt-6-luna-max/README.md) |
+| GPT-5.6 Sol Max | 紫宸宫阙 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/gpt-5.6-sol-max/) | [项目说明](results/gpt-5.6-sol-max/README.md) |
+| GPT-5.6 Luna Max | 云岚寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/gpt-5.6-luna-max/) | [项目说明](results/gpt-5.6-luna-max/README.md) |
+| GPT-5.6 Terra Max | 云岫古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/gpt-5.6-terra-max/) | [项目说明](results/gpt-5.6-terra-max/README.md) |
+| GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/results/gpt-6-astra-high/) | [项目说明](results/gpt-6-astra-high/README.md) |
 
-四个结果均为独立的 Three.js + Vite 项目。具体建筑、交互与原作者记录见各项目说明。
+共 19 个结果。各作品保留独立实现；Kimi K3 使用原生静态页面，其余结果通过 Vite 构建。具体建筑、交互与原作者记录见各项目说明。
 
 ## 运行
 
-需要 Node.js ≥ 18。以下命令在仓库根目录执行：
+需要 Node.js ≥ 22.13。以下命令在仓库根目录执行：
 
 ```bash
 npm install
@@ -35,7 +50,7 @@ npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 ```text
 PROMPT.md                  共用任务提示词
 results/manifest.json      作品目录元数据
-results/                   四个独立 Vite 项目，每个目录对应一个模型结果
+results/                   19 个独立项目，每个目录对应一个模型结果
 site/                     作品目录静态页面
 scripts/assemble.mjs      将各结果汇总到 dist/
 .github/workflows/         GitHub Pages 自动发布

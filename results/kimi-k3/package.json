@@ -1,0 +1,13 @@
+{
+  "name": "kimi-k3",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "vite": "^7.3.6"
+  }
+}

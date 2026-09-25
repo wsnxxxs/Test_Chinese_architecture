@@ -1,5 +1,5 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 const entries = JSON.parse(readFileSync('results/manifest.json', 'utf8'));
 const ids = new Set();
@@ -18,6 +18,11 @@ for (const entry of entries) {
   mkdirSync(target, { recursive: true });
   cpSync(built, target, { recursive: true });
   if (existsSync(join(source, 'docs'))) cpSync(join(source, 'docs'), join(target, 'docs'), { recursive: true });
+  const cover = join(source, entry.cover);
+  if (!existsSync(cover)) throw new Error(`Missing cover: ${cover}`);
+  const coverTarget = join(target, entry.cover);
+  mkdirSync(dirname(coverTarget), { recursive: true });
+  cpSync(cover, coverTarget);
 }
 
 writeFileSync(join('dist', 'results.json'), JSON.stringify(entries, null, 2));

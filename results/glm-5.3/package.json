@@ -1,0 +1,18 @@
+{
+  "name": "glm-5.3",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "古刹夕照 · Three.js 体素中国古典建筑群",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

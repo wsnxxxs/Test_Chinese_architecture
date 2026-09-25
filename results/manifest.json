@@ -26,5 +26,110 @@
     "title": "体素中华",
     "description": "三进院落与十二座建筑构成的古典建筑群，含双塔、钟鼓楼和三套光照氛围。",
     "cover": "docs/screenshot-wide.png"
+  },
+  {
+    "id": "deepseek-v4.1-flash",
+    "model": "DeepSeek V4.1 Flash",
+    "title": "古城 · 体素中式建筑群",
+    "description": "可自动环绕的体素古建群，提供晨光与暮色场景。",
+    "cover": "shot-1-panorama-dawn.png"
+  },
+  {
+    "id": "glm-5.3-flash",
+    "model": "GLM 5.3 Flash",
+    "title": "体素古刹",
+    "description": "中轴寺院与晨昏光影组成的体素场景，打开后自动环绕。",
+    "cover": "docs/preview.png"
+  },
+  {
+    "id": "glm-5.3",
+    "model": "GLM 5.3",
+    "title": "古刹夕照",
+    "description": "黄昏暖阳中的中轴院落式古刹，可自动环视全貌。",
+    "cover": "docs/preview.png"
+  },
+  {
+    "id": "hy3",
+    "model": "HY3",
+    "title": "体素中国古典建筑群",
+    "description": "主殿、配殿、山门与塔楼围合庭院，可旋转、缩放和自动巡览。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "kimi-k3",
+    "model": "Kimi K3",
+    "title": "体素 · 中式古典建筑群",
+    "description": "黄昏光影中的中轴院落，包含主殿、配殿、宝塔与钟楼。",
+    "cover": "screenshots/axis-view.png"
+  },
+  {
+    "id": "kimi-k2.8-preview",
+    "model": "Kimi K2.8 Preview",
+    "title": "体素 · 中国古典建筑群",
+    "description": "重檐主殿与配殿、山门、庭院道路构成的体素寺院。",
+    "cover": "shot1.png"
+  },
+  {
+    "id": "deepseek-v4-pro",
+    "model": "DeepSeek V4 Pro",
+    "title": "体素 · 中国古典建筑群",
+    "description": "可漫游的体素中式古建场景，含庭院、建筑与环境细节。",
+    "cover": "preview.png"
+  },
+  {
+    "id": "minimax-m3",
+    "model": "MiniMax M3",
+    "title": "体素中式院落",
+    "description": "主殿、配殿、山门、五层宝塔与钟鼓楼组成的院落。",
+    "cover": "screenshots/palace.png"
+  },
+  {
+    "id": "gpt-6-sol-max",
+    "model": "GPT-6 Sol Max",
+    "title": "云阙宫",
+    "description": "六座建筑与铺装庭院、院墙、石狮和灯笼，支持晨曦、暮色与夜游光照。",
+    "cover": "docs/preview.png"
+  },
+  {
+    "id": "gpt-6-sol-high",
+    "model": "GPT-6 Sol High",
+    "title": "云阙 · 体素古建",
+    "description": "中轴主殿、四座配殿、山门与双塔，辅以庭院道路和园林植被。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gpt-6-luna-max",
+    "model": "GPT-6 Luna Max",
+    "title": "云岚宫阙",
+    "description": "主殿、配殿、山门和成对钟鼓楼组成的体素宫城。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gpt-5.6-sol-max",
+    "model": "GPT-5.6 Sol Max",
+    "title": "紫宸宫阙",
+    "description": "十座中轴对称建筑与庭园环境，支持晨曦、暮色、月夜三种光照。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gpt-5.6-luna-max",
+    "model": "GPT-5.6 Luna Max",
+    "title": "云岚寺",
+    "description": "主殿、东西配殿、山门与钟鼓楼组成的中轴寺院。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gpt-5.6-terra-max",
+    "model": "GPT-5.6 Terra Max",
+    "title": "云岫古寺",
+    "description": "可直接观赏全景并自由旋转缩放的体素古寺。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gpt-6-astra-high",
+    "model": "GPT-6 Astra High",
+    "title": "方寸之间 · 云栖古寺",
+    "description": "十一座建筑组成的古寺，提供光照切换与建筑图鉴。",
+    "cover": "screenshots/evening.jpg"
   }
 ]

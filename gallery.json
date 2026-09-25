@@ -11,6 +11,7 @@
     {"id": "claude-opus-5.5", "name": "Claude Opus 5.5", "vendor": "Anthropic", "logo": "assets/brands/claude.png", "brandUrl": "https://claude.com/", "brandName": "Claude"},
     {"id": "claude-sonnet-5.5", "name": "Claude Sonnet 5.5", "vendor": "Anthropic", "logo": "assets/brands/claude.png", "brandUrl": "https://claude.com/", "brandName": "Claude"},
     {"id": "mimo-v2.6-pro", "name": "MiMo V2.6 Pro", "vendor": "Xiaomi", "logo": "assets/brands/mimo.png", "brandUrl": "https://mimo.mi.com/", "brandName": "Xiaomi MiMo"},
+    {"id": "mimo-v2.6-flash", "name": "MiMo V2.6 Flash", "vendor": "Xiaomi", "logo": "assets/brands/mimo.png", "brandUrl": "https://mimo.mi.com/", "brandName": "Xiaomi MiMo"},
     {"id": "deepseek-v4.1-flash", "name": "DeepSeek V4.1 Flash", "vendor": "DeepSeek", "logo": "assets/brands/deepseek.ico", "brandUrl": "https://www.deepseek.com/", "brandName": "DeepSeek"},
     {"id": "glm-5.3-flash", "name": "GLM 5.3 Flash", "vendor": "Z.ai", "logo": "assets/brands/zai.svg", "brandUrl": "https://z.ai/", "brandName": "Z.ai"},
     {"id": "glm-5.3", "name": "GLM 5.3", "vendor": "Z.ai", "logo": "assets/brands/zai.svg", "brandUrl": "https://z.ai/", "brandName": "Z.ai"},

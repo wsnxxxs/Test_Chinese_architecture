@@ -49,6 +49,13 @@
     "cover": "docs/screenshot-wide.png"
   },
   {
+    "id": "mimo-v2.6-flash",
+    "model": "MiMo V2.6 Flash",
+    "title": "云栖古刹 · 体素中轴",
+    "description": "七座建筑组成的中轴寺院，包含山门、钟鼓楼、配殿、主殿和宝塔，支持自动环视与定点视角。",
+    "cover": "screenshots/overview.png"
+  },
+  {
     "id": "deepseek-v4.1-flash",
     "model": "DeepSeek V4.1 Flash",
     "title": "古城 · 体素中式建筑群",

@@ -21,6 +21,7 @@
 | Claude Sonnet 5.5 Max | 云栖古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-max) | [项目说明](results/sonnet-5.5-max/README.md) |
 | Claude Sonnet 5.5 High | 体素古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-high) | [项目说明](results/sonnet-5.5-high/README.md) |
 | MIMO V2.6 Pro | 体素中华 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/mimo-v2.6-pro) | [项目说明](results/mimo-v2.6-pro/README.md) |
+| MiMo V2.6 Flash | 云栖古刹 · 体素中轴 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/mimo-v2.6-flash) | [项目说明](results/mimo-v2.6-flash/README.md) |
 | DeepSeek V4.1 Flash | 古城 · 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4.1-flash) | [项目说明](results/deepseek-v4.1-flash/README.md) |
 | GLM 5.3 Flash | 体素古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3-flash) | [项目说明](results/glm-5.3-flash/README.md) |
 | GLM 5.3 | 古刹夕照 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3) | [项目说明](results/glm-5.3/README.md) |
@@ -42,7 +43,7 @@
 | GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
 | GPT-6 Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
 
-共 27 个结果，25 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen、Seed 和 Gemini 3.7 Flash 四份新增结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。原有 4 个作品保留统一条件截图；新增作品先展示项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
+共 28 个结果，26 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen、Seed 和 Gemini 3.7 Flash 四份新增结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。原有 4 个作品保留统一条件截图；新增作品先展示项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
 
 ## 运行
 
@@ -65,8 +66,8 @@ npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 gallery.json                              站点名称与模型注册表
 tasks/chinese-architecture/task.json     题目信息、原有作品的详细数据与截图条件
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
-results/manifest.json                    27 个结果的简要目录
-results/                                  27 个独立前端项目
+results/manifest.json                    28 个结果的简要目录
+results/                                  28 个独立前端项目
 site/                                     “同题异答”作品画廊与对比界面
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 .github/workflows/                        GitHub Pages 自动发布

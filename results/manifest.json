@@ -21,6 +21,13 @@
     "cover": "docs/cover.png"
   },
   {
+    "id": "step-5-preview",
+    "model": "Step 5 Preview",
+    "title": "体素 · 中式古典建筑群",
+    "description": "七座建筑组成的中轴对称寺院，包含重檐主殿、配殿、山门、钟鼓楼和六层宝塔，可切换晨光与黄昏。",
+    "cover": "preview.png"
+  },
+  {
     "id": "opus-5.5-high",
     "model": "Claude Opus 5.5 High",
     "title": "云山古刹",

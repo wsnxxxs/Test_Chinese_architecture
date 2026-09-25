@@ -1,0 +1,19 @@
+{
+  "name": "step-5-preview",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "体素风格中国古典建筑群 - Voxel Chinese Classical Temple Complex (Three.js)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.12.0",
+    "vite": "^5.4.8"
+  }
+}

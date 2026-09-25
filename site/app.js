@@ -18,6 +18,7 @@ let MODELS;
 const size = (n) => (n >= 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.round(n / 1024)} KB`);
 const num = (n) => Number(n).toLocaleString('zh-CN');
 const modelOf = (r) => MODELS.get(r.model) ?? { name: r.model, vendor: '' };
+const vendorOf = (r) => modelOf(r).vendor || '其他';
 const label = (r) => (r.effort ? `${modelOf(r).name} · ${r.effort}` : modelOf(r).name);
 // Cover: the first uniform capture (task condition order), else the author's first screenshot.
 const cover = (r) => Object.values(r.captures)[0] ?? r.gallery[0]?.src ?? '';
@@ -29,14 +30,14 @@ const ext = (href, text, cls = 'btn') => `<a class="${cls}" href="${esc(href)}" 
 function header(crumbs = []) {
   const trail = crumbs.map((c) => `<span class="sep">/</span>${c.href ? `<a href="${c.href}">${esc(c.text)}</a>` : `<span>${esc(c.text)}</span>`}`).join('');
   return `<header class="topbar"><div class="wrap topbar-in">
-    <a class="brand" href="#/"><span class="seal" aria-hidden="true">同</span><span class="brand-text"><b>${esc(DATA.title)}</b><small>${esc(DATA.subtitle)}</small></span></a>
+    <a class="brand" href="#/"><img class="site-logo" src="assets/logo.svg" alt="" width="40" height="40"><span class="brand-text"><b>${esc(DATA.title)}</b><small>${esc(DATA.subtitle)}</small></span></a>
     <nav class="crumbs" aria-label="位置">${trail}</nav>
     ${ext(DATA.repo, 'GitHub', 'topbar-link')}
   </div></header>`;
 }
 const footer = () => `<footer class="footer"><div class="wrap">
-  <p>各结果保留独立前端项目，站点负责构建、陈列与对照。</p>
-  <p>添加题目或结果：见仓库 <a href="${esc(DATA.repo)}#readme" target="_blank" rel="noopener">README</a>。</p>
+  <p>同题异答 · 前端作品档案</p>
+  <p><a href="${esc(DATA.repo)}" target="_blank" rel="noopener">项目仓库</a> · <a href="${esc(DATA.repo)}#readme" target="_blank" rel="noopener">参与贡献</a></p>
 </div></footer>`;
 
 function img(src, alt, cls = '') {
@@ -55,54 +56,81 @@ function renderHome() {
         ${shown.map((r) => `<figure>${img(cover(r), label(r))}<figcaption>${esc(label(r))}</figcaption></figure>`).join('')}
       </a>
       <div class="task-body">
-        <p class="meta">${esc(t.date ?? '')}${t.tags.map((g) => `<span class="tag">${esc(g)}</span>`).join('')}</p>
+        <p class="meta"><span>题目 ${String(DATA.tasks.indexOf(t) + 1).padStart(2, '0')}</span><span>${esc(t.date ?? '')}</span>${t.tags.map((g) => `<span class="tag">${esc(g)}</span>`).join('')}</p>
         <h3><a href="${taskHref(t)}">${esc(t.title)}</a></h3>
         <p class="summary">${esc(t.summary)}</p>
-        <p class="task-count">${t.results.length} 个结果 · ${new Set(t.results.map((r) => r.model)).size} 个模型</p>
-        <ul class="chips">${t.results.map((r) => `<li><a href="${viewHref(t, r.id)}">${esc(label(r))}</a></li>`).join('')}</ul>
+        <p class="task-count">${t.results.length} 件作品 · ${new Set(t.results.map((r) => r.model)).size} 个模型</p>
         <div class="actions">
-          <a class="btn primary" href="${taskHref(t)}">查看对比</a>
-          ${t.results[0] ? `<a class="btn" href="${viewHref(t, t.results[0].id, t.results[1]?.id)}">${t.results[1] ? '并排预览' : '在线预览'}</a>` : ''}
+          <a class="btn primary" href="${taskHref(t)}">浏览全部作品 <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </article>`;
   }).join('');
 
-  const modelCards = DATA.models.map((m) => {
-    const mine = results.filter(({ r }) => r.model === m.id);
-    return `<article class="model-card">
-      <header><span class="avatar" aria-hidden="true">${esc(m.name.replace(/^Claude\s+/, '').slice(0, 1))}</span>
-        <div><h3>${esc(m.name)}</h3><p>${[m.vendor, `${mine.length} 个结果`].filter(Boolean).map(esc).join(' · ')}</p></div></header>
-      ${mine.length ? `<ul>${mine.map(({ t, r }) => `<li><a href="${viewHref(t, r.id)}"><span>${esc(r.title)}</span><small>${esc(t.title)}${r.effort ? ` · ${esc(r.effort)}` : ''}</small></a></li>`).join('')}</ul>` : '<p class="muted">暂无结果</p>'}
-    </article>`;
+  const modelsByVendor = new Map();
+  for (const model of DATA.models) {
+    const vendor = model.vendor || '其他';
+    if (!modelsByVendor.has(vendor)) modelsByVendor.set(vendor, []);
+    modelsByVendor.get(vendor).push(model);
+  }
+  const sortedVendors = [...modelsByVendor].sort(([a], [b]) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+  const modelGroups = sortedVendors.map(([vendor, models], index) => {
+    const modelIds = new Set(models.map((m) => m.id));
+    const groupResults = results.filter(({ r }) => modelIds.has(r.model));
+    const modelCards = models.map((m) => {
+      const mine = groupResults.filter(({ r }) => r.model === m.id);
+      const brandMark = m.logo
+        ? `<a class="brand-mark" href="${esc(m.brandUrl)}" target="_blank" rel="noopener" aria-label="${esc(m.brandName)} 官网" title="${esc(m.brandName)} 官网"><img src="${esc(m.logo)}" alt="" loading="lazy" decoding="async"></a>`
+        : `<span class="brand-mark" aria-hidden="true">${esc(m.name.slice(0, 1))}</span>`;
+      return `<article class="model-card">
+        <header>${brandMark}
+          <div><h4>${esc(m.name)}</h4><p>${mine.length} 件作品${m.vendorNote ? ` · ${esc(m.vendorNote)}` : ''}</p></div></header>
+        ${mine.length ? `<ul>${mine.map(({ t, r }) => `<li><a href="${viewHref(t, r.id)}"><span>${esc(r.title)}</span><small>${esc(t.title)}${r.effort ? ` · ${esc(r.effort)}` : ''}</small></a></li>`).join('')}</ul>` : '<p class="muted">暂无结果</p>'}
+      </article>`;
+    }).join('');
+    return `<section class="model-vendor" aria-labelledby="model-vendor-${index}">
+      <div class="model-vendor-head"><h3 id="model-vendor-${index}">${esc(vendor)}</h3><p>${models.length} 个模型 · ${groupResults.length} 件作品</p></div>
+      <div class="model-grid">${modelCards}</div>
+    </section>`;
   }).join('');
 
   root.innerHTML = `${header()}
   <main>
     <section class="hero wrap">
-      <p class="eyebrow">Same prompt · Different models</p>
-      <h1>同一份提示词，<br />看不同模型交出的前端页面。</h1>
-      <p class="lead">${esc(DATA.description)}</p>
+      <div class="hero-copy"><p class="eyebrow">FRONTEND STUDIES</p>
+      <h1>同题，异答。</h1>
+      <p class="hero-sub">同一份提示词，不同模型的前端表达。</p>
+      <p class="lead">浏览可运行的作品，对照细节与实现。</p></div>
       <dl class="stats">
         <div><dt>题目</dt><dd>${DATA.tasks.length}</dd></div>
         <div><dt>模型</dt><dd>${DATA.models.length}</dd></div>
-        <div><dt>结果</dt><dd>${results.length}</dd></div>
+        <div><dt>作品</dt><dd>${results.length}</dd></div>
       </dl>
     </section>
     <section class="block wrap" aria-labelledby="h-tasks">
-      <div class="block-head"><h2 id="h-tasks">题目</h2><p>最新的在前。每道题下的结果都可以在线运行、查看已有截图对照。</p></div>
+      <div class="block-head"><h2 id="h-tasks">题目精选</h2><p>按发布时间排序 · 每道题可浏览作品、截图和参数</p></div>
       <div class="task-list">${taskCards || '<p class="muted">还没有题目。</p>'}</div>
     </section>
-    <section class="block wrap" aria-labelledby="h-models">
-      <div class="block-head"><h2 id="h-models">模型</h2><p>按模型查看它参与过的全部题目。</p></div>
-      <div class="model-grid">${modelCards}</div>
-    </section>
+    <section class="block wrap model-section"><details class="model-index" open>
+      <summary><span>模型索引 <small>${modelsByVendor.size} 家厂商 · ${DATA.models.length} 个模型</small></span><span aria-hidden="true">＋</span></summary>
+      <div class="model-groups">${modelGroups}</div>
+    </details></section>
   </main>${footer()}`;
   document.title = `${DATA.title} · ${DATA.subtitle}`;
 }
 
 // ---- task -----------------------------------------------------------------------------
-const taskState = { cond: null };
+const taskState = { cond: null, vendor: '' };
+const panels = ['results', 'shots', 'facts', 'prompt'];
+function activatePanel(name, updateHash = true) {
+  const target = panels.includes(name) && $(`[data-panel="${name}"]`) ? name : 'results';
+  $$('[data-panel]').forEach((el) => { el.hidden = el.dataset.panel !== target; });
+  $$('[data-go]').forEach((el) => el.setAttribute('aria-pressed', String(el.dataset.go === target)));
+  if (updateHash) {
+    const base = `#${location.hash.split('#')[1]}`;
+    history.replaceState(null, '', target === 'results' ? base : `${base}#${target}`);
+  }
+}
 
 function shotGrid(t) {
   const cond = t.conditions.find((c) => c.id === taskState.cond) ?? t.conditions[0];
@@ -132,24 +160,23 @@ function factsTable(t) {
 
 function renderTask(t) {
   taskState.cond = t.conditions.some((c) => c.id === taskState.cond) ? taskState.cond : t.conditions[0]?.id;
+  const vendors = [...new Set(t.results.map(vendorOf))].sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+  if (!vendors.includes(taskState.vendor)) taskState.vendor = '';
   const [a, b] = t.results;
   const hasCaptures = t.results.some((r) => Object.keys(r.captures).length);
   const captureNotes = t.results.filter((r) => r.captureNote).map((r) => `${esc(r.title)}：${esc(r.captureNote)}`);
 
   const cards = t.results.map((r) => {
     const m = modelOf(r);
-    return `<article class="result">
-      <a class="result-media" href="${viewHref(t, r.id)}">${img(cover(r), r.title)}<span class="play"><span aria-hidden="true">▶</span> 在线预览</span></a>
+    return `<article class="result" data-vendor="${esc(vendorOf(r))}">
+      <a class="result-media" href="${viewHref(t, r.id)}" aria-label="在线预览：${esc(r.title)}，${esc(label(r))}">${img(cover(r), r.title)}<span class="play">在线预览 <span aria-hidden="true">↗</span></span></a>
       <div class="result-body">
-        <p class="result-model"><b>${esc(m.name)}</b>${r.effort ? `<span class="badge">${esc(r.effort)}</span>` : ''}<span class="vendor">${esc(m.vendor ?? '')}</span></p>
+        <p class="result-model"><b>${esc(m.name)}</b>${r.effort ? `<span class="badge">${esc(r.effort)}</span>` : ''}</p>
         <h3>${esc(r.title)}</h3>
         <p class="summary">${esc(r.summary)}</p>
-        <p class="result-stats">${r.stats.lines ? `<span>${num(r.stats.lines)} 行源码</span>` : ''}${r.stats.gzip ? `<span>${size(r.stats.gzip)} gzip</span>` : ''}${r.gallery.length ? `<span>作者截图 ${r.gallery.length} 张</span>` : ''}</p>
         <div class="actions">
-          <a class="btn primary sm" href="${viewHref(t, r.id)}">在线预览</a>
-          ${r.gallery.length ? `<button class="btn sm" data-gallery="${esc(r.id)}">作者截图</button>` : ''}
-          ${r.scene ? ext(r.scene, '独立页面', 'btn sm ghost') : ''}
-          ${ext(r.source, '源码', 'btn sm ghost')}
+          ${r.gallery.length ? `<button class="text-action" data-gallery="${esc(r.id)}">作者截图 ↗</button>` : ''}
+          ${ext(r.source, '查看源码', 'text-action')}
         </div>
       </div>
     </article>`;
@@ -161,39 +188,38 @@ function renderTask(t) {
       <p class="meta">${esc(t.date ?? '')}${t.tags.map((g) => `<span class="tag">${esc(g)}</span>`).join('')}</p>
       <h1>${esc(t.title)}</h1>
       <p class="lead">${esc(t.summary)}</p>
-      <div class="actions">
-        ${a ? `<a class="btn primary" href="${viewHref(t, a.id)}"><span aria-hidden="true">▶</span> 在线预览</a>` : ''}
-        ${b ? `<a class="btn" href="${viewHref(t, a.id, b.id)}">并排对比</a>` : ''}
-        <button class="btn ghost" data-go="prompt">查看提示词</button>
-      </div>
+      <p class="task-count">${t.results.length} 件作品 · ${new Set(t.results.map((r) => r.model)).size} 个模型</p>
     </section>
     <nav class="subnav" aria-label="本页"><div class="wrap subnav-in">
-      <button data-go="results">结果<span>${t.results.length}</span></button>
-      ${t.conditions.length ? '<button data-go="shots">截图对照</button>' : ''}
-      <button data-go="facts">参数</button>
-      <button data-go="prompt">提示词</button>
+      <button data-go="results" aria-pressed="true">作品 <span>${t.results.length}</span></button>
+      ${t.conditions.length ? '<button data-go="shots" aria-pressed="false">截图对照</button>' : ''}
+      <button data-go="facts" aria-pressed="false">参数</button>
+      <button data-go="prompt" aria-pressed="false">提示词</button>
     </div></nav>
 
-    <section id="results" class="block wrap">
-      <div class="block-head"><h2>结果</h2><p>点击卡片进入在线预览；预览页右侧有该页面的操作指南。</p></div>
+    <section id="results" data-panel="results" class="block wrap">
+      <div class="result-toolbar"><div class="block-head"><h2 id="filter-heading">全部作品</h2><p id="filter-count">${t.results.length} 件作品</p></div>
+        <div class="result-controls"><label for="vendor-filter">模型厂商</label><select id="vendor-filter" aria-label="按模型厂商筛选作品"><option value="">全部厂商</option>${vendors.map((vendor) => `<option value="${esc(vendor)}">${esc(vendor)}</option>`).join('')}</select>
+        ${b ? `<a class="btn" href="${viewHref(t, a.id, b.id)}">并排对比 ↗</a>` : ''}</div></div>
       <div class="result-grid">${cards}</div>
+      <p class="muted filter-empty" hidden>该厂商暂无作品。</p>
     </section>
 
-    ${t.conditions.length ? `<section id="shots" class="block wrap">
-      <div class="block-head"><h2>截图对照</h2><p>按条件展示已有截图；新增作品的首屏预览图来自各项目。</p></div>
-      <div class="seg" role="tablist" aria-label="截图条件">${t.conditions.map((c) => `<button role="tab" data-cond="${esc(c.id)}" aria-selected="${c.id === taskState.cond}">${esc(c.label)}</button>`).join('')}</div>
+    ${t.conditions.length ? `<section id="shots" data-panel="shots" class="block wrap" hidden>
+      <div class="block-head"><h2>截图对照</h2><p>切换拍摄条件，查看已有截图。</p></div>
+      <div class="seg" role="group" aria-label="截图条件">${t.conditions.map((c) => `<button data-cond="${esc(c.id)}" aria-pressed="${c.id === taskState.cond}">${esc(c.label)}</button>`).join('')}</div>
       <p class="cond-note" id="cond-note">${esc(t.conditions.find((c) => c.id === taskState.cond)?.note ?? '')}</p>
-      <div id="shot-grid">${hasCaptures ? shotGrid(t) : '<p class="muted">还没有截图。运行 <code>npm run build && npm run capture</code> 生成。</p>'}</div>
+      <div id="shot-grid">${hasCaptures ? shotGrid(t) : '<p class="muted">暂无截图。</p>'}</div>
       ${captureNotes.length ? `<p class="fine">${captureNotes.join('<br />')}</p>` : ''}
       <p class="fine">自动截图可能使用软件渲染；实际光影与帧率请以在线预览为准。</p>
     </section>` : ''}
 
-    <section id="facts" class="block wrap">
+    <section id="facts" data-panel="facts" class="block wrap" hidden>
       <div class="block-head"><h2>参数</h2><p>${esc(t.factsNote)}</p></div>
       ${factsTable(t)}
     </section>
 
-    <section id="prompt" class="block wrap">
+    <section id="prompt" data-panel="prompt" class="block wrap" hidden>
       <div class="block-head"><h2>提示词</h2><p>所有结果使用的原始提示词。</p></div>
       <div class="prompt">
         <div class="prompt-bar"><span>${esc(t.promptUrl.split('/').pop())}</span>
@@ -203,14 +229,16 @@ function renderTask(t) {
     </section>
   </main>${footer()}`;
   document.title = `${t.title} · ${DATA.title}`;
+  $('#vendor-filter').value = taskState.vendor;
+  filterResults(t);
 
   root.onclick = (e) => {
     const go = e.target.closest('[data-go]');
-    if (go) $(`#${go.dataset.go}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (go) { activatePanel(go.dataset.go); scrollTo(0, 0); }
     const cond = e.target.closest('[data-cond]');
     if (cond) {
       taskState.cond = cond.dataset.cond;
-      $$('[data-cond]').forEach((el) => el.setAttribute('aria-selected', String(el === cond)));
+      $$('[data-cond]').forEach((el) => el.setAttribute('aria-pressed', String(el === cond)));
       $('#cond-note').textContent = t.conditions.find((c) => c.id === taskState.cond)?.note ?? '';
       if (hasCaptures) $('#shot-grid').innerHTML = shotGrid(t);
     }
@@ -229,6 +257,17 @@ function renderTask(t) {
       }, () => { copy.textContent = '复制失败'; });
     }
   };
+  root.onchange = (e) => {
+    if (e.target.matches('#vendor-filter')) { taskState.vendor = e.target.value; filterResults(t); }
+  };
+}
+
+function filterResults(t) {
+  const shown = t.results.filter((r) => !taskState.vendor || vendorOf(r) === taskState.vendor);
+  $$('.result').forEach((el) => { el.hidden = Boolean(taskState.vendor && el.dataset.vendor !== taskState.vendor); });
+  $('#filter-heading').textContent = taskState.vendor || '全部作品';
+  $('#filter-count').textContent = `${shown.length} 件作品`;
+  $('.filter-empty').hidden = shown.length > 0;
 }
 
 function openCompareLightbox(t, resultId) {
@@ -245,7 +284,7 @@ function openCompareLightbox(t, resultId) {
     let i = withShots.findIndex((c) => c.id === taskState.cond);
     i = (i + dir + withShots.length) % withShots.length;
     taskState.cond = withShots[i].id;
-    $$('[data-cond]').forEach((el) => el.setAttribute('aria-selected', String(el.dataset.cond === taskState.cond)));
+    $$('[data-cond]').forEach((el) => el.setAttribute('aria-pressed', String(el.dataset.cond === taskState.cond)));
     const note = $('#cond-note');
     if (note) note.textContent = withShots[i].note ?? '';
     const grid = $('#shot-grid');
@@ -327,20 +366,20 @@ let viewer = null;
 const wide = () => matchMedia('(min-width: 1100px)').matches;
 
 function createViewer(t) {
-  const state = { panes: [], queries: [], active: 0, guide: store.get('guide') !== '0' && wide() };
+  const state = { panes: [], queries: [], active: 0, guide: store.get('guide') === '1' && wide() };
   const byId = (id) => t.results.find((r) => r.id === id);
   document.title = `在线预览 · ${t.title}`;
 
   root.innerHTML = `<div class="viewer">
     <header class="vbar">
       <a class="vback" href="${taskHref(t)}" title="返回「${esc(t.title)}」"><span aria-hidden="true">‹</span><span class="vback-text">${esc(t.title)}</span></a>
-      <div class="vtabs" role="tablist" aria-label="切换结果">${t.results.map((r) => `<button role="tab" data-pick="${esc(r.id)}"><b>${esc(r.title)}</b><small>${esc(label(r))}</small></button>`).join('')}</div>
-      <select class="vselect" aria-label="切换结果">${t.results.map((r) => `<option value="${esc(r.id)}">${esc(r.title)} · ${esc(label(r))}</option>`).join('')}</select>
+      <select class="vselect" aria-label="选择预览作品">${t.results.map((r) => `<option value="${esc(r.id)}">${esc(r.title)} · ${esc(label(r))}</option>`).join('')}</select>
+      <span class="split-context" aria-hidden="true">并排对比</span>
       <div class="vtools">
-        <button class="vtool" data-v="guide" aria-pressed="false" title="操作指南（G）"><span aria-hidden="true">?</span><span class="vtool-text">指南</span></button>
-        ${t.results.length > 1 ? '<button class="vtool" data-v="split" aria-pressed="false" title="并排对比（S）"><span aria-hidden="true">◫</span><span class="vtool-text">并排</span></button>' : ''}
-        <a class="vtool" data-v="open" target="_blank" rel="noopener" title="在新窗口打开独立页面"><span aria-hidden="true">↗</span><span class="vtool-text">新窗口</span></a>
-        <button class="vtool" data-v="full" title="全屏（F）"><span aria-hidden="true">⛶</span><span class="vtool-text">全屏</span></button>
+        <button class="vtool" data-v="guide" aria-label="操作指南" aria-pressed="false" title="操作指南（G）"><span aria-hidden="true">?</span><span class="vtool-text">指南</span></button>
+        ${t.results.length > 1 ? '<button class="vtool" data-v="split" aria-label="并排对比" aria-pressed="false" title="并排对比（S）"><span aria-hidden="true">◫</span><span class="vtool-text">并排</span></button>' : ''}
+        <a class="vtool" data-v="open" aria-label="在新窗口打开独立页面" target="_blank" rel="noopener" title="在新窗口打开独立页面"><span aria-hidden="true">↗</span><span class="vtool-text">新窗口</span></a>
+        <button class="vtool" data-v="full" aria-label="全屏" title="全屏（F）"><span aria-hidden="true">⛶</span><span class="vtool-text">全屏</span></button>
       </div>
     </header>
     <div class="vmain">
@@ -399,7 +438,7 @@ function createViewer(t) {
         <button class="icon-btn" data-v="guide" aria-label="收起指南">✕</button>
       </div>
       <p class="guide-summary">${esc(r.summary)}</p>
-      ${g.presets?.length ? `<div class="guide-block"><h3>快速跳转</h3><p class="fine">以下按钮用该页面自带的 URL 参数重新载入。</p>
+      ${g.presets?.length ? `<div class="guide-block"><h3>快速跳转</h3>
         <div class="presets">${g.presets.map((p) => `<button class="chip${state.queries[state.active] === p.query ? ' on' : ''}" data-preset="${esc(p.query)}">${esc(p.label)}</button>`).join('')}
         <button class="chip ghost" data-preset="">默认</button></div></div>` : ''}
       ${(g.sections ?? []).map((s) => `<div class="guide-block"><h3>${esc(s.title)}</h3><dl class="keys">${s.items.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></div>`).join('')}
@@ -410,7 +449,6 @@ function createViewer(t) {
         <div><dt>R</dt><dd>重新载入当前栏</dd></div></dl>
         <p class="fine">点击场景后键盘会交给场景本身；点一下顶栏即可恢复本站快捷键。</p></div>
       <div class="guide-links">
-        ${r.scene ? ext(r.scene, '独立页面', 'btn sm') : ''}
         ${ext(r.source, '源码', 'btn sm ghost')}
         ${r.readme ? ext(r.readme, '项目说明', 'btn sm ghost') : ''}
         <a class="btn sm ghost" href="${taskHref(t)}#shots">截图对照</a>
@@ -424,11 +462,6 @@ function createViewer(t) {
     el.classList.toggle('guide-open', state.guide);
     $$('.pane', stage).forEach((p, i) => p.classList.toggle('active', split && i === state.active));
     const current = state.panes[state.active];
-    $$('[data-pick]', el).forEach((b) => {
-      const on = b.dataset.pick === current;
-      b.setAttribute('aria-selected', String(on));
-      b.classList.toggle('other', split && !on && state.panes.includes(b.dataset.pick));
-    });
     $('.vselect', el).value = current;
     $('[data-v="guide"]', el).setAttribute('aria-pressed', String(state.guide));
     $('[data-v="split"]', el)?.setAttribute('aria-pressed', String(split));
@@ -490,14 +523,6 @@ function createViewer(t) {
   };
 
   el.addEventListener('click', (e) => {
-    const pick = e.target.closest('[data-pick]');
-    if (pick) {
-      const panes = [...state.panes];
-      const at = panes.indexOf(pick.dataset.pick);
-      if (at >= 0) { state.active = at; sync(); return; }
-      panes[state.active] = pick.dataset.pick;
-      return navigate(panes);
-    }
     const v = e.target.closest('[data-v]')?.dataset.v;
     if (v === 'guide') return toggleGuide();
     if (v === 'split') return toggleSplit();
@@ -532,14 +557,15 @@ function createViewer(t) {
     }
   });
   // Clicking into a frame does not bubble; focus moving into it marks that pane active.
-  window.addEventListener('blur', () => {
+  const onBlur = () => {
     setTimeout(() => {
       const frame = document.activeElement;
       if (frame?.tagName !== 'IFRAME') return;
       const i = Number(frame.closest('[data-pane]')?.dataset.pane);
       if (state.panes.length > 1 && i !== state.active) { state.active = i; sync(); }
     });
-  });
+  };
+  window.addEventListener('blur', onBlur);
   const onKey = (e) => {
     if (lightbox.isOpen || e.metaKey || e.ctrlKey || e.altKey || e.target.matches('input, select, textarea')) return;
     const k = e.key.toLowerCase();
@@ -560,6 +586,7 @@ function createViewer(t) {
     update,
     destroy() {
       document.removeEventListener('keydown', onKey);
+      window.removeEventListener('blur', onBlur);
       document.body.classList.remove('is-viewer');
       if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     },
@@ -582,6 +609,7 @@ function route() {
     viewer = null;
   }
   root.onclick = null;
+  root.onchange = null;
   lightbox.close();
 
   if (!taskId) {
@@ -592,8 +620,8 @@ function route() {
   if (!inViewer) {
     renderTask(t);
     const anchor = location.hash.split('#')[2];
-    if (anchor) requestAnimationFrame(() => $(`#${CSS.escape(anchor)}`)?.scrollIntoView());
-    else scrollTo(0, 0);
+    activatePanel(anchor, false);
+    scrollTo(0, 0);
     return;
   }
   const ids = [a, vs === 'vs' ? b : null].filter(Boolean);

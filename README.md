@@ -1,35 +1,46 @@
 # 同题异答 · 模型前端效果对比
 
-本站使用原来的“同题异答”前端，展示不同模型针对[同一份任务提示词](tasks/chinese-architecture/PROMPT.md)生成的 Three.js 体素中国古典建筑群。可查看作品、在线运行、并排对比、浏览截图与源码。
+“同题异答”展示不同模型针对[同一份任务提示词](tasks/chinese-architecture/PROMPT.md)生成的 Three.js 体素中国古典建筑群。页面采用雾白、石墨黑与冷灰配色，以作品截图为主，支持在线运行、并排对比、浏览截图与源码。
 
-**在线站点：<https://wsnxxxs.github.io/Test_Chinese_architecture/>**
+首页按题目浏览，模型索引默认展开并按厂商分组，各组显示模型数与作品数，模型名称旁保留对应品牌标识，也可手动收起索引。题目页支持按模型筛选作品，并通过“作品 / 截图对照 / 参数 / 提示词”切换内容。在线预览时可切换作品或打开并排对比，操作指南按需展开。
+
+模型品牌标识保存在 `site/assets/brands/`，来源及下载地址见[标识来源](site/assets/brands/README.md)。新增模型时，可在 `gallery.json` 中复用对应品牌的本地标识。
+
+**在线站点：<https://wsnxxxs.github.io/same-prompt-gallery/>**
 
 ## 现有结果
 
 | 模型 | 作品 | 在线场景 | 源码与说明 |
 | --- | --- | --- | --- |
-| Claude Opus 5.5 High | 云山古刹 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/opus-5.5-high) | [项目说明](results/opus-5.5-high/README.md) |
-| Claude Sonnet 5.5 Max | 云栖古刹 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/sonnet-5.5-max) | [项目说明](results/sonnet-5.5-max/README.md) |
-| Claude Sonnet 5.5 High | 体素古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/sonnet-5.5-high) | [项目说明](results/sonnet-5.5-high/README.md) |
-| MIMO V2.6 Pro | 体素中华 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/mimo-v2.6-pro) | [项目说明](results/mimo-v2.6-pro/README.md) |
-| DeepSeek V4.1 Flash | 古城 · 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/deepseek-v4.1-flash) | [项目说明](results/deepseek-v4.1-flash/README.md) |
-| GLM 5.3 Flash | 体素古刹 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/glm-5.3-flash) | [项目说明](results/glm-5.3-flash/README.md) |
-| GLM 5.3 | 古刹夕照 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/glm-5.3) | [项目说明](results/glm-5.3/README.md) |
-| HY3 | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/hy3) | [项目说明](results/hy3/README.md) |
-| Kimi K3 | 体素 · 中式古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/kimi-k3) | [项目说明](results/kimi-k3/README.md) |
-| Kimi K2.8 Preview | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/kimi-k2.8-preview) | [项目说明](results/kimi-k2.8-preview/README.md) |
-| DeepSeek V4 Pro | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/deepseek-v4-pro) | [项目说明](results/deepseek-v4-pro/README.md) |
-| MiniMax M3 | 体素中式院落 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/minimax-m3) | [项目说明](results/minimax-m3/README.md) |
-| GPT-6 Sol Max | 云阙宫 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-6-sol-max) | [项目说明](results/gpt-6-sol-max/README.md) |
-| GPT-6 Sol High | 云阙 · 体素古建 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-6-sol-high) | [项目说明](results/gpt-6-sol-high/README.md) |
-| GPT-6 Luna Max | 云岚宫阙 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-6-luna-max) | [项目说明](results/gpt-6-luna-max/README.md) |
-| GPT-5.6 Sol Max | 紫宸宫阙 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-5.6-sol-max) | [项目说明](results/gpt-5.6-sol-max/README.md) |
-| GPT-5.6 Luna Max | 云岚寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-5.6-luna-max) | [项目说明](results/gpt-5.6-luna-max/README.md) |
-| GPT-5.6 Terra Max | 云岫古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-5.6-terra-max) | [项目说明](results/gpt-5.6-terra-max/README.md) |
-| GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
-| Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
+| Grok 4.6 | 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/grok-4.6) | [项目说明](results/grok-4.6/README.md) |
+| Qwen3.8 Max 0902 | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-max-0902) | [项目说明](results/qwen3.8-max-0902/README.md) |
+| Seed 2.1 Pro | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/seed-2.1-pro) | [项目说明](results/seed-2.1-pro/README.md) |
+| Claude Opus 5.5 High | 云山古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/opus-5.5-high) | [项目说明](results/opus-5.5-high/README.md) |
+| Claude Sonnet 5.5 Max | 云栖古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-max) | [项目说明](results/sonnet-5.5-max/README.md) |
+| Claude Sonnet 5.5 High | 体素古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-high) | [项目说明](results/sonnet-5.5-high/README.md) |
+| MIMO V2.6 Pro | 体素中华 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/mimo-v2.6-pro) | [项目说明](results/mimo-v2.6-pro/README.md) |
+| DeepSeek V4.1 Flash | 古城 · 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4.1-flash) | [项目说明](results/deepseek-v4.1-flash/README.md) |
+| GLM 5.3 Flash | 体素古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3-flash) | [项目说明](results/glm-5.3-flash/README.md) |
+| GLM 5.3 | 古刹夕照 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3) | [项目说明](results/glm-5.3/README.md) |
+| HY3 | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/hy3) | [项目说明](results/hy3/README.md) |
+| Kimi K3 | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/kimi-k3) | [项目说明](results/kimi-k3/README.md) |
+| Kimi K2.8 Preview | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/kimi-k2.8-preview) | [项目说明](results/kimi-k2.8-preview/README.md) |
+| DeepSeek V4 Pro | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4-pro) | [项目说明](results/deepseek-v4-pro/README.md) |
+| Gemini 3.1 Pro | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.1-pro) | [项目说明](results/gemini-3.1-pro/README.md) |
+| Gemini 3.7 Flash | 华夏九重天 · 3D 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.7-flash) | [项目说明](results/gemini-3.7-flash/README.md) |
+| Gemini 3.8 Flash | 紫禁晨暮 · 中式殿阁体素群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.8-flash) | [项目说明](results/gemini-3.8-flash/README.md) |
+| MiniMax M3 | 体素中式院落 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/minimax-m3) | [项目说明](results/minimax-m3/README.md) |
+| Space-bunny（暂归 MiniMax） | 云麓宫 · 体素汉风建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/space-bunny) | [项目说明](results/space-bunny/README.md) |
+| GPT-6 Sol Max | 云阙宫 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-max) | [项目说明](results/gpt-6-sol-max/README.md) |
+| GPT-6 Sol High | 云阙 · 体素古建 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-high) | [项目说明](results/gpt-6-sol-high/README.md) |
+| GPT-6 Luna Max | 云岚宫阙 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-luna-max) | [项目说明](results/gpt-6-luna-max/README.md) |
+| GPT-5.6 Sol Max | 紫宸宫阙 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-sol-max) | [项目说明](results/gpt-5.6-sol-max/README.md) |
+| GPT-5.6 Luna Max | 云岚寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-luna-max) | [项目说明](results/gpt-5.6-luna-max/README.md) |
+| GPT-5.6 Terra Max | 云岫古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-terra-max) | [项目说明](results/gpt-5.6-terra-max/README.md) |
+| GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
+| GPT-6 Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
 
-共 20 个结果，18 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。原有 4 个作品保留统一条件截图；新增作品先展示各项目随附的预览图。
+共 27 个结果，25 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen、Seed 和 Gemini 3.7 Flash 四份新增结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。原有 4 个作品保留统一条件截图；新增作品先展示项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
 
 ## 运行
 
@@ -52,9 +63,9 @@ npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 gallery.json                              站点名称与模型注册表
 tasks/chinese-architecture/task.json     题目信息、原有作品的详细数据与截图条件
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
-results/manifest.json                    20 个结果的简要目录
-results/                                  20 个独立前端项目
-site/                                     原版“同题异答”前端
+results/manifest.json                    27 个结果的简要目录
+results/                                  27 个独立前端项目
+site/                                     “同题异答”作品画廊与对比界面
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 .github/workflows/                        GitHub Pages 自动发布
 ```

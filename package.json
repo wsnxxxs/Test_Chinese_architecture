@@ -1,5 +1,5 @@
 {
-  "name": "chinese-architecture-model-gallery",
+  "name": "same-prompt-gallery",
   "private": true,
   "type": "module",
   "workspaces": ["results/*"],

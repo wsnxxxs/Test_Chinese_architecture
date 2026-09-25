@@ -1,5 +1,26 @@
 [
   {
+    "id": "grok-4.6",
+    "model": "Grok 4.6",
+    "title": "体素中式建筑群",
+    "description": "山门、钟鼓楼、配殿、主殿和宝塔组成的可旋转体素场景。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "qwen3.8-max-0902",
+    "model": "Qwen3.8 Max 0902",
+    "title": "体素 · 中国古典建筑群",
+    "description": "中轴院落与两翼建筑组成的古建群，支持自动环视。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "seed-2.1-pro",
+    "model": "Seed 2.1 Pro",
+    "title": "体素中国古典建筑群",
+    "description": "可自由旋转和缩放浏览的体素中式古典建筑群。",
+    "cover": "docs/cover.png"
+  },
+  {
     "id": "opus-5.5-high",
     "model": "Claude Opus 5.5 High",
     "title": "云山古刹",
@@ -58,16 +79,16 @@
   {
     "id": "kimi-k3",
     "model": "Kimi K3",
-    "title": "体素 · 中式古典建筑群",
-    "description": "黄昏光影中的中轴院落，包含主殿、配殿、宝塔与钟楼。",
-    "cover": "screenshots/axis-view.png"
+    "title": "体素 · 中国古典建筑群",
+    "description": "中轴院落、重檐主殿与东西配殿，搭配宝塔和钟楼，可自动环绕浏览。",
+    "cover": "docs/cover.png"
   },
   {
     "id": "kimi-k2.8-preview",
     "model": "Kimi K2.8 Preview",
     "title": "体素 · 中国古典建筑群",
-    "description": "重檐主殿与配殿、山门、庭院道路构成的体素寺院。",
-    "cover": "shot1.png"
+    "description": "中轴对称的体素寺院，包含主殿、配殿、山门、钟鼓楼与五层宝塔，可切换光照。",
+    "cover": "docs/cover.png"
   },
   {
     "id": "deepseek-v4-pro",
@@ -82,6 +103,13 @@
     "title": "体素中式院落",
     "description": "主殿、配殿、山门、五层宝塔与钟鼓楼组成的院落。",
     "cover": "screenshots/palace.png"
+  },
+  {
+    "id": "space-bunny",
+    "model": "Space-bunny",
+    "title": "云麓宫 · 体素汉风建筑群",
+    "description": "中轴对称的体素宫城，包含主殿、配殿、山门、钟鼓楼、宝塔与护城河，支持晨、暮、夜三种光照。",
+    "cover": "verify-shots/01-overview-morning.png"
   },
   {
     "id": "gpt-6-sol-max",
@@ -148,9 +176,33 @@
   },
   {
     "id": "astra-pro",
-    "model": "Astra Pro",
+    "model": "GPT-6 Astra Pro",
     "title": "云阙 · 方寸山河",
     "description": "十一座中轴布局的殿宇与亭塔组成体素古寺，支持自由环视和晨曦、日暮、月夜光照。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gemini-3.1-pro",
+    "model": "Gemini 3.1 Pro",
+    "modelId": "gemini-3.1-pro",
+    "title": "体素中国古典建筑群",
+    "description": "主殿、山门、东西配殿、钟鼓楼和五层宝塔组成的中轴建筑群，可自由旋转与缩放。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gemini-3.8-flash",
+    "model": "Gemini 3.8 Flash",
+    "modelId": "gemini-3.8-flash",
+    "title": "紫禁晨暮 · 中式殿阁体素群",
+    "description": "中轴院落包含重檐主殿、配殿、山门、钟鼓楼和宝塔，支持四种光照与多机位导览。",
+    "cover": "docs/cover.png"
+  },
+  {
+    "id": "gemini-3.7-flash",
+    "model": "Gemini 3.7 Flash",
+    "modelId": "gemini-3.7-flash",
+    "title": "华夏九重天 · 3D 体素中国古典建筑群",
+    "description": "中轴主殿、七级宝塔、配殿、山门和钟鼓楼组成的体素建筑群，支持四种光照和多机位导览。",
     "cover": "docs/cover.png"
   }
 ]

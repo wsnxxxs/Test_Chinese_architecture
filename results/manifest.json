@@ -86,6 +86,8 @@
   {
     "id": "gpt-6-sol-max",
     "model": "GPT-6 Sol Max",
+    "modelId": "gpt-6-sol",
+    "effort": "Max",
     "title": "云阙宫",
     "description": "六座建筑与铺装庭院、院墙、石狮和灯笼，支持晨曦、暮色与夜游光照。",
     "cover": "docs/preview.png"
@@ -93,6 +95,8 @@
   {
     "id": "gpt-6-sol-high",
     "model": "GPT-6 Sol High",
+    "modelId": "gpt-6-sol",
+    "effort": "High",
     "title": "云阙 · 体素古建",
     "description": "中轴主殿、四座配殿、山门与双塔，辅以庭院道路和园林植被。",
     "cover": "docs/cover.png"
@@ -100,6 +104,8 @@
   {
     "id": "gpt-6-luna-max",
     "model": "GPT-6 Luna Max",
+    "modelId": "gpt-6-luna",
+    "effort": "Max",
     "title": "云岚宫阙",
     "description": "主殿、配殿、山门和成对钟鼓楼组成的体素宫城。",
     "cover": "docs/cover.png"
@@ -107,6 +113,8 @@
   {
     "id": "gpt-5.6-sol-max",
     "model": "GPT-5.6 Sol Max",
+    "modelId": "gpt-5.6-sol",
+    "effort": "Max",
     "title": "紫宸宫阙",
     "description": "十座中轴对称建筑与庭园环境，支持晨曦、暮色、月夜三种光照。",
     "cover": "docs/cover.png"
@@ -114,6 +122,8 @@
   {
     "id": "gpt-5.6-luna-max",
     "model": "GPT-5.6 Luna Max",
+    "modelId": "gpt-5.6-luna",
+    "effort": "Max",
     "title": "云岚寺",
     "description": "主殿、东西配殿、山门与钟鼓楼组成的中轴寺院。",
     "cover": "docs/cover.png"
@@ -121,6 +131,8 @@
   {
     "id": "gpt-5.6-terra-max",
     "model": "GPT-5.6 Terra Max",
+    "modelId": "gpt-5.6-terra",
+    "effort": "Max",
     "title": "云岫古寺",
     "description": "可直接观赏全景并自由旋转缩放的体素古寺。",
     "cover": "docs/cover.png"
@@ -128,6 +140,8 @@
   {
     "id": "gpt-6-astra-high",
     "model": "GPT-6 Astra High",
+    "modelId": "gpt-6-astra",
+    "effort": "High",
     "title": "方寸之间 · 云栖古寺",
     "description": "十一座建筑组成的古寺，提供光照切换与建筑图鉴。",
     "cover": "screenshots/evening.jpg"

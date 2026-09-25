@@ -1,0 +1,12 @@
+{
+  "title": "同题异答",
+  "subtitle": "模型前端效果对比",
+  "description": "把同一份提示词交给不同模型，收录它们生成的可运行前端项目。在线运行、统一截图对照、查看源码。",
+  "repo": "https://github.com/wsnxxxs/Test_Chinese_architecture",
+  "branch": "main",
+  "models": [
+    { "id": "claude-opus-5.5", "name": "Claude Opus 5.5", "vendor": "Anthropic" },
+    { "id": "claude-sonnet-5.5", "name": "Claude Sonnet 5.5", "vendor": "Anthropic" },
+    { "id": "mimo-v2.6-pro", "name": "MiMo V2.6 Pro", "vendor": "Xiaomi" }
+  ]
+}

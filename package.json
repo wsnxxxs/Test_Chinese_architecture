@@ -1,16 +1,17 @@
 {
-  "name": "chinese-architecture-model-gallery",
+  "name": "model-frontend-gallery",
   "private": true,
   "type": "module",
-  "workspaces": ["results/*"],
   "scripts": {
-    "dev": "npm run build && vite preview --host 0.0.0.0 --port 5173",
-    "dev:opus": "npm run dev --workspace=opus-5.5-high",
-    "build": "npm run build --workspaces && node scripts/assemble.mjs",
-    "preview": "vite preview --host 0.0.0.0",
-    "check": "npm run check --workspace=opus-5.5-high"
+    "build": "node scripts/build.mjs",
+    "site": "node scripts/build.mjs --site-only && vite preview --host 0.0.0.0 --port 4173",
+    "dev": "node scripts/build.mjs && vite preview --host 0.0.0.0 --port 4173",
+    "preview": "vite preview --host 0.0.0.0 --port 4173",
+    "check": "node scripts/build.mjs --check",
+    "capture": "node scripts/capture.mjs"
   },
   "devDependencies": {
+    "playwright": "1.56.1",
     "vite": "^7.3.6"
   }
 }

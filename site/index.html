@@ -1,45 +1,26 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="同一题目下，不同模型生成的 Three.js 体素中国古典建筑群作品集。" />
-    <title>中国古典建筑群 · 模型作品集</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23172020'/><path d='M2 7L8 3l6 4M4 8h8v5H4z' fill='%23c9a773'/></svg>" />
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <main>
-      <header class="hero">
-        <p class="eyebrow">THREE.JS · VOXEL ARCHITECTURE</p>
-        <h1>同一题目，<br /><em>不同的营造。</em></h1>
-        <p class="lead">以同一份 3D 体素中国古典建筑群提示词为起点，收录各模型独立完成的可运行作品。</p>
-        <div class="hero-links">
-          <a class="button" href="#works">浏览作品 <span aria-hidden="true">↗</span></a>
-          <a class="text-link" href="https://github.com/wsnxxxs/Test_Chinese_architecture/blob/main/PROMPT.md">查看原始题目 ↗</a>
-        </div>
-        <div class="hero-lines" aria-hidden="true"></div>
-      </header>
-
-      <section class="works" id="works">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">THE COLLECTION</p>
-            <h2>作品目录</h2>
-          </div>
-          <span id="count" class="count"></span>
-        </div>
-        <div id="cards" class="cards" aria-live="polite"></div>
-      </section>
-
-      <section class="brief">
-        <p class="eyebrow">THE BRIEF</p>
-        <h2>共同的起点</h2>
-        <p>至少五座建筑，中轴对称布局，道路与庭院贯通。飞檐、斗拱、台阶、门窗等古建细节由体素构成；晨昏光影让场景呈现层次。每个结果都能独立安装、构建和运行。</p>
-        <a class="text-link" href="https://github.com/wsnxxxs/Test_Chinese_architecture/blob/main/PROMPT.md">阅读完整提示词 ↗</a>
-      </section>
-    </main>
-    <footer><span>中国古典建筑群 · 多模型作品集</span><span>Three.js / Voxel / 3D</span></footer>
-    <script type="module" src="./app.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>同题异答 · 模型前端效果对比</title>
+  <meta name="description" content="同一份提示词交给不同模型，对比它们生成的可运行前端页面：在线运行、统一截图对照、查看源码。" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23b33a26'/><text x='16' y='23' font-size='19' text-anchor='middle' fill='%23fff' font-family='serif'>同</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app" aria-live="polite"></div>
+  <div id="lightbox" class="lightbox" hidden>
+    <button class="lb-close icon-btn" data-lb="close" aria-label="关闭（Esc）">✕</button>
+    <button class="lb-nav lb-prev icon-btn" data-lb="prev" aria-label="上一张（←）">‹</button>
+    <figure class="lb-figure">
+      <img class="lb-img" alt="" />
+      <figcaption class="lb-caption"></figcaption>
+    </figure>
+    <button class="lb-nav lb-next icon-btn" data-lb="next" aria-label="下一张（→）">›</button>
+  </div>
+  <noscript>此页面需要启用 JavaScript。</noscript>
+  <script type="module" src="app.js"></script>
+</body>
 </html>

@@ -1,0 +1,190 @@
+{
+  "title": "体素中国古典建筑群",
+  "summary": "用 Three.js 做一个打开即可浏览的体素风格中国古典建筑群：中轴对称布局，中式屋顶与构件，带晨昏光影。",
+  "prompt": "PROMPT.md",
+  "date": "2026-09-25",
+  "tags": ["Three.js", "WebGL", "3D 场景", "体素"],
+  "conditions": [
+    { "id": "first", "label": "桌面首屏", "note": "1440×900，打开页面后不做任何操作" },
+    { "id": "mobile", "label": "手机首屏", "note": "390×844 竖屏，打开页面后不做任何操作", "viewport": [390, 844], "mobile": true },
+    { "id": "dawn", "label": "清晨", "note": "切换到各页面自带的清晨 / 黎明光照" },
+    { "id": "dusk", "label": "黄昏", "note": "切换到各页面自带的黄昏 / 夕照 / 暮色光照" },
+    { "id": "night", "label": "夜晚", "note": "切换到各页面自带的夜晚光照" }
+  ],
+  "facts": [
+    { "id": "buildings", "label": "建筑" },
+    { "id": "scale", "label": "体素规模" },
+    { "id": "lighting", "label": "光照" },
+    { "id": "camera", "label": "视角与标注" },
+    { "id": "stack", "label": "技术栈" }
+  ],
+  "factsNote": "建筑与体素数据来自各结果 README 或页面内统计；构建体积由构建脚本实测。",
+  "results": [
+    {
+      "id": "opus-5.5-high",
+      "model": "claude-opus-5.5",
+      "effort": "High",
+      "title": "云山古刹",
+      "summary": "五进院落的中轴寺院，院外有放生池、石拱桥和环形群山。时间可在 24 小时内连续调节，夜里灯笼和窗纸会亮起。",
+      "aliases": ["results/opus-5.5-high"],
+      "facts": {
+        "buildings": "12 座：大雄宝殿、天王殿、山门殿、配殿×2、禅堂×2、钟鼓楼、碑亭×2、八角七层宝塔",
+        "scale": "约 40 万实体体素（192×112×288）",
+        "lighting": "24 小时连续昼夜，4 个时段预设，灯火泛光",
+        "camera": "自动环游、建筑标注、URL 指定机位",
+        "stack": "Three.js 0.186 · Vite 7"
+      },
+      "gallery": [
+        { "src": "docs/dusk.jpg", "caption": "黄昏全景" },
+        { "src": "docs/dawn.jpg", "caption": "清晨薄雾" },
+        { "src": "docs/night.jpg", "caption": "夜晚灯火（开启建筑标注）" },
+        { "src": "docs/noon-gate.jpg", "caption": "正午：山门、石狮、放生池与石拱桥" },
+        { "src": "docs/main-hall.jpg", "caption": "大雄宝殿近景" },
+        { "src": "docs/mobile.jpg", "caption": "手机竖屏" }
+      ],
+      "guide": {
+        "sections": [
+          { "title": "鼠标", "items": [["左键拖动", "旋转"], ["右键拖动", "平移"], ["滚轮", "缩放"], ["停手 6 秒", "恢复自动环游"]] },
+          { "title": "右下面板", "items": [["清晨 · 正午 · 黄昏 · 夜晚", "平滑过渡到对应时刻"], ["时间滑块", "0–24 时连续调节，显示十二时辰"], ["自动环游 / 时光流转", "镜头环游、昼夜自动流转"], ["建筑标注 / 复位视角", "显示建筑名称、回到初始机位"]] },
+          { "title": "快捷键", "items": [["H", "隐藏 / 显示界面"]] },
+          { "title": "URL 参数", "items": [["t=6.4", "初始时刻（0–24）"], ["rotate=0", "关闭自动环游"], ["flow=1", "开启时光流转"], ["labels=1", "开启建筑标注"], ["cam=x,y,z&look=x,y,z", "指定机位与目标点"]] }
+        ],
+        "tips": [
+          "打开「建筑标注」，对照各殿名称看中轴布局。",
+          "把时间拖到 18–20 时，看灯笼、窗纸和香炉逐渐亮起。",
+          "拉近大雄宝殿，能看到重檐庑殿、斗拱和额枋彩画。"
+        ],
+        "presets": [
+          { "label": "清晨", "query": "t=6.4" },
+          { "label": "正午", "query": "t=12" },
+          { "label": "夜晚 · 标注", "query": "t=21.5&labels=1" },
+          { "label": "时光流转", "query": "flow=1" }
+        ]
+      },
+      "capture": {
+        "dawn": { "query": "t=6.4" },
+        "dusk": { "query": "t=17.6" },
+        "night": { "query": "t=21.5" }
+      }
+    },
+    {
+      "id": "sonnet-5.5-max",
+      "model": "claude-sonnet-5.5",
+      "effort": "Max",
+      "title": "云栖古刹",
+      "summary": "规模最大的一份：四进台地院落，配殿、禅堂、角楼、双塔、牌坊一应俱全，外加云、鸟、行人、锦鲤。有 6 个预设视角和可点击的建筑标注。",
+      "aliases": ["results/sonnet-5.5-max"],
+      "facts": {
+        "buildings": "约 23 座：大雄宝殿、山门、天王殿、钟鼓楼、藏经阁、双塔、配殿×4、禅堂×2、碑亭×2、八角亭×2、角楼×4、牌坊",
+        "scale": "约 180 万实体体素（256×112×400）",
+        "lighting": "连续昼夜，5 个时段预设，晨雾暮霭与泛光",
+        "camera": "6 个预设视角，可点击标注飞行，环游",
+        "stack": "Three.js 0.186 · Vite 6"
+      },
+      "gallery": [
+        { "src": "docs/01-overview-golden-hour.jpg", "caption": "夕照全景（开启标注）" },
+        { "src": "docs/02-dawn.jpg", "caption": "黎明" },
+        { "src": "docs/03-noon.jpg", "caption": "午后" },
+        { "src": "docs/04-dusk-lanterns.jpg", "caption": "暮色灯笼" },
+        { "src": "docs/05-night.jpg", "caption": "月夜" },
+        { "src": "docs/06-axis.jpg", "caption": "中轴视角" },
+        { "src": "docs/07-main-hall.jpg", "caption": "大雄宝殿" },
+        { "src": "docs/08-gate.jpg", "caption": "山门" },
+        { "src": "docs/09-pagoda.jpg", "caption": "宝塔" },
+        { "src": "docs/10-plan-view.jpg", "caption": "俯瞰" }
+      ],
+      "guide": {
+        "sections": [
+          { "title": "鼠标 / 触屏", "items": [["左键拖拽", "旋转"], ["滚轮", "朝光标方向缩放"], ["右键拖拽", "平移"], ["单指 / 双指", "旋转 / 缩放平移"]] },
+          { "title": "界面", "items": [["左下视角按钮", "全景 · 中轴 · 主殿 · 山门 · 宝塔 · 俯瞰"], ["底部时间栏", "黎明 · 午后 · 夕照 · 暮色 · 月夜，或拖动滑块"], ["建筑标注", "点击标注，镜头飞到该建筑"]] },
+          { "title": "快捷键", "items": [["1 – 6", "切换预设视角"], ["C", "昼夜流转"], ["L", "建筑标注"], ["R", "自动环游"], ["Q", "切换画质"], ["H", "隐藏界面"]] },
+          { "title": "URL 参数", "items": [["t=0.715", "初始时刻（0 午夜，0.5 正午）"], ["view=axis", "overview / axis / hall / gate / pagoda / top"], ["q=high", "画质 auto / high / medium / low / lite"], ["hud=0 · labels=0", "隐藏界面 / 标注"]] }
+        ],
+        "tips": [
+          "按 1–6 依次看全景、中轴、主殿、山门、宝塔和俯瞰。",
+          "暮色和月夜时段有孔明灯、萤火虫和亮灯的宝塔。",
+          "设备较弱时会自动降低画质，按 Q 可以手动切换。"
+        ],
+        "presets": [
+          { "label": "中轴 · 月夜", "query": "view=axis&t=0.92" },
+          { "label": "主殿 · 黎明", "query": "view=hall&t=0.276" },
+          { "label": "宝塔 · 暮色", "query": "view=pagoda&t=0.766" },
+          { "label": "俯瞰", "query": "view=top" }
+        ]
+      },
+      "capture": {
+        "query": "q=high",
+        "note": "截图时指定 q=high：无 GPU 的截图环境会让自动画质降到极简档。",
+        "dawn": { "query": "t=0.276" },
+        "dusk": { "query": "t=0.715" },
+        "night": { "query": "t=0.92" }
+      }
+    },
+    {
+      "id": "sonnet-5.5-high",
+      "model": "claude-sonnet-5.5",
+      "effort": "High",
+      "title": "体素古寺",
+      "summary": "代码最短的一份，只有 4 个 JS 源文件。整座寺院是一个网格、两次绘制调用，山门、双塔、钟鼓楼、主殿和后殿沿中轴排开，四周是松林缓坡。",
+      "aliases": ["results/sonnet-5.5-high"],
+      "facts": {
+        "buildings": "13 座 + 牌坊：山门、钟鼓楼、双塔、双亭、主殿、后殿、配殿×4",
+        "scale": "约 48.5 万体素（页面统计）",
+        "lighting": "晨 / 昏 / 夜 3 个预设",
+        "camera": "自动旋转",
+        "stack": "Three.js 0.170 · Vite 5"
+      },
+      "gallery": [
+        { "src": "docs/overview.png", "caption": "黄昏概览" }
+      ],
+      "guide": {
+        "sections": [
+          { "title": "鼠标", "items": [["左键拖动", "旋转"], ["滚轮", "缩放"], ["右键拖动", "平移"]] },
+          { "title": "左上按钮", "items": [["晨 · 昏 · 夜", "切换光照，默认为晨"], ["自动旋转", "开关镜头环绕"]] }
+        ],
+        "tips": [
+          "右下角实时显示帧率、体素数和面数。",
+          "切到「昏」看暖色长影，切到「夜」看灯笼。"
+        ]
+      },
+      "capture": {
+        "dusk": { "steps": [{ "click": "#btns [data-t=dusk]" }, { "wait": 3000 }] },
+        "night": { "steps": [{ "click": "#btns [data-t=night]" }, { "wait": 3000 }] }
+      }
+    },
+    {
+      "id": "mimo-v2.6-pro",
+      "model": "mimo-v2.6-pro",
+      "effort": "",
+      "title": "体素中华",
+      "summary": "三进院落、十二座建筑，用大块体素搭成：全场只有 5 千多个盒体、4 次绘制调用，是体量最轻的一份。",
+      "aliases": ["results/mimo-v2.6-pro"],
+      "facts": {
+        "buildings": "12 座：主殿、后殿、配殿×2、厢房×2、山门、垂花门、钟鼓楼、双塔",
+        "scale": "5,211 个体素盒，合并为 4 次绘制调用",
+        "lighting": "晨曦 / 暮色 / 夜景 3 个预设",
+        "camera": "自动旋转（默认开启）",
+        "stack": "Three.js 0.170 · Vite 5"
+      },
+      "gallery": [
+        { "src": "docs/screenshot-wide.png", "caption": "暮色全貌" },
+        { "src": "docs/screenshot-dusk.png", "caption": "暮色" },
+        { "src": "docs/screenshot-night.png", "caption": "夜景" }
+      ],
+      "guide": {
+        "sections": [
+          { "title": "鼠标", "items": [["左键拖拽", "旋转"], ["滚轮", "缩放"], ["右键拖拽", "平移"]] },
+          { "title": "右上按钮", "items": [["晨曦 · 暮色 · 夜景", "切换光照，默认为暮色"], ["自动旋转", "开关镜头环绕，默认开启"]] }
+        ],
+        "tips": [
+          "右下角实时显示帧率、体素数、绘制调用与三角形数。",
+          "夜景下窗棂透出灯光。"
+        ]
+      },
+      "capture": {
+        "dawn": { "steps": [{ "click": "[data-pal=dawn]" }, { "wait": 1500 }] },
+        "night": { "steps": [{ "click": "[data-pal=night]" }, { "wait": 1500 }] }
+      }
+    }
+  ]
+}

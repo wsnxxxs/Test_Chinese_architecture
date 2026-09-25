@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 # 构建后把 dist/ 发布到 gh-pages 分支（GitHub Pages 从该分支提供网站）
 on:
   push:
-    branches: [main, master, 'claude/**']
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

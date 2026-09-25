@@ -1,0 +1,9 @@
+[
+  {
+    "id": "opus-5.5-high",
+    "model": "Claude Opus 5.5 High",
+    "title": "云山古刹",
+    "description": "中轴对称的体素寺院建筑群，含大雄宝殿、山门、钟鼓楼、禅堂与宝塔，并提供连续昼夜变化。",
+    "cover": "docs/dusk.jpg"
+  }
+]

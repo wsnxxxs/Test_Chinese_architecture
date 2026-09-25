@@ -1,8 +1,8 @@
 // 无浏览器自检：生成体素世界并网格化，输出统计信息（npm run check）
-import { generateWorld } from '../src/build/layout.js';
-import { buildWorldMeshes, createVoxelMaterial } from '../src/voxel/mesher.js';
-import { paletteArrays } from '../src/voxel/palette.js';
-import { AXIS_X } from '../src/config.js';
+import { generateWorld } from './src/build/layout.js';
+import { buildWorldMeshes, createVoxelMaterial } from './src/voxel/mesher.js';
+import { paletteArrays } from './src/voxel/palette.js';
+import { AXIS_X } from './src/config.js';
 
 let t = performance.now();
 const w = generateWorld();

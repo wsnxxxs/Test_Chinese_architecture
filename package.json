@@ -1,17 +1,14 @@
 {
-  "name": "voxel-chinese-temple",
+  "name": "chinese-architecture-model-gallery",
   "private": true,
-  "version": "1.0.0",
-  "description": "体素风格中国古典建筑群场景（Three.js + Vite）",
   "type": "module",
+  "workspaces": ["results/*"],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "check": "node scripts/check-world.mjs"
-  },
-  "dependencies": {
-    "three": "^0.186.1"
+    "dev": "npm run build && vite preview --host 0.0.0.0 --port 5173",
+    "dev:opus": "npm run dev --workspace=opus-5.5-high",
+    "build": "npm run build --workspaces && node scripts/assemble.mjs",
+    "preview": "vite preview --host 0.0.0.0",
+    "check": "npm run check --workspace=opus-5.5-high"
   },
   "devDependencies": {
     "vite": "^7.3.6"

@@ -27,8 +27,9 @@
 | GPT-5.6 Luna Max | 云岚寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-5.6-luna-max) | [项目说明](results/gpt-5.6-luna-max/README.md) |
 | GPT-5.6 Terra Max | 云岫古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-5.6-terra-max) | [项目说明](results/gpt-5.6-terra-max/README.md) |
 | GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
+| Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/Test_Chinese_architecture/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
 
-共 19 个结果，17 个模型。各作品保留独立实现；Kimi K3 使用原生静态页面，其余结果通过 Vite 构建。原有 4 个作品保留统一条件截图；新增作品先展示各项目随附的预览图。
+共 20 个结果，18 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。原有 4 个作品保留统一条件截图；新增作品先展示各项目随附的预览图。
 
 ## 运行
 
@@ -51,8 +52,8 @@ npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 gallery.json                              站点名称与模型注册表
 tasks/chinese-architecture/task.json     题目信息、原有作品的详细数据与截图条件
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
-results/manifest.json                    19 个结果的简要目录
-results/                                  19 个独立前端项目
+results/manifest.json                    20 个结果的简要目录
+results/                                  20 个独立前端项目
 site/                                     原版“同题异答”前端
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 .github/workflows/                        GitHub Pages 自动发布

@@ -145,5 +145,12 @@
     "title": "方寸之间 · 云栖古寺",
     "description": "十一座建筑组成的古寺，提供光照切换与建筑图鉴。",
     "cover": "screenshots/evening.jpg"
+  },
+  {
+    "id": "astra-pro",
+    "model": "Astra Pro",
+    "title": "云阙 · 方寸山河",
+    "description": "十一座中轴布局的殿宇与亭塔组成体素古寺，支持自由环视和晨曦、日暮、月夜光照。",
+    "cover": "docs/cover.png"
   }
 ]

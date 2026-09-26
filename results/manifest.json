@@ -564,5 +564,15 @@
     "description": "傍晚光照中的铁路沙盘，提供列车运行与暂停、车速调整、视角控制和昼夜切换。",
     "cover": "docs/cover.png",
     "addedAt": "2026-09-26T04:58:40.576Z"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "doubao-seed-evolving",
+    "model": "Doubao Seed Evolving",
+    "modelId": "doubao-seed-evolving",
+    "title": "桌面微缩铁路小镇",
+    "description": "暖色傍晚中的木质微缩沙盘，蒸汽列车沿闭合铁路经过小镇、河流桥梁与车站，支持三档光照和运行控制。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T05:31:41.123Z"
   }
 ]

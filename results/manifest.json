@@ -533,5 +533,25 @@
         }
       ]
     }
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "mimo-v2.6-flash",
+    "model": "MiMo V2.6 Flash",
+    "modelId": "mimo-v2.6-flash",
+    "title": "微缩铁路小镇 · Miniature Railway Town",
+    "description": "傍晚光照中的木质铁路沙盘，两座钢桥跨过河道，列车在车站停靠，支持三档光照与运行控制。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:52:39.000Z"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "mimo-v2.6-pro",
+    "model": "MiMo V2.6 Pro",
+    "modelId": "mimo-v2.6-pro",
+    "title": "青溪镇 · 桌面微缩铁路沙盘",
+    "description": "木质底座上的青溪镇，钢桁架桥与石拱桥连接闭合铁路，三节列车独立沿轨道运行。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:52:39.000Z"
   }
 ]

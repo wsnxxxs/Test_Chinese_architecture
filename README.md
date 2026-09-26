@@ -68,6 +68,15 @@
 
 本题共 31 个结果，29 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。所有作品均提供手机界面截图；原有 4 个作品保留统一首屏截图，LongCat 使用 1440×900 默认首屏截图，其余作品的首屏使用项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
 
+## 桌面微缩铁路小镇
+
+本题收录 15 份作品，支持在线运行、并排对比与手机截图预览。本次新增两份 MiMo 作品：
+
+| 模型 | 作品 | 在线预览 | 源码与说明 |
+| --- | --- | --- | --- |
+| MiMo V2.6 Flash | 微缩铁路小镇 · Miniature Railway Town | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/mimo-v2.6-flash) | [项目说明](results/miniature-railway-town/mimo-v2.6-flash/README.md) |
+| MiMo V2.6 Pro | 青溪镇 · 桌面微缩铁路沙盘 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/mimo-v2.6-pro) | [项目说明](results/miniature-railway-town/mimo-v2.6-pro/README.md) |
+
 ## 机械键盘 · 交互式产品配置器
 
 本题收录 10 份作品，保留各模型独立的产品展示与配置实现。提供在线预览、并排对比、1440×900 默认首屏和 390×844 手机截图。截图与构建检查用于确认画廊集成，不代表全部产品交互要求均已验证。
@@ -110,9 +119,9 @@ tasks/chinese-architecture/task.json     题目信息、原有作品的详细数
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
 tasks/miniature-railway-town/            第二道题目的提示词、元数据与手机截图
 tasks/mechanical-keyboard/              第三道题目的提示词、元数据与统一截图
-results/manifest.json                    54 个结果的简要目录
+results/manifest.json                    56 个结果的简要目录
 results/                                  第一题的 31 个独立前端项目
-results/miniature-railway-town/           第二题的 13 个独立前端项目
+results/miniature-railway-town/           第二题的 15 个独立前端项目
 results/mechanical-keyboard/             第三题的 10 个独立前端项目
 site/                                     “同题异答”作品画廊与对比界面
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json

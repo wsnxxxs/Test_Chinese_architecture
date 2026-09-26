@@ -1,0 +1,18 @@
+{
+  "name": "railway-mimo-v2.6-flash",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "桌面微缩铁路小镇 — Three.js 手工沙盘",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=./",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  }
+}

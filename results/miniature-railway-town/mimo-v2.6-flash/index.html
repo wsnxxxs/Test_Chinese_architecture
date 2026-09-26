@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>微缩铁路小镇 · Miniature Railway Town</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23231a12'/%3E%3Cpath d='M4 21h24M6 25h20' stroke='%23d6b276' stroke-width='2'/%3E%3Ccircle cx='11' cy='14' r='5' fill='%23c0402f'/%3E%3Crect x='16' y='9' width='11' height='10' rx='2' fill='%23f0e3c8'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene"></canvas>
+
+      <header class="panel title-panel">
+        <h1>微缩铁路小镇</h1>
+        <p>Miniature Railway Town · 手工沙盘模型</p>
+      </header>
+
+      <section class="panel control-panel" aria-label="沙盘控制台">
+        <div class="row">
+          <button id="btn-run" class="btn primary" type="button">⏸ 暂停</button>
+          <button id="btn-reset" class="btn" type="button">↺ 复位</button>
+          <button id="btn-time" class="btn" type="button">🌆 傍晚</button>
+        </div>
+        <div class="row speed-row">
+          <label for="speed">速度</label>
+          <input id="speed" type="range" min="0.25" max="3" step="0.05" value="1" />
+          <span id="speed-value">1.00×</span>
+        </div>
+        <div class="row status-row">
+          <span id="status-train">运行中</span>
+          <span class="dot">·</span>
+          <span id="status-time">傍晚 18:40</span>
+        </div>
+      </section>
+
+      <footer class="panel hint-panel">
+        拖拽旋转 · 滚轮缩放 · 右键平移
+      </footer>
+
+      <div id="loading">沙盘装配中…</div>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

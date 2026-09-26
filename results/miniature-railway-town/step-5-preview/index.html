@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Millford · 微缩铁路小镇</title>
+    <style>
+      :root {
+        --ink: #2b2118;
+        --paper: #f6efe2;
+        --panel: rgba(255, 250, 240, 0.9);
+        --panel-border: rgba(120, 90, 60, 0.28);
+        --accent: #b4552a;
+        --accent-soft: rgba(180, 85, 42, 0.14);
+        --shadow: 0 10px 30px rgba(40, 26, 12, 0.22);
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; overflow: hidden; background: #10131a; }
+      body {
+        font-family: "Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+      }
+      #app { position: fixed; inset: 0; }
+      canvas { display: block; }
+
+      .vignette {
+        position: fixed; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse at 50% 42%, rgba(0,0,0,0) 52%, rgba(30, 18, 8, 0.28) 100%);
+        mix-blend-mode: multiply;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--panel-border);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px) saturate(1.1);
+      }
+
+      #title {
+        position: fixed; top: 18px; left: 18px; padding: 12px 16px 11px;
+        display: flex; flex-direction: column; gap: 3px; z-index: 5;
+      }
+      #title .name {
+        font-size: 19px; font-weight: 700; letter-spacing: 0.09em;
+        text-transform: uppercase; color: #3a2a1c;
+      }
+      #title .name small { font-weight: 600; letter-spacing: 0.22em; color: var(--accent); font-size: 11px; margin-right: 8px; }
+      #title .sub { font-size: 12px; color: #7a6a57; letter-spacing: 0.04em; }
+
+      #panel {
+        position: fixed; left: 18px; bottom: 18px; z-index: 5;
+        padding: 14px 16px; width: 268px;
+        display: flex; flex-direction: column; gap: 12px;
+      }
+      .row { display: flex; align-items: center; gap: 8px; }
+      .btn {
+        appearance: none; border: 1px solid var(--panel-border);
+        background: linear-gradient(#fffdf7, #f1e7d5);
+        color: #3a2a1c; border-radius: 9px; padding: 8px 10px;
+        font-size: 13px; font-weight: 600; letter-spacing: 0.02em; cursor: pointer;
+        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+        transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+        box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 2px 5px rgba(90,60,30,.12);
+        user-select: none;
+      }
+      .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(90,60,30,.18); }
+      .btn:active { transform: translateY(0); }
+      .btn.primary { background: linear-gradient(#c9602f, #a9471f); color: #fff8ef; border-color: #8f3a17; }
+      .btn.primary:hover { background: linear-gradient(#d26a37, #b34d23); }
+      .btn.wide { flex: 1; }
+      .btn .ico { font-size: 14px; line-height: 1; }
+      .btn.toggle[data-on="true"] { background: linear-gradient(#3c4f6b, #2c3a52); color: #e8eefc; border-color: #26324a; }
+
+      .label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #8b7a64; }
+
+      input[type="range"] {
+        -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; cursor: pointer;
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+        height: 6px; border-radius: 99px;
+        background: linear-gradient(90deg, var(--accent) var(--fill, 30%), #e0d5c2 var(--fill, 30%));
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none; width: 16px; height: 16px; margin-top: -5px; border-radius: 50%;
+        background: #fffaf0; border: 2px solid var(--accent); box-shadow: 0 2px 5px rgba(90,60,30,.28);
+      }
+      input[type="range"]::-moz-range-track { height: 6px; border-radius: 99px; background: #e0d5c2; }
+      input[type="range"]::-moz-range-progress { height: 6px; border-radius: 99px; background: var(--accent); }
+      input[type="range"]::-moz-range-thumb {
+        width: 14px; height: 14px; border-radius: 50%; background: #fffaf0; border: 2px solid var(--accent);
+      }
+
+      .speed-val { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 13px; color: #3a2a1c; min-width: 42px; text-align: right; }
+
+      #status {
+        display: flex; align-items: center; gap: 8px;
+        border-top: 1px dashed rgba(120,90,60,.3); padding-top: 10px;
+        font-size: 12px; color: #6b5a48;
+      }
+      #dot { width: 9px; height: 9px; border-radius: 50%; background: #57a15a; box-shadow: 0 0 0 3px rgba(87,161,90,.18); flex: none; }
+      #status.paused #dot { background: #c39a3c; box-shadow: 0 0 0 3px rgba(195,154,60,.2); }
+      #status.stopping #dot { background: #d07a34; }
+      #status-text { font-weight: 600; letter-spacing: .02em; }
+
+      #hint {
+        position: fixed; right: 18px; bottom: 18px; z-index: 5; padding: 9px 13px;
+        font-size: 11.5px; color: #6b5a48; letter-spacing: .02em; line-height: 1.7;
+      }
+      #hint b { color: #3a2a1c; font-weight: 700; }
+
+      #loading {
+        position: fixed; inset: 0; z-index: 20; display: grid; place-items: center;
+        background: radial-gradient(circle at 50% 40%, #f7efe1, #ddcdb4);
+        transition: opacity .6s ease; color: #6b5a48; letter-spacing: .3em; font-size: 13px;
+        text-transform: uppercase; font-weight: 700;
+      }
+      #loading.hide { opacity: 0; pointer-events: none; }
+
+      @media (max-width: 640px) {
+        #panel { width: calc(100vw - 36px); }
+        #hint { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div class="vignette"></div>
+
+    <header id="title" class="card">
+      <div class="name"><small>MILLFORD</small>微缩铁路小镇</div>
+      <div class="sub">桌面微缩景观 · Three.js · 环线列车每日穿行</div>
+    </header>
+
+    <section id="panel" class="card">
+      <div class="row">
+        <button id="btn-run" class="btn primary wide"><span class="ico">❚❚</span><span id="run-text">暂停</span></button>
+        <button id="btn-reset" class="btn" title="恢复初始机位、列车位置与速度"><span class="ico">↺</span>复位</button>
+      </div>
+      <div class="row">
+        <button id="btn-theme" class="btn toggle" data-on="false"><span class="ico">☾</span><span id="theme-text">夜晚</span></button>
+        <button id="btn-view" class="btn" title="俯视全沙盘"><span class="ico">▣</span>全景</button>
+      </div>
+      <div>
+        <div class="row" style="justify-content: space-between; margin-bottom: 2px;">
+          <span class="label">列车速度</span><span class="speed-val" id="speed-val">1.00×</span>
+        </div>
+        <input id="speed" type="range" min="0.25" max="3" step="0.05" value="1" aria-label="列车速度" />
+      </div>
+      <div id="status"><span id="dot"></span><span id="status-text">运行中</span></div>
+    </section>
+
+    <aside id="hint" class="card">
+      <div><b>拖拽</b> 旋转视角 · <b>滚轮</b> 缩放 · <b>右键拖拽</b> 平移</div>
+      <div>列车抵达 <b>Millford 车站</b> 会停靠约 2 秒</div>
+    </aside>
+
+    <div id="loading">Building the diorama…</div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

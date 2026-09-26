@@ -4,12 +4,12 @@
 
 **[打开在线画廊](https://wsnxxxs.github.io/same-prompt-gallery/)** · [作品清单](results/manifest.json) · [模型注册表](gallery.json)
 
-截至 2026-09-26，收录 **3 道题目、70 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
+截至 2026-09-26，收录 **3 道题目、72 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
 
 | 题目 | 作品数 | 提示词 | 在线题目页 |
 | --- | ---: | --- | --- |
 | 体素中国古典建筑群 | 36 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
-| 桌面微缩铁路小镇 | 21 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
+| 桌面微缩铁路小镇 | 23 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
 | 机械键盘 · 交互式产品配置器 | 13 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
 
 ## 目录
@@ -62,7 +62,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 首页按题目浏览，模型索引按厂商查看作品。题目页支持厂商筛选、「作品 / 截图对照 / 提示词」切换，以及按加入时间、厂商或模型名称排序。
 
-作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 70 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
+作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 72 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
 
 选中两件作品可并排对比。在线预览支持用方向键或顶栏按钮切换作品；中式建筑题目另有三维沙盘和原作展厅。站点默认跟随系统切换暖白与墨色主题。[品牌标识来源](site/assets/brands/README.md)记录模型标识的来源与下载地址。
 
@@ -130,7 +130,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ### 桌面微缩铁路小镇
 
-21 份作品，涉及 18 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
+23 份作品，涉及 20 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -155,6 +155,8 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | Space-bunny Max | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/space-bunny-max) | [项目说明](results/miniature-railway-town/space-bunny-max/README.md) |
 | MiniMax M3 | 桌面微缩铁路镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/minimax-m3) | [项目说明](results/miniature-railway-town/minimax-m3/README.md) |
 | DeepSeek V4.1 Flash High | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4.1-flash-high) | [项目说明](results/miniature-railway-town/deepseek-v4.1-flash-high/README.md) |
+| Claude Sonnet 5.5 High | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/sonnet-5.5-high) | [项目说明](results/miniature-railway-town/sonnet-5.5-high/README.md) |
+| Step 5 Preview | Millford · 微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/step-5-preview) | [项目说明](results/miniature-railway-town/step-5-preview/README.md) |
 
 ### 机械键盘 · 交互式产品配置器
 
@@ -178,7 +180,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ## 截图与收录范围
 
-全部 70 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
+全部 72 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
 
 截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
 

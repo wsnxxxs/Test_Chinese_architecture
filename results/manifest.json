@@ -700,5 +700,27 @@
     "description": "木质沙盘中的闭合铁路连接车站、街区与钢桁架桥和双拱石桥，提供三档光照、运行暂停与速度控制。",
     "cover": "docs/cover.jpg",
     "addedAt": "2026-09-26T10:13:06.018Z"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "sonnet-5.5-high",
+    "model": "Claude Sonnet 5.5 High",
+    "modelId": "claude-sonnet-5.5",
+    "effort": "High",
+    "title": "桌面微缩铁路小镇",
+    "description": "木质边框沙盘中的闭合铁路跨越河流，连接车站、街区和农庄，支持列车控制与昼夜切换。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T21:15:59+10:00",
+    "captureNote": "手机默认首屏中沙盘缩小且受原作雾化效果影响偏淡，但场景与控制区完整可见；保留默认状态。"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "step-5-preview",
+    "model": "Step 5 Preview",
+    "modelId": "step-5-preview",
+    "title": "Millford · 微缩铁路小镇",
+    "description": "Millford 木质铁路沙盘包含闭合环线、跨河桥梁、车站街区和三节蒸汽列车，提供运行、调速与昼夜控制。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T21:15:59+10:00"
   }
 ]

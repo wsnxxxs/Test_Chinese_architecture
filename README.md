@@ -4,13 +4,13 @@
 
 **[打开在线画廊](https://wsnxxxs.github.io/same-prompt-gallery/)** · [作品清单](results/manifest.json) · [模型注册表](gallery.json)
 
-截至 2026-09-27，收录 **5 道题目、79 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
+截至 2026-09-27，收录 **5 道题目、81 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
 
 | 题目 | 作品数 | 提示词 | 在线题目页 |
 | --- | ---: | --- | --- |
 | 体素中国古典建筑群 | 36 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
-| 桌面微缩铁路小镇 | 25 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
-| 机械键盘 · 交互式产品配置器 | 16 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
+| 桌面微缩铁路小镇 | 26 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
+| 机械键盘 · 交互式产品配置器 | 17 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
 | Boeing 787 · 交互式三维展示 | 1 | [提示词待补充](tasks/boeing-787/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/boeing-787) |
 | 腾势 Z Racing · 交互式三维展示 | 1 | [提示词待补充](tasks/denza-z/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/denza-z) |
 
@@ -64,7 +64,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 首页按题目浏览，模型索引按厂商查看作品。题目页支持厂商筛选、「作品 / 截图对照 / 提示词」切换，以及按加入时间、厂商或模型名称排序。
 
-作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 79 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
+作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 81 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
 
 选中两件作品可并排对比。在线预览支持用方向键或顶栏按钮切换作品；中式建筑题目另有三维沙盘和原作展厅。站点默认跟随系统切换暖白与墨色主题。[品牌标识来源](site/assets/brands/README.md)记录模型标识的来源与下载地址。
 
@@ -132,7 +132,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ### 桌面微缩铁路小镇
 
-25 份作品，涉及 22 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
+26 份作品，涉及 23 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -161,10 +161,11 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | Step 5 Preview | Millford · 微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/step-5-preview) | [项目说明](results/miniature-railway-town/step-5-preview/README.md) |
 | GLM 5.3 | 枫屿镇 · 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/glm-5.3) | [项目说明](results/miniature-railway-town/glm-5.3/README.md) |
 | DeepSeek V4 Pro High | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4-pro-high) | [项目说明](results/miniature-railway-town/deepseek-v4-pro-high/README.md) |
+| Kimi K3 Max | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/kimi-k3-max) | [项目说明](results/miniature-railway-town/kimi-k3-max/README.md) |
 
 ### 机械键盘 · 交互式产品配置器
 
-16 份作品，涉及 13 个模型。各模型独立实现产品展示与配置，提供在线运行、并排对比和桌面、手机截图。
+17 份作品，涉及 14 个模型。各模型独立实现产品展示与配置，提供在线运行、并排对比和桌面、手机截图。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -184,6 +185,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | MiMo V2.6 Flash | ORBIT 65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/mimo-v2.6-flash) | [项目说明](results/mechanical-keyboard/mimo-v2.6-flash/README.md) |
 | MiMo V2.6 Pro | LUMEN 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/mimo-v2.6-pro) | [项目说明](results/mechanical-keyboard/mimo-v2.6-pro/README.md) |
 | Step 5 Preview High | AXIA K65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/step-5-preview-high) | [项目说明](results/mechanical-keyboard/step-5-preview-high/README.md) |
+| Kimi K3 Max | PRISM-68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/kimi-k3-max) | [项目说明](results/mechanical-keyboard/kimi-k3-max/README.md) |
 
 ### Boeing 787 · 交互式三维展示
 
@@ -203,7 +205,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ## 截图与收录范围
 
-全部 79 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
+全部 81 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
 
 截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
 
@@ -222,10 +224,10 @@ tasks/
   boeing-787/                         Boeing 787 题目说明、元数据与截图
   denza-z/                            腾势 Z Racing 题目说明、元数据与截图
 results/
-  manifest.json                      79 份作品的元数据
+  manifest.json                      81 份作品的元数据
   <模型标识>/                         建筑题的 36 个项目
-  miniature-railway-town/<模型标识>/   铁路题的 25 个项目
-  mechanical-keyboard/<模型标识>/     键盘题的 16 个项目
+  miniature-railway-town/<模型标识>/   铁路题的 26 个项目
+  mechanical-keyboard/<模型标识>/     键盘题的 17 个项目
   boeing-787/<模型标识>/              Boeing 787 题目的 1 个项目
   denza-z/<模型标识>/                 腾势 Z Racing 题目的 1 个项目
 site/                                画廊、在线预览、对比与展示界面

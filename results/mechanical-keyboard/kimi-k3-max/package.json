@@ -1,0 +1,18 @@
+{
+  "name": "keyboard-kimi-k3-max",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "PRISM-68 机械键盘 · 交互式产品展示与配置页（Three.js）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.160.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
+  }
+}

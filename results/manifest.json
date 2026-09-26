@@ -768,6 +768,18 @@
     "addedAt": "2026-09-27T03:28:58+10:00"
   },
   {
+    "task": "miniature-railway-town",
+    "id": "kimi-k3-max",
+    "model": "Kimi K3 Max",
+    "modelId": "kimi-k3",
+    "effort": "Max",
+    "title": "桌面微缩铁路小镇",
+    "description": "暖色傍晚中的木质铁路沙盘，闭合铁路串联车站、街区、河流与桥梁，支持运行、调速、复位和昼夜切换。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T04:06:46+10:00",
+    "captureNote": "手机默认视角放大场景并裁掉部分底座，控制面板与铁路、小镇、河流主体可见；保留原作取景。"
+  },
+  {
     "task": "mechanical-keyboard",
     "id": "gpt-6-luna-max-arena",
     "model": "GPT-6 Luna Max",
@@ -800,5 +812,16 @@
     "description": "腾势 Z 2026 款 Racing 赛道版程序化三维外观展厅，提供多视角、三种车身颜色、车灯、尺寸标注、影棚明暗与自动环绕控制。",
     "cover": "docs/cover.jpg",
     "addedAt": "2026-09-27T04:12:33+10:00"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "kimi-k3-max",
+    "model": "Kimi K3 Max",
+    "modelId": "kimi-k3",
+    "effort": "Max",
+    "title": "PRISM-68",
+    "description": "68 键紧凑机械键盘展示页，提供九种外观搭配、分层拆解、按键与音效体验及本地配置保存。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T04:27:10+10:00"
   }
 ]

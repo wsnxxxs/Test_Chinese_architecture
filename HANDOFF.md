@@ -13,7 +13,8 @@
 
 - 本轮新增 `HANDOFF.md`、`docs/archive/`、`docs/PRODUCT.md`、`docs/ARCHITECTURE.md`、`docs/DESIGN.md`、`docs/IDEAS.md`，四份历史轮次记录迁入 `docs/archive/` 加日期前缀，同步修正主 README 与 7 份作品 README 的引用。
 - `AGENTS.md` 已按新体系重写：合并协作规范；文档地图移入 `AGENTS.md`。
-- 项目基线：3 道题目 / 70 份作品 / 32 个模型 / 15 家厂商（2026-09-26 口径，随收录变化）；Node.js ≥ 22.13，`npm install && npm run dev` 本地起画廊。
+- 项目基线：5 道题目 / 81 份作品 / 32 个模型 / 15 家厂商（2026-09-27 口径，随收录变化）；Node.js ≥ 22.13，`npm install && npm run dev` 本地起画廊。
+- 已收录 Kimi K3 Max（Max 档位）的 PRISM-68 机械键盘作品；待提交前补齐本轮归档记录。
 
 ## 生产运行与同步
 

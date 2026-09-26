@@ -1,0 +1,74 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+#app, #app canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#ui {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  padding: 14px 16px;
+  background: rgba(24, 20, 16, 0.72);
+  color: #f3e9d8;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  user-select: none;
+  z-index: 10;
+}
+
+#ui .title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+#ui .row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#ui button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #b4772f;
+  color: #fff8ec;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#ui button:hover {
+  background: #d08d3d;
+}
+
+#ui .speed {
+  font-size: 12px;
+}
+
+#ui input[type="range"] {
+  width: 110px;
+  accent-color: #d08d3d;
+}
+
+#speedVal {
+  min-width: 42px;
+  font-variant-numeric: tabular-nums;
+}
+
+#ui .hint {
+  font-size: 11px;
+  opacity: 0.65;
+  margin-top: 2px;
+}

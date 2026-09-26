@@ -80,7 +80,7 @@ scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 ## 添加模型结果
 
 1. 在 `results/<模型标识>/` 放入完整、可独立运行的前端项目，提供 `package.json` 的 `build` 脚本和项目 README。标识使用小写字母、数字、点和连字符。
-2. 在 `results/manifest.json` 添加 `id`、`model`、`title`、`description`、`cover`。`cover` 是项目目录内的相对图片路径，建议放在 `docs/` 下。若模型有单独的推理档位，可另填 `modelId`、`effort`。
+2. 在 `results/manifest.json` 添加 `id`、`model`、`title`、`description`、`cover`、`addedAt`。`cover` 是项目目录内的相对图片路径，建议放在 `docs/` 下。`addedAt` 使用带时区的 ISO 8601 加入时间（如 `2026-09-26T12:00:00+10:00`），用于作品列表和在线预览排序；已有作品依据首次加入 Git 的记录补齐，同一时间保留目录顺序，缺失时间的作品排在最后。若模型有单独的推理档位，可另填 `modelId`、`effort`。
 3. 新题目先建立 `tasks/<题目标识>/task.json` 和提示词文件，配置标题、日期、标签、截图条件和事实字段；在根 `package.json` 的 `workspaces` 中添加 `results/<题目标识>/*`。结果放在 `results/<题目标识>/<模型标识>/`，并在清单条目中添加 `task`。同一模型可在不同题目下复用标识；工作区的包名必须唯一。未填写 `task` 的原有条目仍归属于第一题，原场景链接保持可用。
 4. 在 `gallery.json` 注册新模型，并更新上方表格。运行 `npm install`、`npm run build` 验证。构建会把结果放在 `dist/results/<模型标识>/` 或 `dist/results/<题目标识>/<模型标识>/`，并生成同题异答的数据文件。
 

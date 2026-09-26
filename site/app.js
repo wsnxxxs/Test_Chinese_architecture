@@ -21,6 +21,20 @@ const modelOf = (r) => MODELS.get(r.model) ?? { name: r.model, vendor: '' };
 const vendorOf = (r) => modelOf(r).vendor || '其他';
 const label = (r) => (r.effort ? `${modelOf(r).name} · ${r.effort}` : modelOf(r).name);
 const byName = (a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' });
+const sortModes = { added: '加入时间（最新在前）', vendor: '模型厂商（A–Z）', name: '模型名字（A–Z）' };
+let resultSort = Object.hasOwn(sortModes, store.get('result-sort')) ? store.get('result-sort') : 'added';
+const sortControl = () => `<label class="result-sort">排序<select data-result-sort>${Object.entries(sortModes).map(([value, text]) => `<option value="${value}"${value === resultSort ? ' selected' : ''}>${text}</option>`).join('')}</select></label>`;
+function sortedResults(t) {
+  return [...t.results].sort((a, b) => {
+    if (resultSort === 'vendor') return byName(vendorOf(a), vendorOf(b)) || byName(label(a), label(b));
+    if (resultSort === 'name') return byName(label(a), label(b));
+    return (Date.parse(b.addedAt) || 0) - (Date.parse(a.addedAt) || 0);
+  });
+}
+function setResultSort(value) {
+  resultSort = value;
+  store.set('result-sort', value);
+}
 // Cover: the first uniform capture (task condition order), else the author's first screenshot.
 const cover = (r) => Object.values(r.captures)[0] ?? r.gallery[0]?.src ?? '';
 const taskHref = (t) => `#/${t.id}`;
@@ -233,7 +247,7 @@ function renderTask(t) {
   const hasCaptures = t.results.some((r) => Object.keys(r.captures).length);
   const captureNotes = t.results.filter((r) => r.captureNote).map((r) => `${esc(r.title)}：${esc(r.captureNote)}`);
 
-  const cards = t.results.map((r) => {
+  const cards = sortedResults(t).map((r) => {
     const m = modelOf(r);
     return `<article class="result" data-vendor="${esc(vendorOf(r))}" data-id="${esc(r.id)}">
       <div class="result-media">
@@ -271,6 +285,7 @@ function renderTask(t) {
 
     <section id="results" data-panel="results" class="block wrap">
       <div class="block-head"><h2 id="filter-heading">全部作品</h2><p id="filter-count">${t.results.length} 件作品</p>
+        ${sortControl()}
         ${t.results.length > 1 ? '<p class="block-hint">选中两件作品即可并排对比</p>' : ''}</div>
       <div class="chips" role="group" aria-label="按模型厂商筛选">
         <button class="chip" data-vendor="" aria-pressed="true">全部<span>${t.results.length}</span></button>
@@ -303,6 +318,12 @@ function renderTask(t) {
   filterResults(t);
   syncPicks(t);
 
+  root.onchange = (e) => {
+    if (!e.target.matches('[data-result-sort]')) return;
+    setResultSort(e.target.value);
+    const cards = new Map($$('.result').map((el) => [el.dataset.id, el]));
+    $('.result-grid').append(...sortedResults(t).map((r) => cards.get(r.id)));
+  };
   root.onclick = (e) => {
     const go = e.target.closest('[data-go]');
     if (go) {
@@ -492,7 +513,7 @@ const wide = () => matchMedia('(min-width: 1100px)').matches;
 function createViewer(t) {
   const state = { panes: [], queries: [], active: 0, guide: store.get('guide') === '1' && wide() };
   const byId = (id) => t.results.find((r) => r.id === id);
-  const options = t.results.map((r) => `<option value="${esc(r.id)}">${esc(r.title)} · ${esc(label(r))}</option>`).join('');
+  const options = () => sortedResults(t).map((r) => `<option value="${esc(r.id)}">${esc(r.title)} · ${esc(label(r))}</option>`).join('');
   const many = t.results.length > 1;
   document.title = `在线预览 · ${t.title}`;
 
@@ -501,7 +522,7 @@ function createViewer(t) {
       <a class="vback" href="${taskHref(t)}" title="返回「${esc(t.title)}」">${icon('prev')}<span class="vback-text">${esc(t.title)}</span></a>
       <div class="vnav">
         ${many ? `<button class="vtool icon-only" data-v="prev" aria-label="上一件作品" title="上一件（←）">${icon('prev')}</button>` : ''}
-        <span class="vselect-wrap"><span class="vmark" aria-hidden="true"></span><select class="vselect" aria-label="选择预览作品">${options}</select></span>
+        <span class="vselect-wrap"><span class="vmark" aria-hidden="true"></span><select class="vselect" aria-label="选择预览作品">${options()}</select></span>
         ${many ? `<button class="vtool icon-only" data-v="next" aria-label="下一件作品" title="下一件（→）">${icon('next')}</button>` : ''}
       </div>
       <span class="split-context">并排对比 · 点击一栏以选中</span>
@@ -528,7 +549,7 @@ function createViewer(t) {
     return `<section class="pane" data-pane="${i}">
       <div class="pane-head">
         <span class="pane-tag">${i === 0 ? 'A' : 'B'}</span>
-        <select data-pane-pick="${i}" aria-label="${i === 0 ? '左' : '右'}栏的作品">${options}</select>
+        <select data-pane-pick="${i}" aria-label="${i === 0 ? '左' : '右'}栏的作品">${options()}</select>
         <button class="pane-close" data-close="${i}" title="关闭这一栏" aria-label="关闭这一栏">${icon('close')}</button>
       </div>
       <div class="pane-body"></div>
@@ -633,7 +654,7 @@ function createViewer(t) {
   }
 
   const cycle = (d) => {
-    const ids = t.results.map((r) => r.id);
+    const ids = sortedResults(t).map((r) => r.id);
     const panes = [...state.panes];
     let i = ids.indexOf(panes[state.active]);
     do i = (i + d + ids.length) % ids.length; while (panes.length > 1 && panes.includes(ids[i]) && ids.length > 2);
@@ -647,7 +668,7 @@ function createViewer(t) {
   };
   const toggleSplit = () => {
     if (state.panes.length > 1) return navigate([state.panes[state.active]], 0);
-    const other = t.results.find((r) => r.id !== state.panes[0]);
+    const other = sortedResults(t).find((r) => r.id !== state.panes[0]);
     if (other) navigate([state.panes[0], other.id], 1);
   };
   const reload = () => load(state.active);
@@ -745,6 +766,7 @@ function route() {
     viewer = null;
   }
   root.onclick = null;
+  root.onchange = null;
   lightbox.close();
   if (!(t && !inViewer)) document.body.classList.remove('has-tray');
 

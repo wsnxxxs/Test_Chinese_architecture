@@ -293,6 +293,17 @@ a.brand-mark:hover { border-color: var(--ink-2); transform: translateY(-1px); }
 .subnav button[aria-pressed="true"]::after { transform: scaleX(1); }
 .subnav .count { padding: 0 6px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); font: 500 11px/18px var(--mono); }
 
+.result-sort { display: inline-flex; align-items: center; align-self: center; gap: 8px; color: var(--muted); font-size: 13px; }
+.result-sort select, .vselect, .pane-head select {
+  appearance: none; min-width: 0; height: 32px; padding: 0 30px 0 12px;
+  border: 1px solid var(--line); border-radius: 999px; background-color: transparent; color: var(--ink-2); cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(-45deg, transparent 50%, currentColor 50%);
+  background-position: right 15px center, right 11px center; background-size: 4px 4px; background-repeat: no-repeat;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.result-sort select:hover, .vselect:hover, .pane-head select:hover { border-color: var(--line-2); color: var(--ink); background-color: var(--surface-2); }
+.result-sort select:focus-visible, .vselect:focus-visible, .pane-head select:focus-visible { border-radius: 999px; }
+.result-sort option, .vselect option, .pane-head option { background: var(--surface); color: var(--ink); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: -8px 0 24px; }
 .chips .chip {
   display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px;
@@ -446,19 +457,13 @@ a.brand-mark:hover { border-color: var(--ink-2); transform: translateY(-1px); }
 .vnav { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; max-width: 520px; }
 .split .vnav { display: none; }
 .vselect-wrap { position: relative; display: flex; flex: 1; min-width: 0; }
-.vmark { position: absolute; left: 8px; top: 50%; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 5px; background: var(--mark-bg); transform: translateY(-50%); pointer-events: none; }
+.vmark { position: absolute; left: 8px; top: 50%; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--mark-bg); transform: translateY(-50%); pointer-events: none; }
 .vmark:empty { display: none; }
 .vmark img { width: 14px; height: 14px; object-fit: contain; }
 .vselect {
   display: block; width: 100%; min-width: 0; height: 36px; padding: 0 30px 0 38px;
-  border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); color: var(--ink); font-size: 13.5px;
+  font-size: 13.5px;
 }
-.vselect, .pane-head select {
-  appearance: none; cursor: pointer; transition: border-color 0.2s;
-  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(-45deg, transparent 50%, currentColor 50%);
-  background-position: right 15px center, right 11px center; background-size: 4px 4px; background-repeat: no-repeat;
-}
-.vselect:hover, .pane-head select:hover { border-color: var(--line-2); }
 .split-context { display: none; color: var(--muted); font-size: 13px; }
 .split .split-context { display: inline; }
 .vtools { display: flex; align-items: center; gap: 2px; flex: none; margin-left: auto; }
@@ -479,7 +484,7 @@ a.brand-mark:hover { border-color: var(--ink-2); transform: translateY(-1px); }
 .split .pane-head { display: flex; }
 .pane-tag { display: grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 5px; background: var(--surface-2); color: var(--muted); font: 600 11px var(--mono); transition: background-color 0.2s, color 0.2s; }
 .split .pane.active .pane-tag { background: var(--accent); color: #fff; }
-.pane-head select { flex: 1; min-width: 0; height: 32px; padding: 0 28px 0 10px; border: 1px solid var(--line); border-radius: 6px; background-color: var(--bg); color: var(--ink); font-size: 13px; }
+.pane-head select { flex: 1; font-size: 13px; }
 .pane-close { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 6px; background: none; color: var(--muted); }
 .pane-close .i { width: 16px; height: 16px; }
 .pane-close:hover { background: var(--surface-2); color: var(--ink); }

@@ -121,6 +121,7 @@ function assembleResult(entry, taskConfig) {
   const repoPath = `${galleryConfig.repo}/tree/${galleryConfig.branch}/${resultPath}`;
   return {
     id: entry.id,
+    addedAt: entry.addedAt ?? null,
     model,
     effort: original?.effort ?? entry.effort ?? '',
     title: original?.title ?? entry.title,

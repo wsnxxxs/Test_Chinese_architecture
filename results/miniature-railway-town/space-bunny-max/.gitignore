@@ -1,0 +1,6 @@
+﻿node_modules
+dist
+verify-out.txt
+dev-out.txt
+dev-err.txt
+*.log

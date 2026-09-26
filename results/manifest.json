@@ -624,5 +624,70 @@
     "description": "2026-09-26 收录的独立版本：主殿、配殿、山门、五层宝塔与钟鼓楼组成的院落。",
     "cover": "docs/preview.webp",
     "addedAt": "2026-09-26T16:00:00+10:00"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "glm-5.3-flash",
+    "model": "GLM 5.3 Flash",
+    "modelId": "glm-5.3-flash",
+    "title": "AXIS 68",
+    "description": "原创紧凑键盘配置间，支持外壳与键帽主题、拆解、按键体验和本地配置保存。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T19:54:00+10:00"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "mimo-v2.6-flash",
+    "model": "MiMo V2.6 Flash",
+    "modelId": "mimo-v2.6-flash",
+    "title": "ORBIT 65",
+    "description": "68 键紧凑键盘展示页，提供三种外壳与键帽主题、分层拆解和键盘体验。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T19:54:00+10:00"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "mimo-v2.6-pro",
+    "model": "MiMo V2.6 Pro",
+    "modelId": "mimo-v2.6-pro",
+    "title": "LUMEN 68",
+    "description": "紧凑机械键盘的三维产品展示，提供配色、键帽主题、拆解和本地保存。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T19:54:00+10:00",
+    "captureNote": "原作默认视角中键盘右缘在桌面和手机首屏略被画布裁切；保留交付布局，未人为缩小模型。"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "swe-2",
+    "model": "SWE-2",
+    "modelId": "swe-2",
+    "title": "溪口站 · 微缩铁路小镇",
+    "description": "闭合铁路串联溪口站与两岸小镇，三节列车跨桥行驶，支持暂停、速度与夜晚切换。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T19:54:00+10:00",
+    "captureNote": "原作默认相机裁切部分底座，手机首屏仅显示局部沙盘；保留默认视角。"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "space-bunny-max",
+    "model": "Space-bunny Max",
+    "modelId": "space-bunny",
+    "title": "桌面微缩铁路小镇",
+    "description": "河湖、铁路桥、公路石拱桥和田野围绕木质沙盘中的小镇，支持三种光照与列车控制。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T19:54:00+10:00",
+    "effort": "Max",
+    "captureNote": "手机默认界面中右上控制面板遮挡部分标题，沙盘主体完整可见；保留原作布局。"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "minimax-m3",
+    "model": "MiniMax M3",
+    "modelId": "minimax-m3",
+    "title": "桌面微缩铁路镇",
+    "description": "木质底座承托闭合铁路、跨河石桥与车站街区，三节蒸汽列车沿环线行驶，支持速度、暂停和三档光照。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T10:07:14.698Z",
+    "captureNote": "原作地表出现明显斑块和闪烁；默认视角裁切部分底座，手机标题/状态面板重叠且底部控制条超出横向视口。保留交付状态。"
   }
 ]

@@ -22,3 +22,6 @@ These local copies of the original site assets appear beside model names in the 
 The LongCat mark was retrieved from its official site's favicon on 2026-09-26.
 
 The `HY3` attribution is also confirmed in [Tencent's official repository](https://github.com/Tencent-Hunyuan/Hy3). The Astra entries use OpenAI branding based on the [official GPT-6 Astra page](https://openai.com/index/gpt-6-astra/).
+
+The `cognition.svg` mark was retrieved on 2026-09-26 from the official [Cognition site](https://cognition.com/): https://cognition.com/icon.svg?icon.0.9lpn4kfq48g.svg?dpl=dpl_4iFKyV44ctVkgHLScGjvoenrBZep. [SWE-2 attribution](https://cognition.com/blog/swe-2) is confirmed by its official announcement.
+The local Cognition SVG keeps the official black path variant and removes its dark-system white-fill media rule so it remains visible in the gallery’s white logo frame in both themes.

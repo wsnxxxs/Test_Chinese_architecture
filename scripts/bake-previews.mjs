@@ -8,6 +8,7 @@ import { compactModel } from './compact-previews.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
 const force = process.argv.includes('--force');
+const port = Number(process.argv.find(arg => arg.startsWith('--port='))?.slice(7) ?? 5174);
 const taskFilter = process.argv.find(arg => arg.startsWith('--task='))?.slice(7);
 const idFilter = process.argv.find(arg => arg.startsWith('--id='))?.slice(5);
 const data = JSON.parse(readFileSync(join(dist, 'data.json'), 'utf8'));
@@ -46,4 +47,4 @@ createServer(async (request, response) => {
     if (!existsSync(file)) { response.writeHead(404); response.end(); return; }
     response.setHeader('Content-Type', mime[extname(file)] ?? 'application/octet-stream'); response.end(readFileSync(file));
   } catch (error) { response.writeHead(500); response.end(error.message); }
-}).listen(5174, '127.0.0.1', () => console.log(`Open http://localhost:5174/__bake/ to bake ${jobs.length} preview models. Run node scripts/assemble.mjs when finished.`));
+}).listen(port, '127.0.0.1', () => console.log(`Open http://localhost:${port}/__bake/ to bake ${jobs.length} preview models. Run node scripts/assemble.mjs when finished.`));

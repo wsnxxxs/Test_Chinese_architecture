@@ -1,0 +1,428 @@
+/* AXIS 68 · 深色消费电子风界面 */
+
+:root {
+  --accent: #e8842c;
+  --bg: #0d0e11;
+  --panel-bg: #13151a;
+  --line: rgba(255, 255, 255, 0.07);
+  --text: #e9eaee;
+  --text-dim: #9aa0ac;
+  --text-faint: #6d7380;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: clamp(330px, 29vw, 410px) 1fr;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ---------------- 左侧面板 ---------------- */
+
+#panel {
+  padding: 30px 28px 24px;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #14161c 0%, var(--panel-bg) 34%, #101216 100%);
+  border-right: 1px solid var(--line);
+  scrollbar-width: thin;
+  scrollbar-color: #2c3038 transparent;
+}
+
+.intro .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.intro .mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.intro h1 {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  font-weight: 800;
+}
+
+.intro .tagline {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.intro .desc {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text-dim);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  font-size: 11px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ---------------- 控件区 ---------------- */
+
+.control {
+  margin-top: 26px;
+}
+
+.control h2,
+.summary h2 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.swatches.themes {
+  grid-template-columns: 1fr;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s, transform 0.18s;
+}
+
+.swatch:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.swatch.selected {
+  border-color: var(--accent);
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+
+.swatch .dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.35), inset 0 3px 6px rgba(255, 255, 255, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.swatch .palette {
+  display: flex;
+  gap: 4px;
+}
+
+.swatch .palette i {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.swatches.themes .swatch {
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 9px 12px;
+}
+
+/* ---------------- 开关 ---------------- */
+
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switch .track {
+  flex: none;
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: #2a2e36;
+  border: 1px solid var(--line);
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.switch .track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #b9bec7;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.switch input:checked + .track {
+  background: var(--accent);
+  border-color: transparent;
+}
+
+.switch input:checked + .track::after {
+  transform: translateX(14px);
+  background: #17181c;
+}
+
+.switch .label {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.switch input:checked ~ .label {
+  color: var(--text);
+}
+
+#typingDemo {
+  width: 100%;
+  margin-top: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#typingDemo::placeholder {
+  color: var(--text-faint);
+}
+
+#typingDemo:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ---------------- 配置摘要 ---------------- */
+
+.summary {
+  margin-top: 28px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.summary dl {
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+
+.summary dl > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.summary dl > div:last-child {
+  border-bottom: none;
+}
+
+.summary dt {
+  font-size: 12px;
+  color: var(--text-faint);
+  flex: none;
+}
+
+.summary dd {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 600;
+  text-align: right;
+}
+
+.saved {
+  margin: 12px 0 0;
+  font-size: 11.5px;
+  color: var(--accent);
+}
+
+.fineprint {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* ---------------- 按钮 ---------------- */
+
+button.ghost {
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, transform 0.18s;
+}
+
+button.ghost:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+button.ghost:active {
+  transform: translateY(1px);
+}
+
+.summary button.ghost {
+  margin-top: 12px;
+  width: 100%;
+}
+
+/* ---------------- 3D 舞台 ---------------- */
+
+#stage {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  background:
+    radial-gradient(1100px 640px at 60% 34%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 62%),
+    radial-gradient(900px 620px at 50% 68%, #181b22, transparent 72%),
+    var(--bg);
+  transition: background 0.4s;
+}
+
+#stage canvas {
+  display: block;
+}
+
+.hud {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.hint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-faint);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.webgl-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* ---------------- 移动端 ---------------- */
+
+@media (max-width: 920px) {
+  body {
+    overflow: auto;
+  }
+
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-rows: 58vh auto;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  #stage {
+    order: -1;
+  }
+
+  #panel {
+    border-right: none;
+    border-top: 1px solid var(--line);
+    overflow: visible;
+  }
+
+  .hint {
+    font-size: 11px;
+  }
+}

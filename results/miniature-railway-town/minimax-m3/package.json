@@ -1,0 +1,18 @@
+{
+  "name": "gallery-miniature-railway-town-minimax-m3",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A Three.js desktop miniature railway town sandbox",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.10"
+  }
+}

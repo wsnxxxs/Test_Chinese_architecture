@@ -5,6 +5,7 @@
   "repo": "https://github.com/wsnxxxs/same-prompt-gallery",
   "branch": "main",
   "models": [
+    {"id": "swe-2", "name": "SWE-2", "vendor": "Cognition", "logo": "assets/brands/cognition.svg", "brandUrl": "https://cognition.com/", "brandName": "Cognition"},
     {"id": "grok-4.6", "name": "Grok 4.6", "vendor": "xAI", "logo": "assets/brands/xai.ico", "brandUrl": "https://x.ai/", "brandName": "xAI"},
     {"id": "qwen3.8-max-0902", "name": "Qwen3.8 Max 0902", "vendor": "Alibaba Cloud Qwen", "logo": "assets/brands/qwen.png", "brandUrl": "https://chat.qwen.ai/", "brandName": "Qwen"},
     {"id": "qwen3.8-flash-next", "name": "Qwen3.8 Flash next", "vendor": "Alibaba Cloud Qwen", "logo": "assets/brands/qwen.png", "brandUrl": "https://chat.qwen.ai/", "brandName": "Qwen"},

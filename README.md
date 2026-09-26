@@ -1,18 +1,76 @@
 # 同题异答 · 模型前端效果对比
 
-“同题异答”展示不同模型针对同一份任务提示词生成的前端作品，目前收录[体素中国古典建筑群](tasks/chinese-architecture/PROMPT.md)、[桌面微缩铁路小镇](tasks/miniature-railway-town/PROMPT.md)与[机械键盘 · 交互式产品配置器](tasks/mechanical-keyboard/PROMPT.md)三道题目。页面以作品截图为主，支持在线运行、并排对比、浏览截图与源码。
+把同一份提示词交给不同模型，展示它们生成的可运行前端作品。支持在线运行、并排对比、截图对照，以及查看提示词和源码。
 
-站点采用暖白纸色与墨色两套主题，仅以一抹朱砂色作点缀；默认跟随系统的浅色 / 深色设置，也可用顶栏的日月按钮手动切换，选择会保存在浏览器中。标识由一条完整的横线（同）与一条断开的横线（异）组成，末段为朱砂色，文件为 `site/assets/logo.svg`。
+**[打开在线画廊](https://wsnxxxs.github.io/same-prompt-gallery/)** · [作品清单](results/manifest.json) · [模型注册表](gallery.json)
 
-首页按题目浏览，模型索引按厂商分行排列，列出每个模型的作品，可以收起。题目页可按厂商筛选作品，并通过“作品 / 截图对照 / 提示词”切换内容；截图对照提供首屏与手机界面预览。在作品卡片上点“对比”选中两件作品，底部对比栏即可打开并排对比。在线预览时可用 ← / → 或顶栏按钮切换作品，也可打开并排对比，操作指南按需展开。
+截至 2026-09-26，收录 **3 道题目、58 份作品、30 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
 
-模型品牌标识保存在 `site/assets/brands/`，来源及下载地址见[标识来源](site/assets/brands/README.md)。新增模型时，可在 `gallery.json` 中复用对应品牌的本地标识。
+| 题目 | 作品数 | 提示词 | 在线题目页 |
+| --- | ---: | --- | --- |
+| 体素中国古典建筑群 | 31 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
+| 桌面微缩铁路小镇 | 17 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
+| 机械键盘 · 交互式产品配置器 | 10 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
 
-**在线站点：<https://wsnxxxs.github.io/same-prompt-gallery/>**
+## 快速运行
 
-## 三维沙盘与原作展厅
+需要 Node.js ≥ 22.13。在仓库根目录执行：
 
-中式建筑题目默认进入「三维沙盘」：从首页、题目页或在线预览的沙盘入口进入。直接进入时为空，只加载自行选择的作品；也可在作品卡片上先选多件，再点击「进入沙盘」。选中两件时仍可使用并排对比。顶栏可切换到「原作展厅」，在可平移、缩放的大画布中查看完整实时作品。
+```bash
+npm install
+npm run dev
+```
+
+打开 [http://localhost:5173](http://localhost:5173)。`npm run dev` 会先构建全部作品，再启动主站预览服务；修改主站或作品源码后，需要重新构建才能看到更新。
+
+| 命令 | 用途 |
+| --- | --- |
+| `npm run build` | 构建全部作品并汇总站点到 `dist/` |
+| `npm run preview` | 预览已构建的主站，默认地址为 `http://localhost:4173` |
+| `npm run check` | 检查画廊页面和汇总脚本的 JavaScript 语法 |
+| `npm run dev:opus` | 单独启动 Opus 建筑作品的开发服务 |
+
+### 单独开发一份作品
+
+安装依赖后，在仓库根目录使用作品 `package.json` 中的包名指定工作区，例如：
+
+```bash
+# 铁路小镇 · MiMo V2.6 Pro
+npm run dev --workspace=railway-mimo-v2.6-pro
+npm run build --workspace=railway-mimo-v2.6-pro
+
+# 机械键盘 · GPT-6 Sol Max
+npm run dev --workspace=keyboard-gpt-6-sol-max
+npm run build --workspace=keyboard-gpt-6-sol-max
+```
+
+也可以进入对应项目目录运行其 npm 命令，具体用法见作品 README。部分静态作品的构建脚本引用仓库内的 `scripts/build-static-result.mjs`，运行时需保留仓库目录结构。单独重建作品后，执行 `node scripts/assemble.mjs` 将更新汇入主站；此命令要求全部作品已有构建产物。
+
+## 浏览与对比
+
+首页按题目浏览，模型索引按厂商列出各模型的作品。题目页可按厂商筛选，并切换「作品」「截图对照」「提示词」；作品默认按加入时间从新到旧排列，也可按厂商或模型名称排序。
+
+在作品卡片上选中两件作品，点击底部对比栏即可并排查看。在线预览支持使用 ← / → 或顶栏按钮切换作品，操作指南可按需展开。中式建筑题目还支持多件作品的三维沙盘与原作展厅。
+
+站点提供暖白与墨色主题，默认跟随系统，可通过顶栏日月按钮切换并保存选择。[品牌标识来源](site/assets/brands/README.md)记录模型标识的来源与下载地址。
+
+### 三维沙盘与原作展厅
+
+这两种展示方式用于中式建筑题目，顶栏切换时携带已选作品。
+
+| 展示方式 | 适合查看 | 展示与操作 |
+| --- | --- | --- |
+| 三维沙盘（默认入口） | 建筑布局与结构 | 统一相机、展台尺度和光照；支持旋转、平移、缩放、聚焦与俯视；简化原作天空、特效和动画 |
+| 原作展厅 | 完整交付效果 | 在可平移、缩放的画布中运行原始页面；进入专注视图后可操作原作相机、光照及其他交互 |
+
+直接进入沙盘时为空，只加载自行选择的作品；也可在题目页选中多件作品后点击「进入沙盘」。选择记录保存在链接中，刷新后恢复。
+
+原作展厅支持搜索、厂商筛选、加入和移除作品。点击作品或「操作原作」进入专注视图，点击「返回画布」或按 Esc 返回，不重新加载作品。总览中的原作以 1280 × 800 页面视口运行，专注视图适配当前可用视口；手机端通过「选择模型」展开侧栏。
+
+沙盘的场景提取仅作用于 `dist/_sandtable/` 的专用副本。正常在线预览与原作展厅使用原始构建页面，保留渲染器、材质、光照、阴影、后期、动画与界面。切换展示方式会重新加载所选作品；展厅内进出专注视图时保留原作交互状态。多件作品同时运行的帧率受设备与并发负载影响，不作为单个模型性能评分。
+
+<details>
+<summary>三维沙盘的渲染与性能处理</summary>
 
 沙盘使用固定统一光照，支持旋转、平移、缩放、聚焦与俯视；选择记录在链接中，刷新后恢复。展示环境包含渐变天空、草地、低多边形远山和疏林，随主站明暗主题调整配色；导入建筑时排除原作在光源旁绘制的太阳球体。为优先保证交互流畅，移除昼夜播放、时间调节和动态阴影；静止时停止重绘，像素密度最高为 1。导入时按材质合并兼容的静态不透明部件，保留几何、顶点颜色、纹理与原有实例化；分批处理，避免一次处理全部部件。界面继续使用主站的控件、明暗主题与手机返回入口。
 
@@ -20,68 +78,77 @@
 
 这套优化统一用于全部中式建筑作品。大型、不透明且没有纹理的网格还会生成远景细节层级：按位置与法线边界聚合顶点，平均小范围内的颜色，保留发光和材质附加顶点属性。总览距离足够远时使用简化网格，聚焦近看时恢复完整几何；切换距离随画布像素高度变化，并保留缓冲区间，避免来回切换。透明部件、纹理材质及不适合简化的网格继续使用原几何。控制台会记录各作品的绘制对象、完整网格和远景网格三角形数量。
 
-原作展厅中，侧栏支持模型搜索、厂商筛选、加入和移除。拖动画布平移，滚轮或双指缩放；点击作品或「操作原作」进入专注视图，直接使用原作的相机、光照切换和其他交互。点击「返回画布」或按 Esc 返回，不重新加载作品。工具栏提供总览、缩放与 1:1 显示。选择记录在链接中，刷新或返回时恢复；手机端通过「选择模型」展开侧栏。
+</details>
 
-每件作品直接运行其原始页面，保留原有渲染器、光照、阴影、材质、天空、后期、动画和界面。展厅不提取网格，不替换渲染效果，也不向作品构建产物注入代码。画布总览中的作品统一以 1280 × 800 页面视口运行，按比例显示；专注视图使用当前可用视口，保留原作的响应式行为。只有选中的作品会加载，移除或离开展厅后释放对应页面。多件作品同时运行的帧率受设备和并发负载影响，不作为单个模型性能评分。
+## 作品目录
 
-### 两种展示模式
+各作品保留独立实现与依赖。High、Max、Extra 等表示推理档位。Space-bunny 暂归 MiniMax，厂商身份尚未确认；Doubao Seed Evolving 与 Seed 2.1 Pro 分别收录。
 
-顶栏可在「原作展厅」和「三维沙盘」之间切换，携带已选模型。原作展厅用于比较完整交付效果；三维沙盘为默认入口，保留统一相机、展台尺度与光照，适合比较建筑布局，明确标注天空、特效、动画等简化。切换模式会重新加载所选作品，原作交互状态只在展厅内进入/退出专注视图时保留。
+### 体素中国古典建筑群
 
-沙盘的场景提取仅作用于 `dist/_sandtable/` 中的专用副本。正常在线预览和原作展厅使用未经注入的原始构建产物。
-
-## 体素中国古典建筑群
-
-| 模型 | 作品 | 在线场景 | 源码与说明 |
-| --- | --- | --- | --- |
-| Grok 4.6 | 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/grok-4.6) | [项目说明](results/grok-4.6/README.md) |
-| Qwen3.8 Max 0902 | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-max-0902) | [项目说明](results/qwen3.8-max-0902/README.md) |
-| Qwen3.8 Flash next | 体素古建 · 中轴殿宇 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-flash-next) | [项目说明](results/qwen3.8-flash-next/README.md) |
-| Seed 2.1 Pro | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/seed-2.1-pro) | [项目说明](results/seed-2.1-pro/README.md) |
-| Step 5 Preview | 体素 · 中式古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/step-5-preview) | [项目说明](results/step-5-preview/README.md) |
-| Claude Opus 5.5 High | 云山古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/opus-5.5-high) | [项目说明](results/opus-5.5-high/README.md) |
-| Claude Sonnet 5.5 Max | 云栖古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-max) | [项目说明](results/sonnet-5.5-max/README.md) |
-| Claude Sonnet 5.5 High | 体素古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-high) | [项目说明](results/sonnet-5.5-high/README.md) |
-| MIMO V2.6 Pro | 体素中华 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/mimo-v2.6-pro) | [项目说明](results/mimo-v2.6-pro/README.md) |
-| MiMo V2.6 Flash | 云栖古刹 · 体素中轴 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/mimo-v2.6-flash) | [项目说明](results/mimo-v2.6-flash/README.md) |
-| DeepSeek V4.1 Flash | 古城 · 体素中式建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4.1-flash) | [项目说明](results/deepseek-v4.1-flash/README.md) |
-| GLM 5.3 Flash | 体素古刹 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3-flash) | [项目说明](results/glm-5.3-flash/README.md) |
-| GLM 5.3 | 古刹夕照 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3) | [项目说明](results/glm-5.3/README.md) |
-| HY3 | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/hy3) | [项目说明](results/hy3/README.md) |
-| Kimi K3 | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/kimi-k3) | [项目说明](results/kimi-k3/README.md) |
-| Kimi K2.8 Preview | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/kimi-k2.8-preview) | [项目说明](results/kimi-k2.8-preview/README.md) |
-| DeepSeek V4 Pro | 体素 · 中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4-pro) | [项目说明](results/deepseek-v4-pro/README.md) |
-| Gemini 3.1 Pro | 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.1-pro) | [项目说明](results/gemini-3.1-pro/README.md) |
-| Gemini 3.7 Flash | 华夏九重天 · 3D 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.7-flash) | [项目说明](results/gemini-3.7-flash/README.md) |
-| Gemini 3.8 Flash | 紫禁晨暮 · 中式殿阁体素群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.8-flash) | [项目说明](results/gemini-3.8-flash/README.md) |
-| MiniMax M3 | 体素中式院落 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/minimax-m3) | [项目说明](results/minimax-m3/README.md) |
-| Space-bunny（暂归 MiniMax） | 体素宫城 · Voxel Palace | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/space-bunny) | [项目说明](results/space-bunny/README.md) |
-| GPT-6 Sol Max | 云阙宫 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-max) | [项目说明](results/gpt-6-sol-max/README.md) |
-| GPT-6 Sol High | 云阙 · 体素古建 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-high) | [项目说明](results/gpt-6-sol-high/README.md) |
-| GPT-6 Luna Max | 云岚宫阙 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-luna-max) | [项目说明](results/gpt-6-luna-max/README.md) |
-| GPT-5.6 Sol Max | 紫宸宫阙 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-sol-max) | [项目说明](results/gpt-5.6-sol-max/README.md) |
-| GPT-5.6 Luna Max | 云岚寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-luna-max) | [项目说明](results/gpt-5.6-luna-max/README.md) |
-| GPT-5.6 Terra Max | 云岫古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-terra-max) | [项目说明](results/gpt-5.6-terra-max/README.md) |
-| GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
-| GPT-6 Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
-| LongCat 2.5 | Voxel 中式古建筑群 · 晨光 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/longcat-2.5) | [项目说明](results/longcat-2.5/README.md) |
-
-本题共 31 个结果，29 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。所有作品均提供手机界面截图；原有 4 个作品保留统一首屏截图，LongCat 使用 1440×900 默认首屏截图，其余作品的首屏使用项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
-
-## 桌面微缩铁路小镇
-
-本题收录 17 份作品，支持在线运行、并排对比与手机截图预览。新增结果如下，Extra 为模型思考等级：
+31 份作品，涉及 29 个模型。Grok、Qwen3.8 Max、Seed 2.1 Pro 和 Gemini 3.7 Flash 四份作品仅有已构建页面，仓库保留其静态资源并提供复制构建脚本。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
+| Grok 4.6 | 体素中式建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/grok-4.6) | [项目说明](results/grok-4.6/README.md) |
+| Qwen3.8 Max 0902 | 体素 · 中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-max-0902) | [项目说明](results/qwen3.8-max-0902/README.md) |
+| Qwen3.8 Flash next | 体素古建 · 中轴殿宇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-flash-next) | [项目说明](results/qwen3.8-flash-next/README.md) |
+| Seed 2.1 Pro | 体素中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/seed-2.1-pro) | [项目说明](results/seed-2.1-pro/README.md) |
+| Step 5 Preview | 体素 · 中式古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/step-5-preview) | [项目说明](results/step-5-preview/README.md) |
+| Claude Opus 5.5 High | 云山古刹 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/opus-5.5-high) | [项目说明](results/opus-5.5-high/README.md) |
+| Claude Sonnet 5.5 Max | 云栖古刹 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-max) | [项目说明](results/sonnet-5.5-max/README.md) |
+| Claude Sonnet 5.5 High | 体素古寺 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/sonnet-5.5-high) | [项目说明](results/sonnet-5.5-high/README.md) |
+| MiMo V2.6 Pro | 体素中华 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/mimo-v2.6-pro) | [项目说明](results/mimo-v2.6-pro/README.md) |
+| MiMo V2.6 Flash | 云栖古刹 · 体素中轴 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/mimo-v2.6-flash) | [项目说明](results/mimo-v2.6-flash/README.md) |
+| DeepSeek V4.1 Flash | 古城 · 体素中式建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4.1-flash) | [项目说明](results/deepseek-v4.1-flash/README.md) |
+| GLM 5.3 Flash | 体素古刹 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3-flash) | [项目说明](results/glm-5.3-flash/README.md) |
+| GLM 5.3 | 古刹夕照 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3) | [项目说明](results/glm-5.3/README.md) |
+| HY3 | 体素中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/hy3) | [项目说明](results/hy3/README.md) |
+| Kimi K3 | 体素 · 中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/kimi-k3) | [项目说明](results/kimi-k3/README.md) |
+| Kimi K2.8 Preview | 体素 · 中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/kimi-k2.8-preview) | [项目说明](results/kimi-k2.8-preview/README.md) |
+| DeepSeek V4 Pro | 体素 · 中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4-pro) | [项目说明](results/deepseek-v4-pro/README.md) |
+| MiniMax M3 | 体素中式院落 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/minimax-m3) | [项目说明](results/minimax-m3/README.md) |
+| Space-bunny（暂归 MiniMax） | 体素宫城 · Voxel Palace | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/space-bunny) | [项目说明](results/space-bunny/README.md) |
+| GPT-6 Sol Max | 云阙宫 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-max) | [项目说明](results/gpt-6-sol-max/README.md) |
+| GPT-6 Sol High | 云阙 · 体素古建 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-high) | [项目说明](results/gpt-6-sol-high/README.md) |
+| GPT-6 Luna Max | 云岚宫阙 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-luna-max) | [项目说明](results/gpt-6-luna-max/README.md) |
+| GPT-5.6 Sol Max | 紫宸宫阙 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-sol-max) | [项目说明](results/gpt-5.6-sol-max/README.md) |
+| GPT-5.6 Luna Max | 云岚寺 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-luna-max) | [项目说明](results/gpt-5.6-luna-max/README.md) |
+| GPT-5.6 Terra Max | 云岫古寺 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-terra-max) | [项目说明](results/gpt-5.6-terra-max/README.md) |
+| GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
+| GPT-6 Astra Pro | 云阙 · 方寸山河 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
+| Gemini 3.1 Pro | 体素中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.1-pro) | [项目说明](results/gemini-3.1-pro/README.md) |
+| Gemini 3.8 Flash | 紫禁晨暮 · 中式殿阁体素群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.8-flash) | [项目说明](results/gemini-3.8-flash/README.md) |
+| Gemini 3.7 Flash | 华夏九重天 · 3D 体素中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.7-flash) | [项目说明](results/gemini-3.7-flash/README.md) |
+| LongCat 2.5 | Voxel 中式古建筑群 · 晨光 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/longcat-2.5) | [项目说明](results/longcat-2.5/README.md) |
+
+### 桌面微缩铁路小镇
+
+17 份作品，涉及 15 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
+
+| 模型 | 作品 | 在线预览 | 源码与说明 |
+| --- | --- | --- | --- |
+| GPT-6 Astra Pro | 柳溪铁路镇 · Willowbrook Railway | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/astra-pro) | [项目说明](results/miniature-railway-town/astra-pro/README.md) |
+| DeepSeek V4.1 Flash | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4.1-flash) | [项目说明](results/miniature-railway-town/deepseek-v4.1-flash/README.md) |
+| Gemini 3.8 Flash | Alpine Junction · 桌面微缩铁路 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gemini-3.8-flash) | [项目说明](results/miniature-railway-town/gemini-3.8-flash/README.md) |
+| GPT-5.6 Luna Max | Evergreen Junction | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gpt-5.6-luna-max) | [项目说明](results/miniature-railway-town/gpt-5.6-luna-max/README.md) |
+| GPT-5.6 Sol Max | 溪谷镇 · 桌面微缩铁路 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gpt-5.6-sol-max) | [项目说明](results/miniature-railway-town/gpt-5.6-sol-max/README.md) |
+| GPT-5.6 Terra Max | 暮光微缩铁路镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gpt-5.6-terra-max) | [项目说明](results/miniature-railway-town/gpt-5.6-terra-max/README.md) |
+| GPT-6 Astra High | 松溪镇 · The Little Railway | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gpt-6-astra-high) | [项目说明](results/miniature-railway-town/gpt-6-astra-high/README.md) |
+| GPT-6 Luna Max | 河湾小镇 · 微缩铁路沙盘 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gpt-6-luna-max) | [项目说明](results/miniature-railway-town/gpt-6-luna-max/README.md) |
+| GPT-6 Sol High | 松溪镇 · 桌面微缩铁路 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gpt-6-sol-high) | [项目说明](results/miniature-railway-town/gpt-6-sol-high/README.md) |
+| GPT-6 Sol Max | Willowmere Railway | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/gpt-6-sol-max) | [项目说明](results/miniature-railway-town/gpt-6-sol-max/README.md) |
+| HY3 | 微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/hy3) | [项目说明](results/miniature-railway-town/hy3/README.md) |
+| LongCat 2.5 | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/longcat-2.5) | [项目说明](results/miniature-railway-town/longcat-2.5/README.md) |
+| Qwen3.8 Flash next | Meadowbank · 微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/qwen3.8-flash-next) | [项目说明](results/miniature-railway-town/qwen3.8-flash-next/README.md) |
 | MiMo V2.6 Flash | 微缩铁路小镇 · Miniature Railway Town | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/mimo-v2.6-flash) | [项目说明](results/miniature-railway-town/mimo-v2.6-flash/README.md) |
 | MiMo V2.6 Pro | 青溪镇 · 桌面微缩铁路沙盘 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/mimo-v2.6-pro) | [项目说明](results/miniature-railway-town/mimo-v2.6-pro/README.md) |
 | DeepSeek V4.1 Flash Extra | 微缩铁路小镇 · Miniature Railway Town | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4.1-flash-extra) | [项目说明](results/miniature-railway-town/deepseek-v4.1-flash-extra/README.md) |
 | Doubao Seed Evolving | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/doubao-seed-evolving) | [项目说明](results/miniature-railway-town/doubao-seed-evolving/README.md) |
 
-## 机械键盘 · 交互式产品配置器
+### 机械键盘 · 交互式产品配置器
 
-本题收录 10 份作品，保留各模型独立的产品展示与配置实现。提供在线预览、并排对比、1440×900 默认首屏和 390×844 手机截图。截图与构建检查用于确认画廊集成，不代表全部产品交互要求均已验证。
+10 份作品，涉及 9 个模型。各模型独立实现产品展示与配置，提供在线运行、并排对比和桌面、手机截图。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -96,45 +163,53 @@
 | LongCat 2.5 | APEX-65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/longcat-2.5) | [项目说明](results/mechanical-keyboard/longcat-2.5/README.md) |
 | DeepSeek V4.1 Flash | MERIDIAN 65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/deepseek-v4.1-flash) | [项目说明](results/mechanical-keyboard/deepseek-v4.1-flash/README.md) |
 
-仓库保留作品核心源码、运行与构建配置、许可说明和画廊展示图片；原交付中的测试、验证报告与临时辅助脚本不收录。
+## 截图与收录范围
 
-## 运行
+全部 58 份作品均有 390 × 844 手机界面截图。键盘题的 10 份作品均有 1440 × 900 默认首屏截图；建筑题有 5 份、铁路题有 4 份作品提供独立首屏截图，其余首屏使用项目预览图。具体截图条件见各题目的 `task.json` 和页面标注。
 
-需要 Node.js ≥ 22.13。以下命令在仓库根目录执行：
+截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
 
-```bash
-npm install
-npm run dev       # 构建全部结果并在 http://localhost:5173 打开同题异答
-npm run build     # 将站点、模型数据和全部结果构建到 dist/
-npm run preview   # 预览已构建的 dist/，默认 http://localhost:4173
-npm run check     # 检查画廊页面和汇总脚本的 JavaScript 语法
-npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
-```
-
-也可以进入任一 `results/<模型标识>/`、`results/miniature-railway-town/<模型标识>/` 或 `results/mechanical-keyboard/<模型标识>/` 目录，独立运行 `npm install`、`npm run dev` 和 `npm run build`。
+仓库收录作品核心源码或已交付的静态页面、运行与构建配置、已有许可说明和展示图片；原交付中的测试、验证报告与临时辅助脚本不收录。作品 README 中保留模型、运行方法和已知提示词差异。
 
 ## 仓库结构
 
 ```text
-gallery.json                              站点名称与模型注册表
-tasks/chinese-architecture/task.json     题目信息、原有作品的详细数据与截图条件
-tasks/chinese-architecture/captures/     原有作品的统一条件截图
-tasks/miniature-railway-town/            第二道题目的提示词、元数据与手机截图
-tasks/mechanical-keyboard/              第三道题目的提示词、元数据与统一截图
-results/manifest.json                    58 个结果的简要目录
-results/                                  第一题的 31 个独立前端项目
-results/miniature-railway-town/           第二题的 17 个独立前端项目
-results/mechanical-keyboard/             第三题的 10 个独立前端项目
-site/                                     “同题异答”作品画廊与对比界面
-scripts/assemble.mjs                     汇总结果并生成 dist/data.json
-.github/workflows/                        GitHub Pages 自动发布
+gallery.json                         站点信息与模型注册表
+README.md                            使用说明与完整作品目录
+tasks/
+  chinese-architecture/              建筑题提示词、元数据与截图
+  miniature-railway-town/             铁路题提示词、元数据与截图
+  mechanical-keyboard/               键盘题提示词、元数据与截图
+results/
+  manifest.json                      58 份作品的元数据
+  <模型标识>/                         建筑题的 31 个项目
+  miniature-railway-town/<模型标识>/   铁路题的 17 个项目
+  mechanical-keyboard/<模型标识>/     键盘题的 10 个项目
+site/                                画廊、在线预览、对比与展示界面
+scripts/
+  assemble.mjs                       汇总站点并生成 dist/data.json
+  build-static-result.mjs             复制构建静态作品
+docs/result-folder-archive.md         本地结果归档核对记录
+.github/workflows/deploy-pages.yml    GitHub Pages 发布流程
+dist/                                构建产物，不提交到主分支
 ```
 
-## 添加模型结果
+### 本地结果归档
 
-1. 在 `results/<模型标识>/` 放入完整、可独立运行的前端项目，提供 `package.json` 的 `build` 脚本和项目 README。标识使用小写字母、数字、点和连字符。
-2. 在 `results/manifest.json` 添加 `id`、`model`、`title`、`description`、`cover`、`addedAt`。`cover` 是项目目录内的相对图片路径，建议放在 `docs/` 下。`addedAt` 使用带时区的 ISO 8601 加入时间（如 `2026-09-26T12:00:00+10:00`），用于作品列表和在线预览排序；已有作品依据首次加入 Git 的记录补齐，同一时间保留目录顺序，缺失时间的作品排在最后。若模型有单独的推理档位，可另填 `modelId`、`effort`。
-3. 新题目先建立 `tasks/<题目标识>/task.json` 和提示词文件，配置标题、日期、标签、截图条件和事实字段；同日题目可用 `order` 指定先后顺序。在根 `package.json` 的 `workspaces` 中添加 `results/<题目标识>/*`。结果放在 `results/<题目标识>/<模型标识>/`，并在清单条目中添加 `task`。同一模型可在不同题目下复用标识；工作区的包名必须唯一。未填写 `task` 的原有条目仍归属于第一题，原场景链接保持可用。
-4. 在 `gallery.json` 注册新模型，并更新上方表格。运行 `npm install`、`npm run build` 验证。构建会把结果放在 `dist/results/<模型标识>/` 或 `dist/results/<题目标识>/<模型标识>/`，并生成同题异答的数据文件。
+2026-09-26 已核对桌面现有的铁路与键盘结果文件夹，补齐 7 份遗漏作品，覆盖对应题目的全部 27 份已上线结果。两个目录中的 `RESULTS.md` 提供作品索引，`PROMPT.md` 保存题目原文；Terra 键盘项目保留原有 `aeris-65/` 内层结构。归档范围和验证记录见[本地结果归档核对](docs/result-folder-archive.md)。
 
-各模型结果保留自己的依赖和实现，不需要改成同一种技术结构。提交时请注明模型与推理档位，并将使用的提示词差异写在该结果的 README 中。
+这些桌面目录属于本地归档，仓库运行与发布使用 `results/` 内的项目。
+
+## 添加作品
+
+1. **放入项目。** 建筑题使用 `results/<结果标识>/`，铁路与键盘题使用 `results/<题目标识>/<结果标识>/`。提供 `package.json`、`build` 脚本和 README；工作区包名必须唯一。结果标识使用小写字母、数字、点和连字符。
+2. **登记元数据。** 在 [results/manifest.json](results/manifest.json) 添加 `id`、`model`、`title`、`description`、`cover`、`addedAt`。铁路与键盘作品填写 `task`；未填写时归入建筑题。`cover` 为项目内的相对图片路径，建议放在 `docs/`。`addedAt` 使用带时区的 ISO 8601 时间，例如 `2026-09-26T12:00:00+10:00`；缺少时间的作品排在最后。不同推理档位使用不同结果标识，并填写共同的 `modelId` 与各自的 `effort`。
+3. **登记模型。** 新模型加入 [gallery.json](gallery.json)，填写名称、厂商与品牌标识；已有模型复用注册表中的模型 ID。同一模型可以在不同题目下复用结果标识。
+4. **补充截图与说明。** 将题目条件对应的截图放在 `tasks/<题目标识>/captures/<结果标识>/<条件标识>.jpg`，如 `first.jpg`、`mobile.jpg`。README 写明模型、推理档位、运行方式、提示词差异及实际验证范围，并更新本文作品目录。
+5. **构建核对。** 在仓库根目录运行 `npm install`、`npm run check` 和 `npm run build`，通过 `npm run preview` 检查作品入口与截图。构建结果位于 `dist/results/`，站点数据位于 `dist/data.json`。
+
+添加新题目时，先创建 `tasks/<题目标识>/task.json` 与提示词文件，配置标题、日期、标签、截图条件和事实字段；同日题目可用 `order` 指定先后顺序。在根 `package.json` 的 `workspaces` 中加入 `results/<题目标识>/*`，再按上述步骤收录作品。
+
+## 发布
+
+[GitHub Actions 工作流](.github/workflows/deploy-pages.yml)在推送到 `main` 或手动触发时执行依赖安装、语法检查和完整构建，将 `dist/` 发布到 `gh-pages` 分支。GitHub Pages 需配置为从该分支的根目录提供站点。

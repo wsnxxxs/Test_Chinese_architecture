@@ -25,6 +25,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run check:intake
       - run: npm run build
       - name: Publish dist to gh-pages
         env:

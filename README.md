@@ -28,6 +28,8 @@ npm run dev
 | `npm run build` | 构建全部作品并汇总站点到 `dist/` |
 | `npm run preview` | 预览已构建的主站，默认地址为 `http://localhost:4173` |
 | `npm run check` | 检查画廊页面和汇总脚本的 JavaScript 语法 |
+| `npm run check:intake` | 核对必要文件、元数据、桌面/手机截图、厂商 Logo 与卡片模型包 |
+| `npm run capture:results` | 在已运行的预览服务上补齐缺失的桌面和手机首屏截图 |
 | `npm run dev:opus` | 单独启动 Opus 建筑作品的开发服务 |
 
 ### 单独开发一份作品
@@ -52,7 +54,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 作品卡片以对应的真实三维模型预览，鼠标移动可轻微转动模型；静止时暂停绘制。「截图对照」继续显示原有静态截图。
 
-全部 63 份作品已有预先生成的模型包，打开卡片直接读取模型，省去运行原作、重新合并与简化的等待。可见卡片优先加载，最多并行读取 3 份；预览用位置、颜色、法线与纹理按卡片尺寸压缩，完整原作保留原始精度。
+全部 63 份作品已有预先生成的模型包，打开卡片直接读取模型，省去运行原作、重新合并与简化的等待。可见卡片优先加载，桌面最多并行读取 3 份，手机最多 2 份；手机降低绘制像素密度和离屏缓存，多张卡片分帧绘制。预览用位置、颜色、法线与纹理按卡片尺寸压缩，完整原作保留原始精度。
 
 在作品卡片上选中两件作品，点击底部对比栏即可并排查看。在线预览支持使用 ← / → 或顶栏按钮切换作品，操作指南可按需展开。中式建筑题目还支持多件作品的三维沙盘与原作展厅。
 
@@ -176,7 +178,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ## 截图与收录范围
 
-全部 58 份作品均有 390 × 844 手机界面截图。键盘题的 10 份作品均有 1440 × 900 默认首屏截图；建筑题有 5 份、铁路题有 4 份作品提供独立首屏截图，其余首屏使用项目预览图。具体截图条件见各题目的 `task.json` 和页面标注。
+全部 63 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
 
 截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
 
@@ -213,11 +215,14 @@ dist/                                构建产物，不提交到主分支
 
 ## 添加作品
 
-1. **放入项目。** 建筑题使用 `results/<结果标识>/`，铁路与键盘题使用 `results/<题目标识>/<结果标识>/`。提供 `package.json`、`build` 脚本和 README；工作区包名必须唯一。结果标识使用小写字母、数字、点和连字符。
-2. **登记元数据。** 在 [results/manifest.json](results/manifest.json) 添加 `id`、`model`、`title`、`description`、`cover`、`addedAt`。铁路与键盘作品填写 `task`；未填写时归入建筑题。`cover` 为项目内的相对图片路径，建议放在 `docs/`。`addedAt` 使用带时区的 ISO 8601 时间，例如 `2026-09-26T12:00:00+10:00`；缺少时间的作品排在最后。不同推理档位使用不同结果标识，并填写共同的 `modelId` 与各自的 `effort`。
-3. **登记模型。** 新模型加入 [gallery.json](gallery.json)，填写名称、厂商与品牌标识；已有模型复用注册表中的模型 ID。同一模型可以在不同题目下复用结果标识。
-4. **补充截图与说明。** 将题目条件对应的截图放在 `tasks/<题目标识>/captures/<结果标识>/<条件标识>.jpg`，如 `first.jpg`、`mobile.jpg`。README 写明模型、推理档位、运行方式、提示词差异及实际验证范围，并更新本文作品目录。
-5. **构建核对。** 在仓库根目录运行 `npm install`、`npm run check` 和 `npm run build`，通过 `npm run preview` 检查作品入口与截图。构建结果位于 `dist/results/`，站点数据位于 `dist/data.json`。
+完整操作与完成清单见 [作品收录流程](docs/intake-workflow.md)，仓库 [AGENTS.md](AGENTS.md) 也引用此流程。
+
+1. **核对与整理。** 先确认题目、模型、档位、来源和重复交付；保留核心源码或静态交付、依赖配置、README、许可与展示资源，清理交付内的临时测试、日志、缓存和备份。
+2. **登记作品。** 建筑题使用 `results/<结果标识>/`，其他题目使用 `results/<题目标识>/<结果标识>/`。提供唯一工作区包名与 `build` 脚本。在 [manifest](results/manifest.json) 填写题目、模型、档位、标题、描述、封面和带时区的 `addedAt`；不同档位复用共同 `modelId`。
+3. **核对品牌。** 新模型加入 [模型注册表](gallery.json)，已有模型复用 ID。确认本地厂商 Logo、品牌名称、官网链接和[标识来源记录](site/assets/brands/README.md)齐全；身份待确认时明确标注。
+4. **构建与截图。** 执行 `npm install`、`npm run check`、`npm run build`，启动 `npm run preview`。运行 `npm run capture:results -- --task=<题目标识> --id=<结果标识>` 补齐桌面与手机真实首屏，逐张目视检查。截图保存在 `tasks/<题目标识>/captures/<结果标识>/`；已有作品改动后加 `--force` 重拍。
+5. **生成小模型。** 运行 `npm run bake:previews -- --task=<题目标识> --id=<结果标识>`，在本地生成页完成生成，再执行 `node scripts/assemble.mjs`。核对主体取景、材质与手机滚动；模型包随代码提交。
+6. **检查与提交。** 更新作品 README 和本文目录、数量，运行 `npm run check:intake`、`npm run check` 与 `npm run build`，检查页面与静态子路径。清理本次临时产物，用英文简单句提交一条 Git commit。
 
 添加新题目时，先创建 `tasks/<题目标识>/task.json` 与提示词文件，配置标题、日期、标签、截图条件和事实字段；同日题目可用 `order` 指定先后顺序。在根 `package.json` 的 `workspaces` 中加入 `results/<题目标识>/*`，再按上述步骤收录作品。
 
@@ -225,8 +230,8 @@ dist/                                构建产物，不提交到主分支
 
 新增或修改作品模型后，先完成构建，再运行 `npm run bake:previews`，打开终端显示的 [本地生成页](http://localhost:5174/__bake/)，点击「开始生成」。生成完成后执行 `node scripts/assemble.mjs`，把模型包汇入主站。生成页只在本地运行，不发布到主站。
 
-默认只生成缺少模型包的作品；`npm run bake:previews -- --force` 重新生成仓库内提取的模型包，压缩包导入的九份原始模型包保留。生成结果位于 `site/assets/scenes/<题目标识>/`，随代码提交。未生成模型包的新作品仍可使用原作提取方式预览。处理方式与验证记录见[预览加载优化](docs/preview-loading.md)。
+默认只生成缺少模型包的作品；可以用 `--task=<题目标识> --id=<结果标识>` 仅处理本次作品。`npm run bake:previews -- --force` 重新生成仓库内提取的模型包，压缩包导入的九份原始模型包保留。生成结果位于 `site/assets/scenes/<题目标识>/`，随代码提交。开发期间保留原作提取回退，正式收录检查要求模型包齐全。处理方式与验证记录见[预览加载优化](docs/preview-loading.md)。
 
 ## 发布
 
-[GitHub Actions 工作流](.github/workflows/deploy-pages.yml)在推送到 `main` 或手动触发时执行依赖安装、语法检查和完整构建，将 `dist/` 发布到 `gh-pages` 分支。GitHub Pages 需配置为从该分支的根目录提供站点。
+[GitHub Actions 工作流](.github/workflows/deploy-pages.yml)在推送到 `main` 或手动触发时执行依赖安装、语法检查、收录检查和完整构建，将 `dist/` 发布到 `gh-pages` 分支。GitHub Pages 需配置为从该分支的根目录提供站点。

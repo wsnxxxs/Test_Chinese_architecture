@@ -5,8 +5,11 @@ import { readModel } from './preview-model.js';
 
 export function createResultPreviews(root, task) {
   const abort = new AbortController(), { signal } = abort;
+  const mobile = matchMedia('(max-width: 640px)').matches;
+  const parallelLoads = mobile ? 2 : 3;
+  const cacheLimit = mobile ? 6 : 9;
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1 : 1.5));
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -106,7 +109,7 @@ export function createResultPreviews(root, task) {
     setStatus(entry, 'ready'); requestRender();
     // Keep nearby models interactive without retaining every large scene in RAM.
     const cached = entries.filter((entry) => entry.scene);
-    for (const old of cached.filter((entry) => !entry.nearby).slice(0, Math.max(0, cached.length - 9))) {
+    for (const old of cached.filter((entry) => !entry.nearby).slice(0, Math.max(0, cached.length - cacheLimit))) {
       disposeObject(old.scene); old.scene = null;
     }
   }
@@ -127,12 +130,12 @@ export function createResultPreviews(root, task) {
     stopLoader(job); pump();
   }
   function pump() {
-    if (destroyed || paused || document.hidden || loading.size >= 3) return;
+    if (destroyed || paused || document.hidden || loading.size >= parallelLoads) return;
     const pending = entries.filter((entry) => entry.nearby && !entry.scene && !loading.has(entry) && entry.card.dataset.previewState !== 'error' && !entry.card.hidden)
       .map(entry => ({ entry, rect: entry.element.getBoundingClientRect() }))
       .sort((a, b) => Number(a.rect.top >= innerHeight || a.rect.bottom <= 0) - Number(b.rect.top >= innerHeight || b.rect.bottom <= 0) || a.rect.top - b.rect.top || a.rect.left - b.rect.left);
     for (const { entry } of pending) {
-      if (loading.size >= 3) break;
+      if (loading.size >= parallelLoads) break;
       // Baked models load in parallel. Keep procedural fallback generation serial.
       if (!entry.result.previewModel && [...loading.values()].some(job => job.iframe)) continue;
       const job = { entry }; loading.set(entry, job);
@@ -179,13 +182,16 @@ export function createResultPreviews(root, task) {
     frame = 0;
     if (destroyed || paused || document.hidden) return;
     const dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016); lastTime = time;
-    let moving = false;
+    let moving = false, deferred = false, rendered = 0;
+    const started = performance.now();
     for (const entry of entries) {
       if (!entry.scene || entry.card.hidden || !entry.nearby) continue;
       const rect = entry.element.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > innerHeight || !rect.width) continue;
       const changed = Math.abs(entry.targetX - entry.x) + Math.abs(entry.targetY - entry.y) > 0.0001;
       if (!entry.dirty && !changed) continue;
+      // Spread first paint / resize uploads across frames to leave room for input.
+      if (rendered && performance.now() - started >= 8) { deferred = true; break; }
       moving ||= changed;
       const follow = 1 - Math.exp(-dt * 9);
       entry.x += (entry.targetX - entry.x) * follow; entry.y += (entry.targetY - entry.y) * follow;
@@ -204,8 +210,9 @@ export function createResultPreviews(root, task) {
       entry.context.clearRect(0, 0, entry.canvas.width, entry.canvas.height);
       entry.context.drawImage(renderer.domElement, 0, 0);
       entry.card.classList.add('has-model-preview'); entry.dirty = false;
+      rendered++;
     }
-    if (moving) requestRender();
+    if (moving || deferred) requestRender();
   }
   return {
     refresh,

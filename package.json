@@ -13,9 +13,12 @@
     "build": "npm run build --workspaces && node scripts/assemble.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "bake:previews": "node scripts/bake-previews.mjs",
-    "check": "node --check site/app.js && node --check site/result-previews.js && node --check site/preview-model.js && node --check site/scene-resources.js && node --check site/sandtable.js && node --check scripts/assemble.mjs && node --check scripts/bake-previews.mjs && node --check scripts/compact-previews.mjs && node --check scripts/preview-baker.js"
+    "check": "node --check site/app.js && node --check site/result-previews.js && node --check site/preview-model.js && node --check site/scene-resources.js && node --check site/sandtable.js && node --check scripts/assemble.mjs && node --check scripts/bake-previews.mjs && node --check scripts/compact-previews.mjs && node --check scripts/preview-baker.js && node --check scripts/check-intake.mjs && node --check scripts/capture-results.mjs",
+    "check:intake": "node scripts/check-intake.mjs",
+    "capture:results": "node scripts/capture-results.mjs"
   },
   "devDependencies": {
+    "playwright": "^1.63.0",
     "three": "^0.186.1",
     "vite": "^7.3.6"
   }

@@ -9,3 +9,9 @@ playwright-report/
 **/tests/
 **/verification/
 **/playwright.config.*
+.cache/
+.vite/
+__pycache__/
+*.pyc
+*.tmp
+*.bak

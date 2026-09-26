@@ -12,7 +12,8 @@
     "dev:opus": "npm run dev --workspace=opus-5.5-high",
     "build": "npm run build --workspaces && node scripts/assemble.mjs",
     "preview": "vite preview --host 0.0.0.0",
-    "check": "node --check site/app.js && node --check site/result-previews.js && node --check site/sandtable.js && node --check scripts/assemble.mjs"
+    "bake:previews": "node scripts/bake-previews.mjs",
+    "check": "node --check site/app.js && node --check site/result-previews.js && node --check site/preview-model.js && node --check site/scene-resources.js && node --check site/sandtable.js && node --check scripts/assemble.mjs && node --check scripts/bake-previews.mjs && node --check scripts/compact-previews.mjs && node --check scripts/preview-baker.js"
   },
   "devDependencies": {
     "three": "^0.186.1",

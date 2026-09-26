@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { batchArchitecture } from './sandtable-batching.js';
 import { createArchitectureLod } from './sandtable-lod.js';
+import { disposeObject } from './scene-resources.js';
+export { disposeObject } from './scene-resources.js';
 
 const $ = (selector, root) => root.querySelector(selector);
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -140,22 +142,6 @@ export async function importArchitecture(scenes, id, { architecture = true } = {
     new THREE.Vector3(span.x * scale / 2, span.y * scale + 2.1, span.z * scale / 2),
   );
   return { group, lods: detail.lods, height: span.y * scale, previewBounds };
-}
-
-export function disposeObject(object) {
-  const geometries = new Set(), materials = new Set(), textures = new Set();
-  object.traverse((o) => {
-    if (o.geometry) geometries.add(o.geometry);
-    for (const material of (Array.isArray(o.material) ? o.material : [o.material])) {
-      if (!material) continue;
-      materials.add(material);
-      for (const value of Object.values(material)) if (value?.isTexture) textures.add(value);
-    }
-    if (o.isInstancedMesh) o.dispose();
-  });
-  geometries.forEach((o) => o.dispose());
-  materials.forEach((o) => o.dispose());
-  textures.forEach((o) => o.dispose());
 }
 
 function createLandscape(scene) {

@@ -1,47 +1,7 @@
 import * as THREE from 'three';
-import { importArchitecture, disposeObject } from './sandtable.js';
+import { disposeObject } from './scene-resources.js';
 
-const arrayTypes = { Float32Array, Float64Array, Uint8Array, Uint16Array, Uint32Array, Int8Array, Int16Array, Int32Array };
-
-// The archive stores the original vertex buffers, materials and instances.
-// Decode them directly; these are the corresponding buildings, not substitutes.
-async function readModel(url, signal) {
-  const response = await fetch(url, { signal });
-  if (!response.ok) throw new Error(`Model request failed: ${response.status}`);
-  const buffer = await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
-  const headerSize = new DataView(buffer).getUint32(0, true);
-  const data = JSON.parse(new TextDecoder().decode(new Uint8Array(buffer, 4, headerSize)));
-  const offset = 4 + headerSize;
-  const array = (spec) => new arrayTypes[spec.type](buffer.slice(offset + spec.offset, offset + spec.offset + spec.length * arrayTypes[spec.type].BYTES_PER_ELEMENT));
-  const attribute = (spec) => new THREE.BufferAttribute(array(spec), spec.itemSize, spec.normalized);
-  const geometries = data.geometries.map((spec) => {
-    const geometry = new THREE.BufferGeometry();
-    for (const [name, specAttribute] of Object.entries(spec.attributes)) geometry.setAttribute(name, attribute(specAttribute));
-    if (spec.index) geometry.setIndex(attribute(spec.index));
-    geometry.groups = spec.groups;
-    return geometry;
-  });
-  const loader = new THREE.MaterialLoader();
-  const materials = data.materials.map((spec) => loader.parse(spec));
-  const group = new THREE.Group();
-  for (const spec of data.meshes) {
-    const material = Array.isArray(spec.material) ? spec.material.map((id) => materials[id]) : materials[spec.material];
-    const mesh = spec.count ? new THREE.InstancedMesh(geometries[spec.geometry], material, spec.count) : new THREE.Mesh(geometries[spec.geometry], material);
-    if (spec.instances) mesh.instanceMatrix = new THREE.InstancedBufferAttribute(array(spec.instances), 16);
-    if (spec.colors) mesh.instanceColor = new THREE.InstancedBufferAttribute(array(spec.colors), 3);
-    mesh.matrix.fromArray(spec.matrix);
-    mesh.matrix.decompose(mesh.position, mesh.quaternion, mesh.scale);
-    mesh.matrixAutoUpdate = false;
-    group.add(mesh);
-  }
-  const bounds = new THREE.Box3(new THREE.Vector3(...data.bounds.min), new THREE.Vector3(...data.bounds.max));
-  const center = bounds.getCenter(new THREE.Vector3()), size = bounds.getSize(new THREE.Vector3());
-  const scale = 88 / Math.max(size.x, size.z);
-  group.scale.setScalar(scale);
-  group.position.set(-center.x * scale, -bounds.min.y * scale + 2.1, -center.z * scale);
-  group.updateMatrixWorld(true);
-  return { group, previewBounds: new THREE.Box3().setFromObject(group) };
-}
+import { readModel } from './preview-model.js';
 
 export function createResultPreviews(root, task) {
   const abort = new AbortController(), { signal } = abort;
@@ -56,7 +16,8 @@ export function createResultPreviews(root, task) {
   camera.position.set(115, 92, 138);
   camera.lookAt(0, 0, 0);
   camera.updateMatrixWorld();
-  let paused = false, destroyed = false, loading = null, frame = 0, lastTime = 0;
+  let paused = false, destroyed = false, frame = 0, lastTime = 0;
+  const loading = new Map();
   const entries = task.results.map((result) => {
     const card = root.querySelector(`.result[data-id="${result.id}"]`);
     const element = card.querySelector('.result-media');
@@ -130,7 +91,7 @@ export function createResultPreviews(root, task) {
     const fill = new THREE.DirectionalLight(0xb5d9db, 0.55); fill.position.set(70, 50, -80); scene.add(fill);
     Object.assign(entry, { scene, pivot, bounds: previewBounds, dirty: true });
     // Clip distant scenery from extraction copies, as in the existing sandtable.
-    if (task.id === 'chinese-architecture' && !entry.result.previewModel) {
+    if (task.id === 'chinese-architecture' && (imported.clip || !entry.result.previewModel)) {
       const { min, max } = previewBounds;
       entry.localPlanes = [
         new THREE.Plane(new THREE.Vector3(1, 0, 0), -min.x), new THREE.Plane(new THREE.Vector3(-1, 0, 0), max.x),
@@ -150,13 +111,12 @@ export function createResultPreviews(root, task) {
     }
   }
 
-  function stopLoader() {
-    if (!loading) return;
-    clearTimeout(loading.timeout);
-    loading.iframe?.remove(); loading = null;
+  function stopLoader(job) {
+    clearTimeout(job.timeout);
+    job.iframe?.remove(); loading.delete(job.entry);
   }
   async function finish(job, imported, error) {
-    if (destroyed || loading !== job) {
+    if (destroyed || loading.get(job.entry) !== job) {
       if (imported) disposeObject(imported.group);
       return;
     }
@@ -164,30 +124,39 @@ export function createResultPreviews(root, task) {
       setStatus(job.entry, 'error', '模型暂未载入 · 点击打开原作');
       console.error('Card model preview:', job.entry.result.id, error);
     } else addScene(job.entry, imported);
-    stopLoader(); pump();
+    stopLoader(job); pump();
   }
   function pump() {
-    if (destroyed || paused || document.hidden || loading) return;
-    const entry = entries.find((entry) => entry.nearby && !entry.scene && entry.card.dataset.previewState !== 'error' && !entry.card.hidden);
-    if (!entry) return;
-    const job = loading = { entry };
-    setStatus(entry, 'loading', '正在载入模型');
-    if (entry.result.previewModel) {
-      readModel(entry.result.previewModel, signal).then((model) => finish(job, model), (error) => finish(job, null, error));
-    } else {
-      const iframe = document.createElement('iframe');
-      iframe.className = 'result-model-loader'; iframe.tabIndex = -1; iframe.setAttribute('aria-hidden', 'true');
-      iframe.title = `载入 ${entry.result.title} 的建模场景`;
-      iframe.src = `${entry.result.previewLoader}?sandtable=1`;
-      job.iframe = iframe;
-      job.timeout = setTimeout(() => { if (!job.importing) finish(job, null, new Error('Model load timed out')); }, 60000);
-      root.append(iframe);
+    if (destroyed || paused || document.hidden || loading.size >= 3) return;
+    const pending = entries.filter((entry) => entry.nearby && !entry.scene && !loading.has(entry) && entry.card.dataset.previewState !== 'error' && !entry.card.hidden)
+      .map(entry => ({ entry, rect: entry.element.getBoundingClientRect() }))
+      .sort((a, b) => Number(a.rect.top >= innerHeight || a.rect.bottom <= 0) - Number(b.rect.top >= innerHeight || b.rect.bottom <= 0) || a.rect.top - b.rect.top || a.rect.left - b.rect.left);
+    for (const { entry } of pending) {
+      if (loading.size >= 3) break;
+      // Baked models load in parallel. Keep procedural fallback generation serial.
+      if (!entry.result.previewModel && [...loading.values()].some(job => job.iframe)) continue;
+      const job = { entry }; loading.set(entry, job);
+      setStatus(entry, 'loading', '正在载入模型');
+      if (entry.result.previewModel) {
+        readModel(entry.result.previewModel, signal).then((model) => finish(job, model), (error) => finish(job, null, error));
+      } else {
+        const iframe = document.createElement('iframe');
+        iframe.className = 'result-model-loader'; iframe.tabIndex = -1; iframe.setAttribute('aria-hidden', 'true');
+        iframe.title = `载入 ${entry.result.title} 的建模场景`;
+        iframe.src = `${entry.result.previewLoader}?sandtable=1`;
+        job.iframe = iframe;
+        job.timeout = setTimeout(() => { if (!job.importing) finish(job, null, new Error('Model load timed out')); }, 60000);
+        root.append(iframe);
+      }
     }
   }
   window.addEventListener('message', async (event) => {
-    if (!loading?.iframe || event.origin !== location.origin || event.source !== loading.iframe.contentWindow || event.data?.type !== 'gallery-scene-ready' || loading.importing) return;
-    const job = loading; job.importing = true; clearTimeout(job.timeout);
+    if (event.origin !== location.origin || event.data?.type !== 'gallery-scene-ready') return;
+    const job = [...loading.values()].find(job => job.iframe?.contentWindow === event.source);
+    if (!job || job.importing) return;
+    job.importing = true; clearTimeout(job.timeout);
     try {
+      const { importArchitecture } = await import('./sandtable.js');
       await finish(job, await importArchitecture(job.iframe.contentWindow.__galleryScenes, job.entry.result.id, { architecture: task.id === 'chinese-architecture' }));
     } catch (error) { await finish(job, null, error); }
   }, { signal });
@@ -246,7 +215,9 @@ export function createResultPreviews(root, task) {
       else refresh();
     },
     destroy() {
-      destroyed = true; abort.abort(); stopLoader(); cancelAnimationFrame(frame);
+      destroyed = true; abort.abort();
+      for (const job of loading.values()) stopLoader(job);
+      cancelAnimationFrame(frame);
       observer.disconnect(); resizeObserver.disconnect();
       for (const entry of entries) if (entry.scene) disposeObject(entry.scene);
       renderer.dispose(); renderer.forceContextLoss();

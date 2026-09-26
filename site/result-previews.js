@@ -226,7 +226,12 @@ export function createResultPreviews(root, task) {
       for (const job of loading.values()) stopLoader(job);
       cancelAnimationFrame(frame);
       observer.disconnect(); resizeObserver.disconnect();
-      for (const entry of entries) if (entry.scene) disposeObject(entry.scene);
+      for (const entry of entries) {
+        if (entry.scene) disposeObject(entry.scene);
+        entry.canvas.remove(); entry.status.remove();
+        entry.card.classList.remove('has-model-preview');
+        delete entry.card.dataset.previewState;
+      }
       renderer.dispose(); renderer.forceContextLoss();
     },
   };

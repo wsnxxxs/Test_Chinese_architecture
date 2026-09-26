@@ -23,6 +23,7 @@ const label = (r) => (r.effort ? `${modelOf(r).name} · ${r.effort}` : modelOf(r
 const byName = (a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' });
 const sortModes = { added: '加入时间（最新在前）', vendor: '模型厂商（A–Z）', name: '模型名字（A–Z）' };
 let resultSort = Object.hasOwn(sortModes, store.get('result-sort')) ? store.get('result-sort') : 'added';
+let previewMode = store.get('preview-mode') === 'model' ? 'model' : 'screenshot';
 const sortControl = () => `<label class="result-sort">排序<select data-result-sort>${Object.entries(sortModes).map(([value, text]) => `<option value="${value}"${value === resultSort ? ' selected' : ''}>${text}</option>`).join('')}</select></label>`;
 function sortedResults(t) {
   return [...t.results].sort((a, b) => {
@@ -102,13 +103,18 @@ document.addEventListener('error', (e) => { if (e.target.tagName === 'IMG') e.ta
 const settleImages = () => $$('img', root).forEach((im) => { if (im.complete) im.classList.add('is-loaded'); });
 
 // ---- shell ----------------------------------------------------------------------------
-function header(crumbs = []) {
+const previewControl = () => `<div class="preview-setting" role="group" aria-label="作品卡片预览">
+  <button data-preview-mode="screenshot" aria-pressed="${previewMode === 'screenshot'}" title="截图预览 · 减少设备负担">截图</button>
+  <button data-preview-mode="model" aria-pressed="${previewMode === 'model'}" title="小模型预览 · 可随鼠标转动">小模型</button>
+</div>`;
+function header(crumbs = [], showPreviewSetting = false) {
   const trail = crumbs.map((c) => `<span class="sep" aria-hidden="true">/</span>${c.href ? `<a href="${c.href}">${esc(c.text)}</a>` : `<span aria-current="page">${esc(c.text)}</span>`}`).join('');
   return `<header class="topbar"><div class="wrap topbar-in">
     <a class="brand" href="#/" aria-label="${esc(DATA.title)} · 首页">${LOGO}<span class="wordmark">${esc(DATA.title)}</span><span class="brand-sub">${esc(DATA.subtitle)}</span></a>
     <nav class="crumbs" aria-label="位置">${trail}</nav>
-    <div class="topbar-tools">
+    <div class="topbar-tools${showPreviewSetting ? ' has-preview-setting' : ''}">
       ${ext(DATA.repo, 'GitHub', 'topbar-link')}
+      ${showPreviewSetting ? previewControl() : ''}
       ${themeButton()}
     </div>
   </div></header>`;
@@ -225,6 +231,21 @@ function renderHome() {
 // ---- task -----------------------------------------------------------------------------
 const taskState = { task: null, cond: null, vendor: '', picks: [] };
 let resultPreviews = null;
+let previewVersion = 0;
+async function updateResultPreviews(t) {
+  const version = ++previewVersion;
+  resultPreviews?.destroy();
+  resultPreviews = null;
+  if (previewMode !== 'model') return;
+  try {
+    const { createResultPreviews } = await import('./result-previews.js');
+    if (version !== previewVersion) return;
+    resultPreviews = createResultPreviews(root, t);
+    resultPreviews.setPaused($('#results').hidden);
+  } catch (error) {
+    console.error('Model previews unavailable:', error);
+  }
+}
 const panels = ['results', 'shots', 'prompt'];
 function activatePanel(name, updateHash = true) {
   const target = panels.includes(name) && $(`[data-panel="${name}"]`) ? name : 'results';
@@ -281,7 +302,7 @@ function renderTask(t) {
     </article>`;
   }).join('');
 
-  root.innerHTML = `${header([{ text: t.title }])}
+  root.innerHTML = `${header([{ text: t.title }], true)}
   <main class="page">
     <section class="task-hero wrap">
       <p class="kicker"><span class="num">No.${pad(DATA.tasks.indexOf(t) + 1)}</span><span>${esc(t.date ?? '')}</span></p>
@@ -342,6 +363,13 @@ function renderTask(t) {
     resultPreviews?.refresh();
   };
   root.onclick = (e) => {
+    const preview = e.target.closest('[data-preview-mode]');
+    if (preview && preview.dataset.previewMode !== previewMode) {
+      previewMode = preview.dataset.previewMode;
+      store.set('preview-mode', previewMode);
+      $$('[data-preview-mode]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.previewMode === previewMode)));
+      updateResultPreviews(t);
+    }
     const go = e.target.closest('[data-go]');
     if (go) {
       activatePanel(go.dataset.go);
@@ -789,6 +817,7 @@ async function route() {
   const inViewer = t && a && !inExhibition;
   exhibition?.destroy();
   exhibition = null;
+  ++previewVersion;
   resultPreviews?.destroy();
   resultPreviews = null;
 
@@ -819,14 +848,8 @@ async function route() {
   } else if (!inViewer) {
     renderTask(t);
     activatePanel(location.hash.split('#')[2], false);
-    try {
-      const { createResultPreviews } = await import('./result-previews.js');
-      if (version !== routeVersion) return;
-      resultPreviews = createResultPreviews(root, t);
-      resultPreviews.setPaused($('#results').hidden);
-    } catch (error) {
-      console.error('Model previews unavailable:', error);
-    }
+    await updateResultPreviews(t);
+    if (version !== routeVersion) return;
   } else {
     const ids = [a, vs === 'vs' ? b : null].filter(Boolean);
     const valid = ids.filter((id, i) => t.results.some((r) => r.id === id) && ids.indexOf(id) === i);

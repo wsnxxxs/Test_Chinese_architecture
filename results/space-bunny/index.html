@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>体素宫城 · 中国古典建筑群</title>
+  <style>:root{--ink:#f2ead9;--dim:#b9ae98;--gold:#d9b45a;--glass:#1012189e;--edge:#d9b45a47}*{box-sizing:border-box}html,body{width:100%;height:100%;color:var(--ink);-webkit-font-smoothing:antialiased;background:#0b0e14;margin:0;padding:0;font-family:PingFang SC,Microsoft YaHei,Hiragino Sans GB,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;overflow:hidden}#scene{width:100vw;height:100vh;display:block}.panel{background:var(--glass);-webkit-backdrop-filter:blur(14px)saturate(1.1);border:1px solid var(--edge);border-radius:12px;position:fixed;box-shadow:0 10px 34px #0000006b}#title{padding:14px 20px 13px;top:20px;left:20px}#title h1{letter-spacing:5px;color:var(--gold);text-shadow:0 2px 10px #0009;margin:0;font-family:Songti SC,SimSun,Noto Serif SC,serif;font-size:20px;font-weight:600}#title p{letter-spacing:1.6px;color:var(--dim);margin:6px 0 0;font-size:11px}#stats{min-width:286px;padding:12px 16px;bottom:20px;left:20px}#stats .row{letter-spacing:.4px;justify-content:space-between;gap:16px;font-size:11.5px;line-height:1.95;display:flex}#stats .k{color:var(--dim)}#stats .v{color:var(--ink);font-variant-numeric:tabular-nums}#stats .v.gpu{color:var(--dim);text-align:right;text-overflow:ellipsis;white-space:nowrap;max-width:178px;font-size:10px;overflow:hidden}#stats hr{border:0;border-top:1px solid #d9b45a29;margin:8px 0}#ctrl{width:216px;padding:14px 16px;top:20px;right:20px}#ctrl h2{letter-spacing:2.4px;color:var(--dim);text-transform:uppercase;margin:0 0 10px;font-size:11px;font-weight:500}.seg{gap:6px;margin-bottom:10px;display:flex}.seg button{letter-spacing:2px;cursor:pointer;color:var(--dim);background:#ffffff0d;border:1px solid #ffffff1a;border-radius:8px;flex:1;padding:7px 0;font-family:inherit;font-size:12.5px;transition:all .18s}.seg button:hover{color:var(--ink);background:#ffffff1c}.seg button.on{color:var(--gold);background:linear-gradient(#d9b45a42,#d9b45a1f);border-color:#d9b45a99}.wide{letter-spacing:1.4px;cursor:pointer;width:100%;color:var(--dim);background:#ffffff0d;border:1px solid #ffffff1a;border-radius:8px;margin-top:6px;padding:8px 0;font-family:inherit;font-size:12px;transition:all .18s}.wide:hover{color:var(--ink);background:#ffffff1c}.wide.on{color:var(--gold);border-color:#d9b45a73}#hint{color:#7e7566;letter-spacing:.3px;margin:11px 0 0;font-size:10.5px;line-height:1.7}#loading{z-index:50;background:radial-gradient(circle at 50% 46%,#1b2130 0%,#0a0d13 72%);flex-direction:column;justify-content:center;align-items:center;gap:18px;display:flex;position:fixed;top:0;bottom:0;left:0;right:0}#loading .seal{border:2px solid var(--gold);width:62px;height:62px;color:var(--gold);border-radius:8px;justify-content:center;align-items:center;font-family:Songti SC,SimSun,serif;font-size:26px;animation:2.4s ease-in-out infinite breathe;display:flex;box-shadow:0 0 26px #d9b45a3d}@keyframes breathe{0%,to{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1)}}#loading p{letter-spacing:4px;color:var(--dim);margin:0;font-size:12.5px}@media (max-width:720px){#stats{display:none}#title h1{letter-spacing:3px;font-size:16px}#ctrl{width:172px;padding:11px 12px}}</style>
+  <script type="module" crossorigin src="./assets/index-BeiCkDA4.js"></script>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <div id="title" class="panel">
+    <h1>体素宫城</h1>
+    <p>VOXEL PALACE · 重檐庑殿 / 歇山 / 攒尖 / 楼阁式塔</p>
+  </div>
+
+  <div id="stats" class="panel">
+    <div class="row"><span class="k">帧率</span><span class="v" id="s-fps">--</span></div>
+    <div class="row"><span class="k">体素总数</span><span class="v" id="s-voxel">--</span></div>
+    <div class="row"><span class="k">可见面数</span><span class="v" id="s-face">--</span></div>
+    <div class="row"><span class="k">Draw Call / 三角</span><span class="v" id="s-call">--</span></div>
+    <hr />
+    <div class="row"><span class="k">渲染尺寸</span><span class="v" id="s-size">--</span></div>
+    <div class="row"><span class="k">场景生成</span><span class="v" id="s-boot">--</span></div>
+    <div class="row"><span class="k">GPU</span><span class="v gpu" id="s-gpu">--</span></div>
+  </div>
+
+  <div id="ctrl" class="panel">
+    <h2>光照 · <span id="preset-name">晨曦</span></h2>
+    <div class="seg">
+      <button data-preset="dawn" class="on">晨曦</button>
+      <button data-preset="noon">正午</button>
+      <button data-preset="dusk">暮色</button>
+    </div>
+    <button id="btn-rotate" class="wide on">自动巡航：开</button>
+    <button id="btn-reset" class="wide">重置视角</button>
+    <p id="hint">左键拖拽环视 · 滚轮缩放 · 右键平移</p>
+  </div>
+
+  <div id="loading">
+    <div class="seal">宫</div>
+    <p>正在生成体素宫城</p>
+  </div>
+
+  <noscript>本场景需要启用 JavaScript 与 WebGL。</noscript>
+</body>
+</html>

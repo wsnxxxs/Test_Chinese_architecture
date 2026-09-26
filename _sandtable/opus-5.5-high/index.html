@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script src="../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Three.js 体素风格中国古典建筑群：山门、钟鼓楼、天王殿、配殿、大雄宝殿、宝塔，晨昏光影。" />
+    <title>云山古刹 · 体素中国古典建筑群</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%23a7352b'/><path d='M2 7 L8 3 L14 7 Z' fill='%23dca628'/><rect x='4' y='7' width='8' height='6' fill='%23f2e6c8'/></svg>" />
+    <script type="module" crossorigin src="./assets/index-BxbsE9Oo.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/three-ByP8DQ2T.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-CmpiwiQJ.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="labels"></div>
+
+    <div id="loader">
+      <div class="seal">营造</div>
+      <div class="loader-title">云山古刹 · 营造中</div>
+      <div id="loader-msg">载入…</div>
+    </div>
+
+    <header id="title" class="ui">
+      <div class="seal small">寺</div>
+      <div>
+        <h1>云山古刹</h1>
+        <p>体素 · 中国古典建筑群</p>
+      </div>
+    </header>
+
+    <section id="panel" class="ui">
+      <div class="time-row">
+        <span id="clock">17:36</span>
+        <span id="shichen">酉时</span>
+      </div>
+      <div class="presets">
+        <button data-t="6.4">清晨</button>
+        <button data-t="12">正午</button>
+        <button data-t="17.6">黄昏</button>
+        <button data-t="21.5">夜晚</button>
+      </div>
+      <input id="slider" type="range" min="0" max="24" step="0.05" value="17.6" aria-label="时间" />
+      <div class="toggles">
+        <button id="tg-rotate" class="tg">自动环游</button>
+        <button id="tg-flow" class="tg">时光流转</button>
+        <button id="tg-labels" class="tg">建筑标注</button>
+        <button id="tg-reset" class="tg plain">复位视角</button>
+      </div>
+      <p class="hint">左键旋转 · 右键平移 · 滚轮缩放 · H 隐藏界面</p>
+    </section>
+
+    <div id="stats" class="ui"></div>
+
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voxel Chinese Palace · 体素中式院落</title>
+    <style>
+      :root {
+        --bg-0: #0d0d0f;
+        --bg-1: #1c1c1e;
+        --fg-0: #f5f5f7;
+        --fg-1: #a1a1a6;
+        --accent: #c8392f;
+        --font:
+          "Geist", "Geist Mono", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg-0);
+        color: var(--fg-0);
+        font-family: var(--font);
+        -webkit-font-smoothing: antialiased;
+      }
+      #app { position: fixed; inset: 0; }
+      canvas { display: block; }
+
+      .hud {
+        position: fixed;
+        left: 18px;
+        top: 18px;
+        padding: 14px 16px;
+        background: rgba(13, 13, 15, 0.62);
+        backdrop-filter: blur(14px) saturate(140%);
+        -webkit-backdrop-filter: blur(14px) saturate(140%);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        max-width: 320px;
+        z-index: 10;
+        user-select: none;
+      }
+      .hud h1 {
+        margin: 0 0 4px 0;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .hud p {
+        margin: 4px 0 0 0;
+        font-size: 11.5px;
+        line-height: 1.55;
+        color: var(--fg-1);
+      }
+      .hud kbd {
+        display: inline-block;
+        padding: 1px 6px;
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 10.5px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 4px;
+        color: var(--fg-0);
+      }
+
+      .meter {
+        position: fixed;
+        right: 18px;
+        top: 18px;
+        padding: 10px 14px;
+        background: rgba(13, 13, 15, 0.62);
+        backdrop-filter: blur(14px) saturate(140%);
+        -webkit-backdrop-filter: blur(14px) saturate(140%);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 10px;
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 11px;
+        color: var(--fg-1);
+        z-index: 10;
+        user-select: none;
+      }
+      .meter b { color: var(--fg-0); font-weight: 500; }
+
+      .loading {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-0);
+        color: var(--fg-1);
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        z-index: 20;
+        transition: opacity 600ms ease;
+      }
+      .loading.hide { opacity: 0; pointer-events: none; }
+    </style>
+    <script type="module" crossorigin src="./assets/index-HDmydl2N.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <div class="hud">
+      <h1>Voxel Chinese Palace</h1>
+      <p>体素中式院落 · 中轴对称</p>
+      <p>
+        拖拽 <kbd>旋转</kbd> · 右键 <kbd>平移</kbd> · 滚轮 <kbd>缩放</kbd>
+      </p>
+    </div>
+
+    <div class="meter" id="meter">
+      <span>fps </span><b id="fps">--</b><span> · blocks </span><b id="blocks">--</b>
+    </div>
+
+    <div class="loading" id="loading">BUILDING&nbsp;SCENE…</div>
+
+  </body>
+</html>

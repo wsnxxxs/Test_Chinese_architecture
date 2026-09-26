@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script src="../../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e9e2d5" />
+    <meta name="description" content="一座在傍晚暖光中运行的桌面微缩铁路小镇。" />
+    <title>河湾小镇 · Riverside Miniature Railway</title>
+    <script type="module" crossorigin src="./assets/index-Cx2LxhM8.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-LoOg1PxY.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="scene" aria-label="可旋转缩放的三维微缩铁路沙盘"></div>
+      <div class="grain" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="河湾小镇首页">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M8 29c5-12 19-18 24-9 3 5-1 11-8 12M8 29h7m10 3h7M11 11l3 3m15 13 3 3"/><circle cx="12" cy="29" r="2"/><circle cx="29" cy="31" r="2"/></svg>
+          </span>
+          <span class="brand-copy">
+            <strong>河湾小镇</strong>
+            <span>RIVERSIDE MINIATURE RAILWAY</span>
+          </span>
+        </a>
+        <div class="edition"><span class="edition-dot"></span> 桌面沙盘 · 第 04 号</div>
+        <button class="theme-button" id="themeButton" type="button" aria-label="切换夜景">
+          <span id="themeIcon" class="theme-icon" aria-hidden="true">☾</span>
+          <span id="themeLabel">点亮夜景</span>
+        </button>
+      </header>
+
+      <div class="scene-note"><span class="note-line"></span> GOLDEN HOUR <span class="note-sep">/</span> 18:42 <span class="note-location">· 河湾站</span></div>
+
+      <aside class="place-card" aria-label="小镇信息">
+        <div class="place-card-top"><span class="live-dot"></span> 小镇正在营业</div>
+        <div class="place-card-title">河水慢慢流，<br />火车准时到站。</div>
+        <div class="place-card-rule"></div>
+        <div class="place-card-meta"><span>环线</span><b>01</b><i></i><span>微缩建筑</span><b>12</b></div>
+        <div class="place-card-coordinates">北纬 43° 08'　东经 05° 42'</div>
+      </aside>
+
+      <div class="drag-hint" id="dragHint"><span class="drag-orbit" aria-hidden="true">↗</span> 拖动旋转 · 滚轮缩放</div>
+
+      <section class="control-panel" aria-label="列车控制台">
+        <div class="control-status">
+          <span class="status-icon" aria-hidden="true">◉</span>
+          <div><span class="status-label">列车状态</span><strong id="trainStatus">环线行驶中</strong></div>
+        </div>
+        <div class="control-divider"></div>
+        <button class="play-button" id="playButton" type="button" aria-label="暂停列车" title="暂停 / 运行">
+          <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+        </button>
+        <div class="speed-control">
+          <div class="speed-heading"><span>运行速度</span><strong><span id="speedReadout">1.0</span><small>×</small></strong></div>
+          <div class="range-wrap"><span class="range-min">慢</span><input id="speedRange" type="range" min="0.55" max="1.85" step="0.05" value="1" aria-label="列车速度"/><span class="range-max">快</span></div>
+        </div>
+        <div class="control-divider speed-divider"></div>
+        <button class="reset-button" id="resetButton" type="button" aria-label="复位沙盘" title="复位机位与列车">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8.5A8 8 0 1 1 4 13M4.5 4v4.5H9"/><path d="M12 7.5v5l3.1 1.8"/></svg>
+          <span>复位</span>
+        </button>
+        <div class="station-status"><span class="station-light"></span><span>下一站</span><strong id="stationStatus">河湾站</strong></div>
+      </section>
+      <footer class="footer-note"><span>手作微缩景观</span><i></i><span>建议全屏欣赏</span><span class="footer-year">EST. 1968</span></footer>
+    </div>
+  </body>
+</html>

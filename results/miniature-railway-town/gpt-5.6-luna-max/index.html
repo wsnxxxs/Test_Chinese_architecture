@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d89a65" />
+    <title>Evergreen Junction · 微缩铁路小镇</title>
+    <script type="module" crossorigin src="./assets/index-D01PI2JO.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-9ipgRdnW.css">
+  </head>
+  <body>
+    <main id="app" aria-label="Evergreen Junction 微缩铁路小镇">
+      <div id="scene-container"></div>
+
+      <header class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <p class="eyebrow">DESKTOP RAILWAY MODEL</p>
+          <h1>Evergreen Junction</h1>
+        </div>
+      </header>
+
+      <section class="control-card" aria-label="场景控制">
+        <div class="control-heading">
+          <div>
+            <p class="eyebrow">LAYOUT 01</p>
+            <h2>暮色小镇</h2>
+          </div>
+          <div class="status-dot" id="status-dot" title="列车运行状态"></div>
+        </div>
+
+        <div class="status-line">
+          <span id="status-text">列车运行中</span>
+          <span class="status-detail" id="status-detail">环线巡游</span>
+        </div>
+
+        <div class="control-row control-actions">
+          <button class="button button-primary" id="toggle-run" type="button">暂停列车</button>
+          <button class="button button-ghost" id="reset-scene" type="button">复位</button>
+        </div>
+
+        <label class="slider-row" for="speed-control">
+          <span class="slider-label"><span>运行速度</span><strong id="speed-value">1.0×</strong></span>
+          <input id="speed-control" type="range" min="0.4" max="1.8" step="0.1" value="1" />
+          <span class="slider-ticks"><span>慢</span><span>标准</span><span>快</span></span>
+        </label>
+
+        <div class="divider"></div>
+
+        <div class="mode-row">
+          <div>
+            <p class="mode-caption">光线设置</p>
+            <p class="mode-name" id="mode-name">暖色傍晚</p>
+          </div>
+          <button class="mode-switch" id="toggle-night" type="button" aria-pressed="false">
+            <span class="mode-icon" aria-hidden="true">☼</span>
+            <span id="mode-button-label">切换夜晚</span>
+          </button>
+        </div>
+      </section>
+
+      <div class="scene-hint">
+        <span class="mouse-icon" aria-hidden="true">⌁</span>
+        <span>拖拽旋转 · 滚轮缩放</span>
+      </div>
+
+      <div class="scene-tag"><span class="tag-line"></span> BUILT FOR SLOW EVENINGS</div>
+    </main>
+  </body>
+</html>

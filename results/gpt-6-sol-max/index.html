@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1b2a31" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <meta name="description" content="云阙宫：可交互的 3D 体素风格中国古典建筑群。" />
+    <title>云阙宫 · 体素建筑群</title>
+    <script type="module" crossorigin src="./assets/index-XBzKbozC.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-iAMhisB4.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="scene" aria-label="云阙宫三维建筑群场景"></div>
+      <div class="atmosphere" aria-hidden="true"></div>
+
+      <header class="masthead">
+        <div class="brand-mark" aria-hidden="true"><span>雲</span></div>
+        <div class="brand-copy">
+          <div class="eyebrow">VOXEL ARCHITECTURE · 001</div>
+          <h1>云阙宫</h1>
+          <p>一座藏在暮色里的东方宫苑</p>
+        </div>
+      </header>
+
+      <aside class="scene-card" aria-label="场景说明">
+        <span class="card-line"></span>
+        <div class="card-kicker">中轴 / 宫苑布局</div>
+        <div class="card-title">层檐叠影，殿宇成章。</div>
+        <p>主殿居中，配殿相望；山门引路，双楼守望庭院。</p>
+        <div class="card-meta"><span>06</span> 座建筑 <i></i> <span>03</span> 种光景</div>
+      </aside>
+
+      <div class="compass" aria-hidden="true"><span>北</span><div class="compass-line"></div><span>南</span></div>
+
+      <footer class="toolbar">
+        <div class="toolbar-main">
+          <span class="toolbar-label">光景</span>
+          <div class="segmented" role="group" aria-label="选择光照氛围">
+            <button type="button" data-theme="dawn">晨曦</button>
+            <button type="button" data-theme="dusk" class="active" aria-pressed="true">暮色</button>
+            <button type="button" data-theme="night">夜游</button>
+          </div>
+          <span class="toolbar-divider"></span>
+          <button type="button" id="reset-view" class="icon-button" title="重置视角" aria-label="重置视角">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 2.34 5.66M4 17v-5h5"/></svg>
+          </button>
+          <button type="button" id="toggle-motion" class="icon-button active" title="暂停自动旋转" aria-label="暂停自动旋转" aria-pressed="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+          </button>
+        </div>
+        <div class="toolbar-hint">拖动旋转视角 <span>·</span> 滚轮缩放</div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>体素 · 中国古典建筑群</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #1a0f0a;
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      color: #f5e6c8;
+    }
+    #app {
+      position: fixed;
+      inset: 0;
+    }
+    #scene-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .overlay {
+      position: fixed;
+      left: 16px;
+      top: 16px;
+      z-index: 10;
+      padding: 12px 16px;
+      background: rgba(20, 10, 6, 0.55);
+      border: 1px solid rgba(255, 220, 170, 0.15);
+      border-radius: 8px;
+      backdrop-filter: blur(6px);
+      font-size: 13px;
+      line-height: 1.6;
+      pointer-events: none;
+      letter-spacing: 0.5px;
+      max-width: 320px;
+    }
+    .overlay h1 {
+      margin: 0 0 6px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffd9a0;
+      letter-spacing: 2px;
+    }
+    .overlay .sub {
+      opacity: 0.75;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    .overlay kbd {
+      padding: 1px 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 12px;
+    }
+    .loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1a0f0a;
+      color: #ffd9a0;
+      letter-spacing: 4px;
+      font-size: 14px;
+      z-index: 100;
+      transition: opacity 0.6s ease;
+    }
+    .loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/index-B-TFd9AB.js"></script>
+</head>
+<body>
+  <div id="app">
+    <canvas id="scene-canvas"></canvas>
+    <div class="overlay">
+      <h1>体素 · 中国古典建筑群</h1>
+      <div>中轴对称院落 · 歇山顶 · 飞檐翘角 · 晨昏光影</div>
+      <div class="sub">鼠标拖拽旋转视角 · 滚轮缩放 · 右键平移</div>
+    </div>
+    <div id="loading" class="loading">载入场景 · · ·</div>
+  </div>
+</body>
+</html>

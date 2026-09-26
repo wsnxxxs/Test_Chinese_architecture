@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%238a5c33'/%3E%3Crect x='4' y='19' width='24' height='4' rx='1' fill='%236b4a2c'/%3E%3Cpath d='M6 19h20l-3-5H9z' fill='%23e8a95c'/%3E%3Ccircle cx='10' cy='25' r='3' fill='%23241a10'/%3E%3Ccircle cx='22' cy='25' r='3' fill='%23241a10'/%3E%3C/svg%3E"
+    />
+    <title>桌面微缩铁路小镇 · Miniature Railway Town</title>
+    <script type="module" crossorigin src="./assets/index-ORCIiqw3.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BSmVoEmP.css">
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+
+    <div id="loading">
+      <div class="spinner"></div>
+      <p>正在搭建沙盘…</p>
+    </div>
+
+    <aside id="panel">
+      <header>
+        <h1>桌面微缩铁路小镇</h1>
+        <p class="sub">Miniature Railway Town · Three.js</p>
+      </header>
+
+      <div class="row buttons">
+        <button id="btn-play" class="primary" type="button">⏸ 暂停</button>
+        <button id="btn-reset" type="button">↺ 复位</button>
+      </div>
+
+      <div class="row buttons">
+        <button id="btn-time" type="button">🌙 切换到夜晚</button>
+      </div>
+
+      <label class="row slider" for="speed">
+        <span>速度</span>
+        <input id="speed" type="range" min="2" max="26" step="0.5" value="11" />
+        <output id="speed-val">11.0</output>
+      </label>
+
+      <div class="row status">
+        <span id="status-train" class="pill running">运行中</span>
+        <span id="status-note">车厢各自沿轨道行驶</span>
+      </div>
+
+      <p class="hint">
+        拖拽旋转 · 滚轮缩放 · 右键平移<br />
+        快捷键：<kbd>空格</kbd> 运行/暂停 · <kbd>R</kbd> 复位 · <kbd>N</kbd> 昼夜
+      </p>
+    </aside>
+
+    <div id="legend">
+      <span><i class="dot day"></i>傍晚暖阳（默认）</span>
+      <span><i class="dot night"></i>夜晚灯光</span>
+    </div>
+
+    <noscript>本站需要启用 JavaScript 才能查看 Three.js 沙盘。</noscript>
+  </body>
+</html>

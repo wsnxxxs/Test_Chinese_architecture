@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script src="../../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%237a4f2a'/%3E%3Crect x='5' y='18' width='22' height='6' rx='2' fill='%23e8c98f'/%3E%3Ccircle cx='11' cy='13' r='4' fill='%232f5d46'/%3E%3Ccircle cx='21' cy='13' r='4' fill='%232f5d46'/%3E%3C/svg%3E"
+    />
+    <title>青溪镇 · 桌面微缩铁路沙盘</title>
+    <script type="module" crossorigin src="./assets/index-CbIJZPil.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-3c_-_EdL.css">
+  </head>
+  <body>
+    <div id="stage"></div>
+
+    <div id="hud">
+      <div class="hud-card">
+        <div class="hud-title">
+          <span class="hud-name">青溪镇</span>
+          <span class="hud-sub">桌面微缩铁路沙盘</span>
+        </div>
+        <div class="hud-row">
+          <button id="btn-play" class="btn btn-primary" type="button">⏸ 暂停</button>
+          <button id="btn-reset" class="btn" type="button">↺ 复位</button>
+          <button id="btn-daynight" class="btn" type="button">🌙 夜晚</button>
+        </div>
+        <div class="hud-row hud-speed">
+          <label for="speed-range">速度</label>
+          <input id="speed-range" type="range" min="0.25" max="3" step="0.05" value="1" />
+          <span id="speed-value">1.00×</span>
+        </div>
+        <div class="hud-status" id="hud-status">运行中 · 白天 · 1.00×</div>
+        <div class="hud-hint">拖拽旋转 · 滚轮缩放 · 右键平移 · 空格暂停 · R 复位 · N 昼夜</div>
+      </div>
+    </div>
+
+    <div id="loading">
+      <div class="loading-box">
+        <div class="loading-title">正在搭建沙盘…</div>
+        <div class="loading-bar"><span id="loading-fill"></span></div>
+      </div>
+    </div>
+
+  </body>
+</html>

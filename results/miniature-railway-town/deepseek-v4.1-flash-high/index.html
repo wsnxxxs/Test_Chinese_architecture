@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>桌面微缩铁路小镇</title>
+    <style>:root{--text:#e9eef7;--text-dim:#a3b2c8;--accent:#ffb46b;--accent-deep:#f0a24f;--glass:#11161fa8;--glass-strong:#0e121ad1;--glass-line:#ffffff24;--glass-line-hi:#ffffff52;--radius:14px}*{box-sizing:border-box}html,body{height:100%;color:var(--text);-webkit-font-smoothing:antialiased;background:#080b11;margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Noto Sans SC,sans-serif;overflow:hidden}#app{position:fixed;top:0;bottom:0;left:0;right:0}#app canvas{touch-action:none;width:100%;height:100%;display:block}.hud{pointer-events:none;z-index:6;-webkit-user-select:none;user-select:none;position:fixed}.hud--title{border-radius:var(--radius);background:var(--glass);border:1px solid var(--glass-line);-webkit-backdrop-filter:blur(12px)saturate(140%);padding:10px 14px;top:14px;left:16px;box-shadow:0 8px 24px #0006}.hud--title h1{letter-spacing:.04em;margin:0;font-size:17px;font-weight:650;line-height:1.2}.hud--title p{color:var(--text-dim);letter-spacing:.08em;margin:4px 0 0;font-size:11px}.hud--hint{background:var(--glass);border:1px solid var(--glass-line);-webkit-backdrop-filter:blur(12px)saturate(140%);color:var(--text-dim);white-space:nowrap;border-radius:999px;padding:8px 12px;font-size:12px;bottom:16px;right:16px}#ui{z-index:8;width:264px;position:fixed;bottom:16px;left:16px}.panel{border-radius:var(--radius);background:var(--glass-strong);border:1px solid var(--glass-line);-webkit-backdrop-filter:blur(16px)saturate(140%);grid-template-columns:1fr 1fr;gap:10px;padding:12px;font-size:12px;display:grid;box-shadow:0 12px 34px #00000075}.panel__head{grid-column:1/-1;justify-content:space-between;align-items:center;gap:8px;display:flex}.panel__title{letter-spacing:.16em;color:var(--text-dim);font-size:12px}.panel__status{letter-spacing:.06em;border:1px solid var(--glass-line);color:var(--text-dim);background:#ffffff14;border-radius:999px;padding:3px 9px;font-size:11px;transition:color .18s,border-color .18s,background .18s}.panel__status.is-running{color:#9ce6b0;border-color:#9ce6b057}.panel__status.is-paused{color:#ffcf8a;background:#ffb46b1f;border-color:#ffcf8a66}.panel__status.is-stopped{color:#8ec8ff;border-color:#8ec8ff5c}.panel__row{grid-column:1/-1;gap:8px;display:flex}.panel__field{grid-column:1/-1;gap:5px;display:grid}.panel__label{color:var(--text-dim);letter-spacing:.06em;justify-content:space-between;align-items:baseline;display:flex}.panel__value{color:var(--accent);font-variant-numeric:tabular-nums;font-weight:600}.panel__sub{color:#a3b2c8bf;font-variant-numeric:tabular-nums;font-size:11px}.btn{-webkit-appearance:none;appearance:none;font:inherit;color:var(--text);border:1px solid var(--glass-line);cursor:pointer;background:#ffffff0f;border-radius:10px;flex:1;padding:8px 10px;font-size:12px;transition:background .16s,border-color .16s,color .16s,transform 80ms}.btn:hover{border-color:var(--glass-line-hi);background:#ffffff21}.btn:active{background:#fff3;transform:translateY(1px)scale(.99)}.btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}.btn.is-active{background:linear-gradient(180deg, #ffcb92, var(--accent-deep));color:#2a1907;border-color:#ffd7a3;font-weight:600}.segmented{background:#0000004d;border:1px solid #ffffff14;border-radius:10px;gap:4px;padding:3px;display:flex}.segmented .btn{color:var(--text-dim);background:0 0;border-color:#0000;padding:6px 4px}.segmented .btn:hover{color:var(--text);background:#ffffff1a}.segmented .btn.is-active{background:linear-gradient(180deg, #ffcb92, var(--accent-deep));color:#2a1907;border-color:#ffd7a3}.slider{--fill:50%;-webkit-appearance:none;appearance:none;cursor:pointer;background:0 0;width:100%;height:20px;margin:0}.slider::-webkit-slider-runnable-track{background:linear-gradient(90deg, var(--accent) 0%, var(--accent) var(--fill), #ffffff29 var(--fill), #ffffff29 100%);border-radius:999px;height:6px}.slider::-webkit-slider-thumb{-webkit-appearance:none;border:2px solid var(--accent);background:#fff;border-radius:50%;width:15px;height:15px;margin-top:-4.5px;transition:transform .12s;box-shadow:0 2px 6px #00000073}.slider:hover::-webkit-slider-thumb{transform:scale(1.12)}.slider:active::-webkit-slider-thumb{transform:scale(1.22)}.slider::-moz-range-track{background:#ffffff29;border-radius:999px;height:6px}.slider::-moz-range-progress{background:var(--accent);border-radius:999px;height:6px}.slider::-moz-range-thumb{border:2px solid var(--accent);background:#fff;border-radius:50%;width:13px;height:13px;box-shadow:0 2px 6px #00000073}#loader{z-index:40;background:radial-gradient(120% 100% at 50% 40%,#16202c 0%,#080b11 70%);place-items:center;transition:opacity .55s;display:grid;position:fixed;top:0;bottom:0;left:0;right:0}#loader.is-hidden{opacity:0;pointer-events:none}.loader__box{color:var(--text-dim);letter-spacing:.14em;align-items:center;gap:12px;font-size:13px;display:flex}.loader__spinner{border:2px solid #ffffff2e;border-top-color:var(--accent);border-radius:50%;width:18px;height:18px;animation:.9s linear infinite loader-spin}@keyframes loader-spin{to{transform:rotate(360deg)}}@media (max-width:720px){#ui{width:auto;bottom:8px;left:8px;right:8px}.panel{gap:8px;padding:10px}.hud--title{padding:8px 11px;top:10px;left:10px}.hud--title h1{font-size:14px}.hud--title p{display:none}.hud--hint{white-space:normal;text-align:right;max-width:44vw;font-size:11px;top:10px;bottom:auto;right:10px}}</style>
+    <script type="module" crossorigin src="./assets/index-D6nWaL1d.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <header class="hud hud--title">
+      <h1>桌面微缩铁路小镇</h1>
+      <p>THREE.JS 沙盘 · 正交等距视角</p>
+    </header>
+
+    <div class="hud hud--hint">拖拽旋转 · 滚轮缩放 · 空格暂停 · R 复位</div>
+
+    <div id="ui"></div>
+
+    <div id="loader">
+      <div class="loader__box">
+        <span class="loader__spinner"></span>
+        <span>正在布置小镇…</span>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script src="../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1b1420" />
+    <meta name="description" content="Three.js 体素风格中国古典建筑群：山门、钟鼓楼、天王殿、配殿、重檐庑殿顶大殿、藏经阁与双塔，晨昏光影。" />
+    <title>云栖古刹 · 体素中式古建筑群</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23111'/><path d='M2 7L8 3l6 4M4 8h8v5H4z' fill='%23d8aa62'/></svg>" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b1420'/%3E%3Cpath d='M16 3h2v3h-2zM13 6h8v3h-8zM11 9h12v3H11zM9 12h16v3H9zM12 15h10v10H12z' fill='%23f0cf8a'/%3E%3Cpath d='M14 19h6v6h-6z' fill='%23b4271f'/%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --gold: #f0cf8a;
+        --gold-strong: #ffd98a;
+        --ink: rgba(22, 16, 26, 0.55);
+        --ink-strong: rgba(22, 16, 26, 0.78);
+        --line: rgba(240, 207, 138, 0.28);
+        --font: "STKaiti", "KaiTi", "Kaiti SC", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC",
+          "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+        --font-ui: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", system-ui, -apple-system, "Segoe UI",
+          sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #120e18; color: #f5ead2; font-family: var(--font-ui); }
+      #app { position: fixed; inset: 0; }
+      #app canvas { display: block; width: 100%; height: 100%; outline: none; touch-action: none; }
+      #vignette {
+        position: fixed; inset: 0; pointer-events: none; z-index: 2;
+        background: radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 58%, rgba(10,6,16,0.34) 100%);
+      }
+
+      /* ---- HUD -------------------------------------------------------- */
+      .glass {
+        background: var(--ink);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(8px) saturate(1.2);
+        -webkit-backdrop-filter: blur(8px) saturate(1.2);
+        border-radius: 12px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      }
+      #hud-title { position: fixed; z-index: 5; left: 22px; top: 18px; pointer-events: none; text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
+      #hud-title h1 { margin: 0; font-family: var(--font); font-weight: 700; font-size: 30px; letter-spacing: 0.32em; color: var(--gold-strong); }
+      #hud-title p { margin: 6px 0 0 2px; font-size: 12px; letter-spacing: 0.22em; color: rgba(255,240,214,0.82); }
+      #hud-right { position: fixed; z-index: 5; right: 18px; top: 16px; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+      #hud-right .row { display: flex; gap: 6px; padding: 6px; }
+      #stats { font-size: 11px; letter-spacing: 0.04em; padding: 6px 10px; color: rgba(255,240,214,0.85); font-variant-numeric: tabular-nums; }
+      #hud-time { position: fixed; z-index: 5; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px 14px 10px; }
+      #hud-time .row { display: flex; gap: 6px; align-items: center; }
+      #hud-views { position: fixed; z-index: 5; left: 18px; bottom: 18px; display: flex; flex-direction: column; gap: 6px; padding: 8px; }
+      #hud-views .cap, #hud-time .cap { font-size: 10px; letter-spacing: 0.3em; color: rgba(240,207,138,0.7); margin: 0 2px 2px; }
+      #hint { position: fixed; z-index: 5; right: 18px; bottom: 18px; font-size: 11px; letter-spacing: 0.08em; color: rgba(255,240,214,0.75); text-shadow: 0 1px 8px rgba(0,0,0,0.7); text-align: right; line-height: 1.7; pointer-events: none; }
+
+      button.btn {
+        appearance: none; border: 1px solid transparent; cursor: pointer;
+        font-family: var(--font); font-size: 14px; letter-spacing: 0.18em; padding: 7px 13px 7px 15px;
+        color: #f5e6c4; background: rgba(255,255,255,0.06); border-radius: 8px; transition: all 0.16s ease;
+      }
+      button.btn:hover { background: rgba(240,207,138,0.16); border-color: var(--line); }
+      button.btn.on { background: linear-gradient(180deg, rgba(240,207,138,0.34), rgba(240,170,90,0.24)); border-color: rgba(240,207,138,0.6); color: #fff4d8; }
+      button.btn.small { font-size: 12px; padding: 5px 10px 5px 12px; letter-spacing: 0.12em; font-family: var(--font-ui); }
+      button.btn:focus-visible { outline: 2px solid var(--gold-strong); outline-offset: 2px; }
+      #hud-views button.btn { text-align: left; min-width: 92px; }
+      input[type="range"] { -webkit-appearance: none; appearance: none; width: 340px; max-width: 62vw; height: 6px; border-radius: 4px; outline: none;
+        background: linear-gradient(90deg, #0d1330 0%, #3a3a7c 12%, #ffb08a 25%, #7fb0e8 50%, #ffb87c 71%, #8a6aa8 78%, #0d1330 90%); }
+      input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff2cf; border: 2px solid #c4923a; cursor: pointer; box-shadow: 0 0 10px rgba(255,220,150,0.7); }
+      input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #fff2cf; border: 2px solid #c4923a; cursor: pointer; }
+      #clock { font-size: 11px; letter-spacing: 0.12em; color: rgba(255,240,214,0.85); min-width: 46px; text-align: center; font-variant-numeric: tabular-nums; }
+
+      /* ---- building labels ------------------------------------------- */
+      #labels { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+      .label { position: absolute; left: 0; top: 0; transform: translate(-50%, -100%); white-space: nowrap; will-change: transform, opacity; opacity: 0; }
+      .label .tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px 3px 8px; font-family: var(--font); font-size: 15px; letter-spacing: 0.1em; color: #fff0cf;
+        background: rgba(30, 18, 22, 0.62); border: 1px solid rgba(240,207,138,0.5); border-radius: 999px; backdrop-filter: blur(3px); box-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+      .label .tag { pointer-events: auto; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+      .label .tag:hover { background: rgba(120, 60, 30, 0.85); border-color: rgba(255, 220, 140, 0.95); }
+      .label .tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--gold-strong); box-shadow: 0 0 8px var(--gold-strong); font-style: normal; }
+      .label .tag small { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em; color: rgba(255,232,190,0.7); }
+      .label .stem { width: 1px; height: 14px; margin: 0 auto; background: linear-gradient(180deg, rgba(240,207,138,0.85), rgba(240,207,138,0)); }
+      .label.rank-1 .tag { font-size: 19px; padding: 4px 13px 4px 11px; background: rgba(120, 30, 24, 0.7); border-color: rgba(255,210,120,0.8); }
+      .label.rank-3 .tag { font-size: 13px; }
+      body.no-labels #labels { display: none; }
+      body.no-hud #hud-title, body.no-hud #hud-right, body.no-hud #hud-time, body.no-hud #hud-views, body.no-hud #hint { display: none; }
+
+      /* ---- loading ---------------------------------------------------- */
+      #loading { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+        background: radial-gradient(ellipse at 50% 40%, #3a2230 0%, #170f1c 70%); transition: opacity 0.8s ease, visibility 0.8s; }
+      #loading.done { opacity: 0; visibility: hidden; }
+      #loading h2 { margin: 0; font-family: var(--font); font-weight: 700; font-size: 44px; letter-spacing: 0.5em; padding-left: 0.5em; color: var(--gold-strong); }
+      #loading p { margin: 0; font-size: 13px; letter-spacing: 0.3em; color: rgba(255,240,214,0.75); }
+      #loading .bar { width: 240px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.12); overflow: hidden; }
+      #loading .bar i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, #f0cf8a, #ff9d5c); transition: width 0.25s ease; }
+      #fatal { position: fixed; inset: 0; z-index: 30; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 32px; text-align: center; background: #170f1c; color: #f5e6c4; font-size: 15px; line-height: 1.8; }
+
+      @media (max-width: 760px) {
+        #hud-title { left: 12px; top: 10px; }
+        #hud-title h1 { font-size: 21px; letter-spacing: 0.24em; }
+        #hud-title p { display: none; }
+        #hint, #stats { display: none; }
+        #hud-right { top: 44px; left: 10px; right: 10px; align-items: flex-start; }
+        #hud-right .row { padding: 4px; gap: 4px; flex-wrap: wrap; }
+        #hud-views { flex-direction: row; left: 10px; right: 10px; bottom: 92px; padding: 6px; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+        #hud-views::-webkit-scrollbar { display: none; }
+        #hud-views .cap { display: none; }
+        #hud-views button.btn { min-width: 0; white-space: nowrap; flex: 0 0 auto; }
+        #hud-time { left: 10px; right: 10px; bottom: 10px; transform: none; padding: 8px 10px; }
+        #hud-time .row { width: 100%; justify-content: center; }
+        #hud-time .row:last-child { gap: 10px; }
+        input[type="range"] { width: 100%; max-width: none; flex: 1 1 auto; }
+        button.btn { padding: 5px 8px 5px 10px; font-size: 13px; letter-spacing: 0.08em; }
+        button.btn.small { font-size: 12px; padding: 5px 8px; letter-spacing: 0.06em; }
+        .label .tag small { display: none; }
+        .label .tag { font-size: 12px !important; padding: 2px 7px 2px 6px; }
+        .label.rank-1 .tag { font-size: 14px !important; }
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-DBcmgs64.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="vignette"></div>
+    <div id="labels"></div>
+
+    <header id="hud-title">
+      <h1>云栖古刹</h1>
+      <p>VOXEL TEMPLE · 体素中式古建筑群</p>
+    </header>
+
+    <div id="hud-right">
+      <div class="glass row">
+        <button class="btn small on" id="btn-labels" title="显示/隐藏建筑标注 (L)">标注</button>
+        <button class="btn small" id="btn-rotate" title="自动环游 (R)">环游</button>
+        <button class="btn small" id="btn-cycle" title="昼夜流转 (C)">流转</button>
+        <button class="btn small" id="btn-quality" title="画质：自动 / 高 / 中 / 低 / 极简 (Q)">画质·自动</button>
+        <button class="btn small" id="btn-shot" title="保存当前画面为 PNG (P)">拍照</button>
+      </div>
+      <div class="glass" id="stats">载入中…</div>
+    </div>
+
+    <div id="hud-views" class="glass">
+      <div class="cap">视 角</div>
+      <button class="btn small on" data-view="overview">全 景</button>
+      <button class="btn small" data-view="axis">中 轴</button>
+      <button class="btn small" data-view="hall">主 殿</button>
+      <button class="btn small" data-view="gate">山 门</button>
+      <button class="btn small" data-view="pagoda">宝 塔</button>
+      <button class="btn small" data-view="top">俯 瞰</button>
+    </div>
+
+    <div id="hud-time" class="glass">
+      <div class="row" id="time-presets"></div>
+      <div class="row">
+        <span id="clock">--:--</span>
+        <input id="time-slider" type="range" min="0" max="1000" value="715" aria-label="时间" />
+      </div>
+    </div>
+
+    <div id="hint">左键拖拽旋转 · 滚轮缩放 · 右键平移<br />数字键 1-6 切换视角 · L 标注 · C 昼夜流转</div>
+
+    <div id="loading">
+      <h2>云栖古刹</h2>
+      <div class="bar"><i id="loading-bar"></i></div>
+      <p id="loading-text">正在营造殿宇…</p>
+    </div>
+    <div id="fatal"></div>
+
+  </body>
+</html>

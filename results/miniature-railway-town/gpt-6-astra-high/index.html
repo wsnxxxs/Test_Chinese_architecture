@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f1e9" />
+    <meta name="description" content="松溪镇，一座在桌面上缓缓运转的微缩铁路小镇。" />
+    <title>松溪镇 · The Little Railway</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script type="module" crossorigin src="./assets/index-C9KFRa5V.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-8spMTECN.css">
+  </head>
+  <body>
+    <div id="app">
+      <header class="masthead">
+        <a class="brand" href="./" aria-label="The Little Railway 首页"><span class="brand-mark">↟</span><span>THE LITTLE<br />RAILWAY<span class="brand-period">®</span></span></a>
+        <div class="edition">小小世界，慢慢经过。<span>AN INTERACTIVE MINIATURE · No. 001</span></div>
+        <button class="help-button" id="help" aria-label="显示操作说明" aria-expanded="false">?</button>
+      </header>
+      <main>
+        <div class="intro"><div class="eyebrow"><span></span> A PLACE TO SLOW DOWN</div><h1>松溪镇<span>Willow Creek</span></h1><p>让时间慢一点，<br />等下一班小火车经过。</p><div class="intro-rule"></div><div class="specimen">手作风景 / 环线铁路 / 日与夜</div></div>
+        <div id="scene" aria-label="可以拖动旋转、滚轮缩放的微缩铁路小镇"></div>
+        <div id="loading"><span class="loading-rail"></span>正在搭建小小世界…</div>
+        <aside class="environment" aria-label="场景光照"><span class="panel-label">光影时刻 <span>TIME OF DAY</span></span><div class="segmented"><button id="day" class="selected" aria-pressed="true"><span>☀</span> 暖阳</button><button id="night" aria-pressed="false"><span>☾</span> 夜色</button></div><p id="light-caption">17:30 <span>·</span> 日落之前的金色时光</p></aside>
+        <div class="scene-caption"><span class="small-cross">＋</span><span>松溪镇环线<span class="caption-sub">WILLOW CREEK LOOP</span></span></div>
+        <div class="compass" aria-hidden="true"><span>N</span><svg viewBox="0 0 60 60"><path d="M30 7 39 42 30 35 21 42Z" fill="currentColor"/><circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" stroke-width=".6"/></svg></div>
+        <div class="help-popover" id="help-panel" hidden><strong>把小镇放在掌心</strong><p>拖动旋转视角，滚轮或双指缩放。<br />空格键运行 / 暂停，R 键复位。<br />列车每次进站停留 2 秒。</p><span>复位将恢复暖阳、初始机位和 1× 速度。</span></div>
+        <section class="transport" aria-label="列车控制">
+          <button id="toggle" class="play-button" aria-label="暂停列车"><svg viewBox="0 0 20 20"><path d="M6 4v12M14 4v12"/></svg></button>
+          <div class="journey"><span class="live-status"><i></i><span id="status">正在环线行驶</span></span><span id="journey-detail">松溪站 · 每圈停留 2 秒</span></div>
+          <div class="control-divider"></div>
+          <label class="speed-control" for="speed"><span>行驶速度 <output id="speed-value">1.0×</output></span><input id="speed" type="range" min="0.25" max="2" step="0.25" value="1" aria-label="列车速度" /></label>
+          <div class="control-divider"></div>
+          <button id="reset" class="reset-button" title="恢复初始状态"><svg viewBox="0 0 24 24"><path d="M4 9a8 8 0 1 1 0 6M4 4v5h5"/></svg><span>复位</span></button>
+        </section>
+      </main>
+      <footer><span><i></i> A SMALL WORLD, ALWAYS IN MOTION.</span><span class="instructions"><span>↔</span> 拖动旋转 <b>·</b> 滚轮缩放 <b>·</b> 自在探索</span><span class="footer-right">用一点想象，造一座小镇 <span>↗</span></span></footer>
+    </div>
+  </body>
+</html>

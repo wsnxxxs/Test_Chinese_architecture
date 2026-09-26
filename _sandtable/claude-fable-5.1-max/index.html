@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script src="../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>体素·中式古建筑群 | Voxel Chinese Temple Complex</title>
+    <link rel="icon" href="data:," />
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #1b2140; font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; }
+      #app { position: fixed; inset: 0; }
+      canvas { display: block; }
+      .hud { position: fixed; color: #f3e9d8; text-shadow: 0 1px 3px rgba(0,0,0,.7); pointer-events: none; user-select: none; }
+      #title { left: 18px; top: 14px; }
+      #title h1 { margin: 0; font-size: 22px; letter-spacing: 3px; font-weight: 600; }
+      #title p { margin: 4px 0 0; font-size: 12px; opacity: .8; letter-spacing: 1px; }
+      #stats { left: 18px; bottom: 14px; font-size: 12px; line-height: 1.7; opacity: .9; }
+      #hint { right: 18px; bottom: 14px; font-size: 12px; text-align: right; line-height: 1.7; opacity: .85; }
+      #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #f3e9d8; font-size: 16px; letter-spacing: 2px; background: #1b2140; transition: opacity .6s; }
+      #loading.hide { opacity: 0; pointer-events: none; }
+      kbd { background: rgba(255,255,255,.15); border-radius: 3px; padding: 0 5px; font-family: inherit; }
+    </style>
+    <script type="module" crossorigin src="./assets/index-CnSAKEm3.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="title" class="hud">
+      <h1>体素 · 中式古建筑群</h1>
+      <p>山门 → 放生池 → 钟鼓楼 → 大雄宝殿 → 东西配殿 → 舍利宝塔 &nbsp;|&nbsp; Three.js Voxel Scene</p>
+    </div>
+    <div id="stats" class="hud"></div>
+    <div id="hint" class="hud">
+      左键拖动旋转 · 右键平移 · 滚轮缩放<br />
+      <kbd>R</kbd> 自动环绕开/关 &nbsp; <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 预设机位
+    </div>
+    <div id="loading">正在生成体素世界…</div>
+  </body>
+</html>

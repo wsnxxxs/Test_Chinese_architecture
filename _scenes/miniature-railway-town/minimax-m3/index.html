@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head><script src="../../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>桌面微缩铁路镇 · Miniature Railway Town</title>
+    <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23c98c4a'/><rect x='4' y='22' width='24' height='4' fill='%235a3a1f'/></svg>" />
+    <style>
+      :root {
+        --panel-bg: rgba(28, 22, 18, 0.78);
+        --panel-stroke: rgba(255, 222, 168, 0.18);
+        --text-main: #fff2d8;
+        --text-dim: #d6b78a;
+        --accent: #ffb15c;
+        --accent-strong: #ffd28a;
+        --ok: #8de29b;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #111;
+        color: var(--text-main);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      #app {
+        position: fixed;
+        inset: 0;
+      }
+      #scene-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        cursor: grab;
+      }
+      #scene-canvas:active { cursor: grabbing; }
+
+      /* Loading veil – covered synchronously on first frame, so users see the sandbox immediately. */
+      #loading {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at 50% 40%, #2a1a10 0%, #0d0805 100%);
+        color: var(--text-dim);
+        font-size: 14px;
+        letter-spacing: 0.12em;
+        z-index: 5;
+        pointer-events: none;
+      }
+
+      .panel {
+        position: fixed;
+        background: var(--panel-bg);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid var(--panel-stroke);
+        border-radius: 12px;
+        padding: 14px 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        user-select: none;
+      }
+
+      /* Top-left brand */
+      #brand {
+        top: 18px;
+        left: 18px;
+        padding: 10px 14px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+      #brand .title {
+        font-size: 13px;
+        color: var(--accent-strong);
+      }
+      #brand .sub {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 2px;
+      }
+
+      /* Top-right HUD: speed and dwell info */
+      #hud {
+        top: 18px;
+        right: 18px;
+        min-width: 200px;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      #hud .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      #hud .row span:first-child { color: var(--text-dim); }
+      #hud .row span:last-child {
+        color: var(--accent-strong);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Bottom controls */
+      #controls {
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+      }
+      .btn {
+        appearance: none;
+        background: linear-gradient(180deg, rgba(255, 200, 130, 0.18), rgba(255, 200, 130, 0.06));
+        color: var(--accent-strong);
+        border: 1px solid rgba(255, 200, 130, 0.35);
+        border-radius: 8px;
+        padding: 8px 14px;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background 0.15s, transform 0.1s;
+        min-width: 76px;
+      }
+      .btn:hover { background: linear-gradient(180deg, rgba(255, 200, 130, 0.28), rgba(255, 200, 130, 0.12)); }
+      .btn:active { transform: translateY(1px); }
+      .btn.primary {
+        background: linear-gradient(180deg, #ffb15c, #d9892a);
+        color: #2a1a10;
+        font-weight: 600;
+        border-color: rgba(255, 200, 130, 0.65);
+      }
+      .btn.primary:hover { filter: brightness(1.07); }
+
+      .slider-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 160px;
+      }
+      .slider-group label {
+        font-size: 11px;
+        color: var(--text-dim);
+        letter-spacing: 0.08em;
+      }
+      .slider-group .val {
+        font-size: 12px;
+        color: var(--accent-strong);
+        font-variant-numeric: tabular-nums;
+      }
+      input[type="range"] {
+        appearance: none;
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 222, 168, 0.18);
+        border-radius: 999px;
+        outline: none;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        background: var(--accent-strong);
+        border-radius: 50%;
+        border: 2px solid #2a1a10;
+        cursor: pointer;
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 14px;
+        height: 14px;
+        background: var(--accent-strong);
+        border-radius: 50%;
+        border: 2px solid #2a1a10;
+        cursor: pointer;
+      }
+
+      .toggle {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        color: var(--text-main);
+      }
+      .toggle .switch {
+        position: relative;
+        width: 36px;
+        height: 20px;
+        background: rgba(255, 222, 168, 0.18);
+        border: 1px solid rgba(255, 222, 168, 0.28);
+        border-radius: 999px;
+        transition: background 0.2s;
+      }
+      .toggle .knob {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 14px;
+        height: 14px;
+        background: var(--text-main);
+        border-radius: 50%;
+        transition: transform 0.2s, background 0.2s;
+      }
+      .toggle.night .switch {
+        background: linear-gradient(90deg, #2a3a6a, #1a2447);
+      }
+      .toggle.night .knob {
+        transform: translateX(16px);
+        background: #b8c8ff;
+      }
+
+      #hint {
+        position: fixed;
+        bottom: 84px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        color: var(--text-dim);
+        letter-spacing: 0.06em;
+        pointer-events: none;
+        opacity: 0.7;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-DmxmCFrB.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene-canvas"></canvas>
+      <div id="loading">加载中…</div>
+
+      <div id="brand" class="panel">
+        <div class="title">桌面微缩铁路镇</div>
+        <div class="sub">Miniature Railway Town · Three.js</div>
+      </div>
+
+      <div id="hud" class="panel">
+        <div class="row"><span>运行状态</span><span id="hud-state">运行中</span></div>
+        <div class="row"><span>速度</span><span id="hud-speed">1.00×</span></div>
+        <div class="row"><span>时段</span><span id="hud-time">傍晚</span></div>
+        <div class="row"><span>到站倒计时</span><span id="hud-dwell">—</span></div>
+      </div>
+
+      <div id="controls" class="panel">
+        <button id="btn-play" class="btn primary">暂停</button>
+        <button id="btn-reset" class="btn">复位</button>
+        <div class="slider-group">
+          <label>速度 <span class="val" id="speed-val">1.00×</span></label>
+          <input id="speed" type="range" min="0.2" max="3" step="0.05" value="1" />
+        </div>
+        <div class="toggle" id="daynight">
+          <div class="switch"><div class="knob"></div></div>
+          <span id="daynight-label">白天 / 夜晚</span>
+        </div>
+      </div>
+
+      <div id="hint">拖拽旋转 · 滚轮缩放</div>
+    </div>
+
+  </body>
+</html>

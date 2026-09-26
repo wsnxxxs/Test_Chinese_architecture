@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>桌面微缩铁路小镇</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #1a1a22; }
+    #app { position: fixed; inset: 0; }
+    #app canvas { display: block; }
+
+    #ui {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 240px;
+      padding: 14px 16px;
+      background: rgba(20, 20, 28, 0.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #e8e6e3;
+      font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      font-size: 13px;
+      user-select: none;
+      z-index: 10;
+    }
+    #ui h1 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .row label { flex: 0 0 auto; color: #b8b4ac; }
+    button {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      color: #e8e6e3;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    button:hover { background: rgba(255,255,255,0.12); }
+    button.active { background: #c8842a; border-color: #c8842a; color: #fff; }
+    input[type="range"] { flex: 1; accent-color: #c8842a; }
+    #speed-label { flex: 0 0 44px; text-align: right; color: #d8d4cc; font-variant-numeric: tabular-nums; }
+    #status { color: #a09c94; font-size: 12px; margin-top: 2px; }
+    .hint {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.55);
+      font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+      z-index: 10;
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/index-BQCDPltj.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div id="ui">
+    <h1>微缩铁路小镇</h1>
+    <div class="row">
+      <button id="btn-run">暂停</button>
+      <button id="btn-reset">复位</button>
+    </div>
+    <div class="row">
+      <label>速度</label>
+      <input id="speed" type="range" min="0.25" max="3" step="0.25" value="1" />
+      <span id="speed-label">1.00x</span>
+    </div>
+    <div class="row">
+      <button data-time="day">白天</button>
+      <button data-time="dusk" class="active">傍晚</button>
+      <button data-time="night">夜晚</button>
+    </div>
+    <div id="status">运行中 · 1.00x</div>
+  </div>
+
+  <div class="hint">拖动旋转 · 滚轮缩放 · 右键平移</div>
+
+</body>
+</html>

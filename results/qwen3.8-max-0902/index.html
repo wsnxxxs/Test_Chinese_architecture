@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script data-aob-probe>(function(){if(window.parent===window)return;var d=!1;function s(){if(d)return;d=!0;try{parent.postMessage("aob:work-ready","*")}catch(e){}}var r=window.requestAnimationFrame;window.requestAnimationFrame=function(c){s();return r.call(window,c)};if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){setTimeout(s,250)},{once:!0})}else{setTimeout(s,250)}})();</script>
+    <meta charset="UTF-8" />
+    <style data-aob-ui>html.aob-hide-ui .hud-list,html.aob-hide-ui .hud-hint,html.aob-hide-ui .hud-stats{display:none !important;}</style>
+    <script data-aob-ui>(function(){if(document.documentElement.dataset.aobUi!==undefined)return;document.documentElement.dataset.aobUi="1";var held=/(?:^|[?&])aob=prev(?:&|$)/.test(location.search);function apply(){document.documentElement.classList.toggle("aob-hide-ui",held)}apply();window.addEventListener("keydown",function(e){if(e.key!=="h"&&e.key!=="H")return;var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.isContentEditable))return;held=!held;apply()});window.addEventListener("message",function(e){if(e.data==="aob-ui-show"){held=false;apply()}if(e.data==="aob-ui-hold"){held=true;apply()}})})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>体素 · 中国古典建筑群</title>
+    <script type="module" crossorigin src="./assets/index-BKnIZqtq.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CNqg9JUY.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="hud">
+      <div class="hud-title">体素 · 中国古典建筑群</div>
+      <div class="hud-sub">Voxel Chinese Classical Architecture</div>
+      <ul class="hud-list">
+        <li><b>中轴</b>：山门 → 泮池石桥 → 庭院 → 主殿 → 后殿 → 宝塔</li>
+        <li><b>两翼</b>：东西配殿 · 钟鼓楼 · 抄手游廊</li>
+        <li><b>形制</b>：庑殿顶 · 歇山顶 · 攒尖顶 · 斗拱 · 台基</li>
+      </ul>
+      <div class="hud-hint">拖拽旋转 · 滚轮缩放 · 右键平移 · 场景自动环视</div>
+      <div class="hud-stats" id="stats">正在生成体素…</div>
+    </div>
+  </body>
+</html>

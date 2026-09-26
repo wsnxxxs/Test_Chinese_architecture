@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AXIS 68 · 原创紧凑机械键盘交互式产品展示与配置页面" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23222429'/%3E%3Crect x='10' y='14' width='44' height='12' rx='3' fill='%23e8842c'/%3E%3Crect x='10' y='32' width='12' height='12' rx='3' fill='%23e9e6de'/%3E%3Crect x='26' y='32' width='12' height='12' rx='3' fill='%23e9e6de'/%3E%3Crect x='42' y='32' width='12' height='12' rx='3' fill='%23e9e6de'/%3E%3C/svg%3E"
+    />
+    <title>AXIS 68 · 机械键盘配置间</title>
+    <script type="module" crossorigin src="./assets/index-B7IsAj-J.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-GLfmSeiw.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- 左侧：产品信息 + 配置控件 -->
+      <aside id="panel">
+        <header class="intro">
+          <p class="eyebrow"><span class="mark"></span>AXIS KEYS · 原创设计</p>
+          <h1>AXIS&nbsp;68</h1>
+          <p class="tagline">68 键紧凑机械键盘 · Gasket 消音结构</p>
+          <p class="desc">
+            以「手感与声音先行」打造的紧凑配列：五行的 68 键里，方向键与编辑区各归其位；
+            Gasket 内胆加三层消音填充，让每一次敲击都干净利落。下方随心搭配外壳与键帽，右侧即刻预览成品。
+          </p>
+          <ul class="chips">
+            <li>65% 配列</li>
+            <li>Gasket</li>
+            <li>全键热插拔</li>
+            <li>PBT 键帽</li>
+            <li>三模连接</li>
+            <li>出厂润轴</li>
+          </ul>
+        </header>
+
+        <section class="control">
+          <h2>外壳配色</h2>
+          <div class="swatches cases" id="caseSwatches" role="radiogroup" aria-label="外壳配色"></div>
+        </section>
+
+        <section class="control">
+          <h2>键帽主题</h2>
+          <div class="swatches themes" id="themeSwatches" role="radiogroup" aria-label="键帽主题"></div>
+        </section>
+
+        <section class="control">
+          <h2>体验</h2>
+          <label class="switch">
+            <input type="checkbox" id="explodeToggle" />
+            <span class="track" aria-hidden="true"></span>
+            <span class="label">拆解视图 — 键帽 / 定位板 / 底壳分层</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="experienceToggle" />
+            <span class="track" aria-hidden="true"></span>
+            <span class="label">键入体验 — 敲击 A–Z / 空格看键帽回弹</span>
+          </label>
+          <input id="typingDemo" type="text" placeholder="或在输入框里打字：3D 键盘不会抢戏" autocomplete="off" spellcheck="false" />
+        </section>
+
+        <section class="summary" aria-label="配置摘要">
+          <h2>配置摘要</h2>
+          <dl>
+            <div><dt>外壳</dt><dd id="sumCase">—</dd></div>
+            <div><dt>键帽</dt><dd id="sumTheme">—</dd></div>
+            <div><dt>结构</dt><dd id="sumStruct">—</dd></div>
+            <div><dt>大键</dt><dd>卫星轴 · 出厂润滑</dd></div>
+            <div><dt>连接</dt><dd>USB-C · 2.4G · 蓝牙</dd></div>
+          </dl>
+          <p class="saved" id="savedAt">配置将自动保存在本浏览器</p>
+          <button id="resetDefaults" class="ghost" type="button">恢复默认</button>
+          <p class="fineprint">「恢复默认」只清除此页面保存在本浏览器的配置。</p>
+        </section>
+      </aside>
+
+      <!-- 右侧：3D 舞台 -->
+      <main id="stage" aria-label="3D 产品预览">
+        <div class="hud">
+          <button id="resetView" class="ghost" type="button" title="回到默认视角">⌖ 复位视角</button>
+          <button id="soundToggle" class="ghost" type="button" title="开关按键音" aria-pressed="true">🔊 按键音</button>
+        </div>
+        <p class="hint">拖拽旋转 · 滚轮 / 双指缩放 · 点按键帽试轴 · A–Z / 空格键入体验</p>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script data-aob-probe>(function(){if(window.parent===window)return;var d=!1;function s(){if(d)return;d=!0;try{parent.postMessage("aob:work-ready","*")}catch(e){}}var r=window.requestAnimationFrame;window.requestAnimationFrame=function(c){s();return r.call(window,c)};if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){setTimeout(s,250)},{once:!0})}else{setTimeout(s,250)}})();</script>
+  <meta charset="UTF-8" />
+  <style data-aob-ui>html.aob-hide-ui #toggleLight,html.aob-hide-ui #fps,html.aob-hide-ui #hint{display:none !important;}</style>
+  <script data-aob-ui>(function(){if(document.documentElement.dataset.aobUi!==undefined)return;document.documentElement.dataset.aobUi="1";var held=/(?:^|[?&])aob=prev(?:&|$)/.test(location.search);function apply(){document.documentElement.classList.toggle("aob-hide-ui",held)}apply();window.addEventListener("keydown",function(e){if(e.key!=="h"&&e.key!=="H")return;var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.isContentEditable))return;held=!held;apply()});window.addEventListener("message",function(e){if(e.data==="aob-ui-show"){held=false;apply()}if(e.data==="aob-ui-hold"){held=true;apply()}})})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>体素 · 中国古典建筑群</title>
+  <script type="module" crossorigin src="./assets/index-BE79mCaN.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CqTZWte3.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <div id="info">
+    <h1>体素 · 中国古典建筑群</h1>
+    <p>山门 → 庭院 → 主殿 · 中轴对称 · 飞檐斗拱</p>
+    <p class="sub">主殿(重檐歇山顶) / 配殿×2 / 山门(重檐) / 钟楼·鼓楼 / 五层宝塔 / 石狮·灯笼·松柏</p>
+  </div>
+
+  <button id="toggleLight">切换: 黄昏</button>
+  <div id="fps"></div>
+  <div id="hint">拖拽旋转 · 滚轮缩放 · 右键平移</div>
+
+</body>
+</html>

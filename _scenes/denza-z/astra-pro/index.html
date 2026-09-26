@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="../../../sandtable-bridge.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e7eae7" />
+  <meta name="description" content="腾势 Z 2026 Racing 赛道版 · 程序化 Three.js 三维造型研究，自由环绕与多视角检查。" />
+  <title>DENZA Z — Racing / 3D Studio</title>
+  <link rel="icon" type="image/svg+xml" href="./public/favicon.svg" />
+  <link rel="stylesheet" href="./src/style.css" />
+  <script type="importmap">{"imports":{"three":"./public/vendor/three.module.js"}}</script>
+</head>
+<body>
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 .7 6M4 4v6h6"/></symbol>
+    <symbol id="i-orbit" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-28 12 12)"/><path d="M13 3h5v5"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14.2A9 9 0 0 1 9.8 3.5 9 9 0 1 0 20.5 14.2Z"/></symbol>
+    <symbol id="i-size" viewBox="0 0 24 24"><path d="m3 17 14-14 4 4L7 21Zm4-4 3 3m1-7 2 2m2-6 3 3"/></symbol>
+    <symbol id="i-light" viewBox="0 0 24 24"><path d="M13 5c-6 0-9 3-9 7s3 7 9 7V5Zm4 1 4-2m-4 6h5m-5 4h5m-5 4 4 2"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 7h5l2-3h4l2 3h5v13H3Z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M3 9V3h6m6 0h6v6M3 15v6h6m6 0h6v-6"/></symbol>
+    <symbol id="i-mouse" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 6v4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  </defs></svg>
+  <header class="header">
+    <a class="brand" href="./" aria-label="DENZA Z 首页"><svg viewBox="0 0 30 38" class="brand-mark"><path d="M15 1C13 7 3 19 3 25a12 12 0 0 0 24 0C27 19 17 7 15 1Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 9c-1 6-6 11-6 15a6 6 0 0 0 12 0c0-4-5-9-6-15Z" fill="currentColor"/></svg><span>DENZA<span class="brand-sub">DESIGN STUDY / 01</span></span></a>
+    <div class="header-center">THE PERFORMANCE COLLECTION<span>2026</span></div>
+    <div class="header-right"><span class="live-dot"></span><span id="runtime-status">INITIALIZING</span><button class="icon-btn" id="fullscreen" title="全屏展示" aria-label="全屏展示"><svg><use href="#i-full"/></svg></button></div>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="model-title">
+      <div class="eyebrow"><span class="yellow-line"></span> TRACK EXPRESSION</div>
+      <h1 id="model-title">Z<span class="edition">RACING</span></h1>
+      <h2>天生，为赛道。</h2>
+      <p class="model-caption">腾势 Z · 2026 款 Racing 赛道版<br/>多视角三维造型研究</p>
+      <div class="intro-rule"></div>
+      <p class="intro-note">纯粹的曲面。精准的姿态。<br/>从每一个角度，重新认识速度。</p>
+      <div class="material-block">
+        <span class="small-label">EXTERIOR / 车身涂装</span>
+        <div class="swatches" role="group" aria-label="车身涂装">
+          <button class="swatch active" data-paint="#1249ef" data-name="电光蓝" style="--swatch:#174ced" aria-label="电光蓝" aria-pressed="true"></button>
+          <button class="swatch" data-paint="#a5adb4" data-name="液态银" style="--swatch:#b8bfbe" aria-label="液态银" aria-pressed="false"></button>
+          <button class="swatch" data-paint="#171d26" data-name="曜石黑" style="--swatch:#272d34" aria-label="曜石黑" aria-pressed="false"></button>
+          <span id="paint-name">电光蓝</span>
+        </div>
+        <div class="material-tags"><span>METALLIC PAINT</span><span>CARBON AERO</span></div>
+      </div>
+    </section>
+    <section id="viewport" aria-label="腾势 Z 三维展示。拖动旋转，滚轮或双指缩放。" tabindex="0">
+      <div class="view-meta"><span id="view-code">PERSPECTIVE / 01</span><span id="view-label">前侧 3/4</span></div>
+      <div id="loader"><div class="load-track"><span></span></div><p>正在构建车身曲面…</p><span>PROCEDURAL GEOMETRY / THREE.JS</span></div>
+      <div id="error-panel" hidden><h3>场景暂时未能加载</h3><p id="error-message"></p><button onclick="location.reload()">重新加载</button></div>
+      <div class="scene-caption"><span class="crosshair">+</span> 1 UNIT = 1 METRE<span class="caption-line"></span><span>FORM FOLLOWS PERFORMANCE</span></div>
+    </section>
+    <aside class="tools" aria-label="展示工具">
+      <span class="small-label">STUDIO</span>
+      <button class="tool-btn active" id="studio-light" title="切换明亮 / 暗调影棚" aria-label="切换影棚灯光" aria-pressed="false"><svg><use href="#i-sun"/></svg></button>
+      <button class="tool-btn active" id="car-light" title="车灯开关 · L" aria-label="车灯开关" aria-pressed="true"><svg><use href="#i-light"/></svg></button>
+      <span class="tool-separator"></span>
+      <button class="tool-btn" id="dimensions" title="显示参考尺寸 · D" aria-label="显示参考尺寸" aria-pressed="false"><svg><use href="#i-size"/></svg></button>
+      <button class="tool-btn" id="capture" title="保存当前视角图片" aria-label="保存当前视角图片"><svg><use href="#i-camera"/></svg></button>
+      <div class="zoom-buttons"><button class="tool-btn" id="zoom-in" title="放大" aria-label="放大"><svg><use href="#i-plus"/></svg></button><button class="tool-btn" id="zoom-out" title="缩小" aria-label="缩小"><svg><use href="#i-minus"/></svg></button></div>
+    </aside>
+    <section class="specs" aria-label="参考车身尺寸">
+      <div class="spec"><span class="spec-number">4,870<span>mm</span></span><span class="spec-label">车长 / LENGTH</span></div>
+      <div class="spec"><span class="spec-number">1,990<span>mm</span></span><span class="spec-label">车宽 / WIDTH</span></div>
+      <div class="spec"><span class="spec-number">1,350<span>mm</span></span><span class="spec-label">车高 / HEIGHT</span></div>
+      <div class="spec"><span class="spec-number">2,780<span>mm</span></span><span class="spec-label">轴距 / WHEELBASE</span></div>
+    </section>
+    <nav class="view-dock" aria-label="预设视角">
+      <div class="dock-title"><span>EXPLORE</span><span>检查视角</span></div>
+      <div class="view-buttons">
+        <button data-view="front" aria-pressed="false"><span class="view-no">01</span><span>正前</span><span class="view-glyph front-glyph">▰</span></button>
+        <button data-view="side" aria-pressed="false"><span class="view-no">02</span><span>正侧</span><span class="view-glyph side-glyph">▰</span></button>
+        <button data-view="front34" class="active" aria-pressed="true"><span class="view-no">03</span><span>前侧 3/4</span><span class="view-glyph diagonal-glyph">▰</span></button>
+        <button data-view="rear34" aria-pressed="false"><span class="view-no">04</span><span>后侧 3/4</span><span class="view-glyph diagonal-glyph back-glyph">▰</span></button>
+        <button data-view="rear" aria-pressed="false"><span class="view-no">05</span><span>车尾</span><span class="view-glyph front-glyph rear-glyph">▰</span></button>
+      </div>
+      <div class="dock-actions"><button id="auto-orbit" title="自动环绕 · 空格" aria-pressed="false"><svg><use href="#i-orbit"/></svg><span>环绕</span></button><button id="reset" title="复位视角 · R"><svg><use href="#i-reset"/></svg><span>复位</span></button></div>
+    </nav>
+  </main>
+  <footer><span class="hint"><svg><use href="#i-mouse"/></svg>拖动旋转<span class="hint-divider">/</span>滚轮缩放<span class="hint-divider">/</span>双指触控</span><span class="footnote">基于参考图的程序化外观研究 · 非官方 CAD 模型</span><span class="footer-index">Z — 026 / R</span></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module">
+    import('./src/main.js').catch(error => {
+      console.error(error); document.querySelector('#loader').hidden=true;
+      document.querySelector('#error-panel').hidden=false;
+      document.querySelector('#runtime-status').textContent='LOAD ERROR';
+      document.querySelector('#error-message').textContent='请通过项目 HTTP 服务打开，并确认浏览器支持 WebGL 2。'+error.message;
+    });
+  </script>
+</body>
+</html>

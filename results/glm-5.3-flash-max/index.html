@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>承天宫 · 3D 体素中国建筑群</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #171225;
+        font-family: 'Songti SC', 'STSong', 'SimSun', 'Noto Serif SC', serif;
+      }
+      #app {
+        position: fixed;
+        inset: 0;
+      }
+      .ui {
+        position: fixed;
+        z-index: 10;
+        color: #f3e6cf;
+        text-shadow: 0 1px 3px rgba(20, 10, 0, 0.65);
+        pointer-events: none;
+        user-select: none;
+      }
+      .top-left {
+        top: 22px;
+        left: 26px;
+      }
+      .top-left h1 {
+        margin: 0;
+        font-size: 30px;
+        letter-spacing: 10px;
+        font-weight: 700;
+        color: #ffe9c2;
+      }
+      .top-left p {
+        margin: 6px 0 0 2px;
+        font-size: 13px;
+        letter-spacing: 3px;
+        opacity: 0.82;
+      }
+      .top-left .seal {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 1px 6px;
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #ffe9c2;
+        border: 1px solid rgba(255, 226, 168, 0.55);
+        border-radius: 2px;
+        vertical-align: 4px;
+      }
+      .top-right {
+        top: 22px;
+        right: 26px;
+        text-align: right;
+        font-size: 12px;
+        letter-spacing: 1px;
+        line-height: 1.7;
+        opacity: 0.85;
+        font-family: Consolas, monospace;
+      }
+      .bottom-left {
+        bottom: 18px;
+        left: 26px;
+        font-size: 12px;
+        letter-spacing: 2px;
+        opacity: 0.66;
+      }
+      .vignette {
+        position: fixed;
+        inset: 0;
+        z-index: 5;
+        pointer-events: none;
+        background: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0) 58%, rgba(10, 5, 18, 0.42) 100%);
+      }
+      #err {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        color: #f3e6cf;
+        background: #171225;
+        text-align: center;
+        padding-top: 40vh;
+        letter-spacing: 2px;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-BbcqlRYM.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div class="ui top-left">
+      <h1>承 天 宫<span class="seal">体素营造</span></h1>
+      <p>山门 · 钟鼓楼 · 东西配殿 · 太极殿 · 七级浮屠 —— 中轴对称院落</p>
+    </div>
+    <div class="ui top-right" id="stats"></div>
+    <div class="ui bottom-left">左键拖动旋转 · 滚轮缩放 · 右键平移</div>
+    <div class="vignette"></div>
+    <div id="err">当前浏览器不支持 WebGL，无法呈现三维场景。</div>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="../../sandtable-bridge.js"></script><script data-aob-probe>(function(){if(window.parent===window)return;var d=!1;function s(){if(d)return;d=!0;try{parent.postMessage("aob:work-ready","*")}catch(e){}}var r=window.requestAnimationFrame;window.requestAnimationFrame=function(c){s();return r.call(window,c)};if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){setTimeout(s,250)},{once:!0})}else{setTimeout(s,250)}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D体素中国古典建筑群 | Three.js Voxel Palace Complex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <style data-aob-ui>
+    html.aob-hide-ui .stats-badge { display: none !important; }
+    html.aob-hide-ui .info-drawer { display: none !important; }
+    html.aob-hide-ui .bottom-dock { display: none !important; }
+  </style>
+  <script data-aob-ui>(function(){if(document.documentElement.dataset.aobUi!==undefined)return;document.documentElement.dataset.aobUi="1";var held=/(?:^|[?&])aob=prev(?:&|$)/.test(location.search);function apply(){document.documentElement.classList.toggle("aob-hide-ui",held)}apply();window.addEventListener("keydown",function(e){if(e.key!=="h"&&e.key!=="H")return;var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.isContentEditable))return;held=!held;apply()});window.addEventListener("message",function(e){if(e.data==="aob-ui-show"){held=false;apply()}if(e.data==="aob-ui-hold"){held=true;apply()}})})();</script>
+  <script type="module" crossorigin src="./assets/index-C51B1iuN.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BGU-axD8.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 3D WebGL Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Top Left Header -->
+    <div class="header-bar glass-panel">
+      <div class="title-group">
+        <span class="seal-icon">華</span>
+        <h1 class="main-title">华夏九重天 · 3D体素中国古典建筑群</h1>
+      </div>
+      <p class="subtitle">Three.js 纯代码实时体素渲染 · 严整中轴礼制院落</p>
+    </div>
+
+    <!-- Top Right Stats HUD -->
+    <div class="stats-badge glass-panel">
+      <div class="stat-item">
+        <span class="stat-label">帧率 (FPS)</span>
+        <span id="stat-fps" class="stat-val">60</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">总生成体素</span>
+        <span id="stat-total-voxels" class="stat-val">--</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">视见渲染体素</span>
+        <span id="stat-rendered-voxels" class="stat-val">--</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Draw Calls</span>
+        <span id="stat-draw-calls" class="stat-val">--</span>
+      </div>
+    </div>
+
+    <!-- Right Side Info Drawer -->
+    <div class="info-drawer glass-panel">
+      <div class="info-title">🏛️ 中国传统建筑形制规制</div>
+      <ul class="info-list">
+        <li><strong>重檐庑殿主殿</strong>：九开间双层飞檐，最高等级礼制</li>
+        <li><strong>七级玲珑宝塔</strong>：后院八角递减攒尖，金顶相轮</li>
+        <li><strong>东西对称配殿</strong>：单檐歇山顶与回廊环抱</li>
+        <li><strong>前庭三间山门</strong>：拱券三门、迎客松与汉白玉石狮</li>
+        <li><strong>钟楼鼓楼呼应</strong>：重檐攒尖阁楼，悬挂古铜巨钟</li>
+        <li><strong>中轴御道庭院</strong>：汉白玉须弥座台阶、螭吻与香炉</li>
+      </ul>
+    </div>
+
+    <!-- Bottom Controls Dock -->
+    <div class="bottom-dock">
+      <!-- Lighting Atmosphere Controls -->
+      <div class="dock-row glass-panel">
+        <span class="dock-label">☀️ 时段光影：</span>
+        <button class="btn-ctrl" data-time="DAWN">🌅 紫禁朝晖</button>
+        <button class="btn-ctrl active" data-time="DAY">☀️ 朗朗晴空</button>
+        <button class="btn-ctrl" data-time="DUSK">🌇 落日余晖</button>
+        <button class="btn-ctrl" data-time="NIGHT">🏮 华灯夜宴</button>
+      </div>
+
+      <!-- Viewpoint & Navigation Controls -->
+      <div class="dock-row glass-panel">
+        <span class="dock-label">🧭 视角导航：</span>
+        <button class="btn-ctrl active" data-view="OVERVIEW">🏛️ 全景鸟瞰</button>
+        <button class="btn-ctrl" data-view="GATE">⛩️ 山门正视</button>
+        <button class="btn-ctrl" data-view="ROYAL_WAY">🏯 中轴御道</button>
+        <button class="btn-ctrl" data-view="MAIN_HALL">👑 主殿近景</button>
+        <button class="btn-ctrl" data-view="PAGODA">🗼 宝塔仰角</button>
+        <button class="btn-ctrl" data-view="CLOISTER">🏮 回廊曲径</button>
+        <button id="btn-tour" class="btn-ctrl btn-tour">🎥 自动巡游</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

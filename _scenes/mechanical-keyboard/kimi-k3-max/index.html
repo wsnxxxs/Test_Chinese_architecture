@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script src="../../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PRISM-68 · 棱镜系列机械键盘 | 交互式配置</title>
+    <meta name="description" content="PRISM-68 65% 紧凑布局机械键盘 —— 在线 3D 展示与个性化配置" />
+    <script type="module" crossorigin src="./assets/index-DDjmViIw.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-cOelgcoI.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- 3D 视口 -->
+      <div id="viewport">
+        <canvas id="scene"></canvas>
+        <div class="viewport-hud">
+          <div class="hud-tip" id="hud-tip">拖动旋转 · 滚轮缩放 · 点击键帽试打</div>
+        </div>
+        <div class="typing-banner" id="typing-banner" hidden>
+          <span class="dot"></span>试打体验已开启 —— 按下 A–Z 或空格试试
+        </div>
+      </div>
+
+      <!-- 配置面板 -->
+      <aside id="panel">
+        <header class="brand">
+          <div class="brand-mark">P<span>68</span></div>
+          <div class="brand-name">PRISM LAB</div>
+        </header>
+
+        <section class="hero">
+          <p class="eyebrow">棱镜系列 · 65% 紧凑布局</p>
+          <h1>PRISM-68</h1>
+          <p class="lede">
+            68 键热插拔机械键盘。CNC 阳极氧化外壳、Gasket 结构、
+            五脚轴座全键无冲 —— 为桌面而生的打字乐器。
+          </p>
+          <div class="price-row">
+            <span class="price" id="price">¥ 699</span>
+            <span class="price-note">含轴体与键帽 · 顺丰包邮</span>
+          </div>
+        </section>
+
+        <section class="config-block">
+          <h2>外壳配色 <em id="case-name"></em></h2>
+          <div class="swatches" id="case-swatches"></div>
+        </section>
+
+        <section class="config-block">
+          <h2>键帽主题 <em id="keycap-name"></em></h2>
+          <div class="swatches" id="keycap-swatches"></div>
+        </section>
+
+        <section class="config-block">
+          <h2>结构与体验</h2>
+          <div class="control-row">
+            <button class="ctl-btn" id="explode-btn" aria-pressed="false">
+              <span class="ctl-title">拆解视图</span>
+              <span class="ctl-sub">键帽 / 定位板 / 底壳 分层展开</span>
+            </button>
+            <button class="ctl-btn" id="typing-btn" aria-pressed="false">
+              <span class="ctl-title">试打体验</span>
+              <span class="ctl-sub">A–Z 与空格实时回弹</span>
+            </button>
+            <button class="ctl-btn" id="reset-view-btn">
+              <span class="ctl-title">视角复位</span>
+              <span class="ctl-sub">回到初始展示角度</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="summary" id="summary">
+          <h2>配置摘要</h2>
+          <ul>
+            <li><span>型号</span><b>PRISM-68 · 68 键</b></li>
+            <li><span>外壳</span><b id="sum-case">—</b></li>
+            <li><span>键帽</span><b id="sum-keycap">—</b></li>
+            <li><span>结构</span><b>Gasket · 热插拔</b></li>
+          </ul>
+          <div class="summary-actions">
+            <button class="ghost-btn" id="reset-config-btn">恢复默认</button>
+            <span class="save-state" id="save-state">配置已自动保存</span>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </body>
+</html>

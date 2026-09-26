@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e9e3d5" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <title>松溪镇 · 桌面微缩铁路</title>
+    <script type="module" crossorigin src="./assets/index-M1Fma4Uk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BR3sK3Y_.css">
+  </head>
+  <body>
+    <div id="app">
+      <main id="scene" aria-label="运行中的桌面微缩铁路小镇"></main>
+      <div class="vignette" aria-hidden="true"></div>
+      <header class="masthead">
+        <div class="eyebrow"><span class="eyebrow-line"></span> THE LITTLE RAILWAY COLLECTION <span class="edition">№ 01</span></div>
+        <h1>松溪<span>镇</span></h1>
+        <p>一座被铁路轻轻环抱的小镇</p>
+      </header>
+      <aside class="scene-note" aria-hidden="true">
+        <span class="note-line"></span>
+        <span>HANDCRAFTED<br />MINIATURE WORLD</span>
+      </aside>
+      <div class="status" role="status" aria-live="polite">
+        <span class="status-dot"></span><span id="status-text">列车运行中</span>
+      </div>
+      <section class="control-panel" aria-label="沙盘控制">
+        <div class="panel-heading"><span>沙盘控制台</span><span class="panel-index">01 / 04</span></div>
+        <div class="controls-row">
+          <button id="play-button" class="primary-button" type="button" aria-label="暂停列车"><span id="play-icon">Ⅱ</span><span id="play-label">暂停</span></button>
+          <button id="reset-button" class="icon-button" type="button" title="复位视角与列车" aria-label="复位视角与列车">↺</button>
+          <div class="control-divider"></div>
+          <button id="day-button" class="mode-button active" type="button" aria-label="切换到白天">☀ <span>白天</span></button>
+          <button id="night-button" class="mode-button" type="button" aria-label="切换到夜晚">☾ <span>夜晚</span></button>
+        </div>
+        <div class="speed-row"><label for="speed">行驶速度 <strong id="speed-value">1.0×</strong></label><input id="speed" type="range" min="0.4" max="2" step="0.1" value="1" /></div>
+        <div class="panel-footer"><span>拖动旋转 · 滚轮缩放</span><span>◈</span><span>约 2 秒停站</span></div>
+      </section>
+      <div class="corner-mark" aria-hidden="true">45° / 2026</div>
+    </div>
+  </body>
+</html>

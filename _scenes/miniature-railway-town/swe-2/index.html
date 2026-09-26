@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="../../../sandtable-bridge.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>微缩铁路小镇</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #f2c894;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+    #app { position: fixed; inset: 0; }
+    canvas { display: block; }
+
+    #hud {
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(40, 30, 22, 0.82);
+      border: 1px solid rgba(255, 220, 170, 0.25);
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+      color: #f5e6cf;
+      user-select: none;
+      backdrop-filter: blur(4px);
+    }
+    #hud button {
+      appearance: none;
+      border: 1px solid rgba(255, 220, 170, 0.35);
+      background: rgba(255, 200, 130, 0.12);
+      color: #f5e6cf;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    #hud button:hover {
+      background: rgba(255, 200, 130, 0.28);
+      border-color: rgba(255, 220, 170, 0.6);
+    }
+    #hud button.active {
+      background: rgba(255, 180, 90, 0.4);
+      border-color: #ffc984;
+    }
+    #hud .speed {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+    }
+    #hud input[type="range"] {
+      width: 110px;
+      accent-color: #ffb45a;
+      cursor: pointer;
+    }
+    #hud .speed-val {
+      min-width: 34px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: #ffcf9a;
+    }
+    #title {
+      position: fixed;
+      left: 16px;
+      top: 14px;
+      color: #5a3a1e;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+      pointer-events: none;
+      transition: color 0.6s;
+    }
+    #title small {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      opacity: 0.75;
+    }
+    body.night #title { color: #b8c8e8; text-shadow: none; }
+  </style>
+  <script type="module" crossorigin src="./assets/index-MubFrHWX.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="title">微缩铁路小镇<small>MINIATURE RAILWAY TOWN</small></div>
+  <div id="hud">
+    <button id="btn-play" title="运行 / 暂停">暂停</button>
+    <div class="speed">
+      <span>速度</span>
+      <input id="speed" type="range" min="0.2" max="2.5" step="0.05" value="1" />
+      <span class="speed-val" id="speed-val">1.00×</span>
+    </div>
+    <button id="btn-daynight" title="白天 / 夜晚">夜晚</button>
+    <button id="btn-reset" title="复位机位 / 列车 / 速度">复位</button>
+  </div>
+</body>
+</html>

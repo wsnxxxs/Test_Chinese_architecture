@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5f0" />
+    <meta name="description" content="FORM 68 原创机械键盘。自由组合配色，探索三层结构，亲手体验每一次敲击。" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>FORM 68 — 为你的手感而造</title>
+    <script type="module" crossorigin src="./assets/index-Cn4gDPI3.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CMqWvvB-.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#configuration">跳转至键盘配置</a>
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="物构 FORM 首页">
+        <span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>form<span class="wordmark-dot">.</span></span>
+        <span class="brand-cn">物构</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a class="active" href="#top" aria-current="page">键盘工坊</a>
+        <a href="#details">设计细节</a>
+        <button type="button" data-open-guide>使用指南 <span data-icon="help"></span></button>
+      </nav>
+      <div class="header-note"><span class="tiny-dot"></span> GOOD THINGS, WELL MADE.</div>
+    </header>
+
+    <main id="top">
+      <div class="product-grid">
+        <section class="showcase" aria-labelledby="product-title">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="edition-line"></span> THE FORM SERIES <span class="edition">/ OBJECT 001</span></div>
+            <div class="hero-title-row"><h1 id="product-title">FORM <span>68</span><sup>✳</sup></h1><span class="layout-badge">65%<span>COMPACT</span></span></div>
+            <p class="hero-tagline">小一点的布局。大不一样的手感。</p>
+            <p class="hero-description">68 枚键帽，无限种默契。为日常创作，找到属于你的配色。</p>
+          </div>
+
+          <div class="viewer-wrap">
+            <div class="viewer" id="viewer" aria-busy="true">
+              <div class="viewer-meta"><span><i class="live-dot"></i> LIVE 3D <em>实时预览</em></span><span class="view-state" id="view-state">ASSEMBLED / 组装视图</span></div>
+              <div class="stage-word" aria-hidden="true">feel every<br /><span>little thing.</span></div>
+              <div class="scene-container" id="scene-container"></div>
+              <div class="scene-loading" id="scene-loading" role="status"><span class="loader"></span><span>正在构建你的 FORM 68</span></div>
+              <div class="scene-error" id="scene-error" hidden role="alert"><span data-icon="layers"></span><strong>3D 预览暂时无法启动</strong><p id="scene-error-message">请确认浏览器支持 WebGL 2，并开启硬件加速。配色与本地保存仍可正常使用。</p><button class="text-button" id="retry-scene" type="button">重新加载预览 <span data-icon="rotate"></span></button></div>
+              <span class="stage-cross cross-tl" aria-hidden="true">+</span><span class="stage-cross cross-br" aria-hidden="true">+</span>
+              <div class="layer-legend" id="layer-legend" hidden><span><i></i>01 键帽</span><span><i></i>02 定位板</span><span><i></i>03 底壳</span></div>
+              <div class="key-indicator" id="key-indicator" hidden aria-hidden="true"><span id="key-indicator-label">A</span><small>KEY PRESSED</small></div>
+              <div class="view-tools" role="group" aria-label="3D 视角控制">
+                <div class="view-presets"><button type="button" id="view-perspective" class="selected" aria-pressed="true">立体</button><button type="button" id="view-top" aria-pressed="false">俯视</button></div>
+                <span class="tool-divider"></span>
+                <button type="button" class="icon-button" id="zoom-out" aria-label="缩小键盘" title="缩小"><span data-icon="minus"></span></button>
+                <span id="zoom-value" class="zoom-value" aria-live="off">100%</span>
+                <button type="button" class="icon-button" id="zoom-in" aria-label="放大键盘" title="放大"><span data-icon="plus"></span></button>
+                <span class="tool-divider"></span>
+                <button type="button" class="icon-button" id="reset-view" aria-label="复位视角" title="复位视角"><span data-icon="rotate"></span></button>
+              </div>
+            </div>
+            <div class="viewer-bottom"><span class="gesture-help"><span data-icon="move"></span><span class="desktop-gesture">拖动旋转 · 滚轮缩放</span><span class="touch-gesture">单指旋转 · 双指缩放</span></span><button id="explode-toggle" class="explode-button" type="button" aria-pressed="false"><span data-icon="layers"></span><span id="explode-label">拆解键盘</span><span class="mini-plus" aria-hidden="true">↗</span></button></div>
+            <div class="mobile-palette" id="mobile-palette" aria-label="快捷配色"></div>
+          </div>
+
+          <div class="experience-panel" id="experience-panel">
+            <div class="experience-top"><div class="experience-icon"><span data-icon="keyboard"></span></div><div class="experience-copy"><h2>触感实验室 <span>TRY IT OUT</span></h2><p id="experience-hint">打开试打，体验每一枚键帽的回响。</p></div><button class="switch" id="experience-toggle" type="button" role="switch" aria-checked="false" aria-label="键盘体验模式"><span></span></button></div>
+            <div class="typing-lab" id="typing-lab" hidden><div class="typing-output" id="typing-output" aria-label="试打内容">FORM FOLLOWS FEELING<span class="typing-caret"></span></div><div class="typing-meta"><span><strong id="hit-count">0</strong> 次敲击</span><button class="icon-button sound-button" id="sound-toggle" type="button" aria-pressed="false" aria-label="开启合成键音" title="开启合成键音"><span data-icon="mute"></span></button><button type="button" class="clear-typing" id="clear-typing">清空</button></div></div>
+          </div>
+          <div class="showcase-caption"><span class="caption-mark">F / 68</span><span>LESS, BUT JUST RIGHT.</span><span>为你的日常，留一点灵感。</span></div>
+        </section>
+
+        <aside class="config-card" id="configuration" aria-labelledby="config-title">
+          <div class="config-head"><div class="eyebrow">MAKE IT YOURS <span class="config-index">01 — 03</span></div><h2 id="config-title">让它，成为你的。</h2><p>从色彩开始，构建你的桌面个性。</p></div>
+          <form id="config-form" autocomplete="off">
+            <fieldset class="option-section"><legend><span class="step-no">01</span>外壳配色 <span class="current-option" id="shell-label">苔原绿</span></legend>
+              <div class="shell-options">
+                <label class="shell-option"><input type="radio" name="shell" value="moss" checked /><span class="shell-swatch" style="--swatch:#647053"><span data-icon="check"></span></span><span>苔原绿</span><small>MOSS</small></label>
+                <label class="shell-option"><input type="radio" name="shell" value="stone" /><span class="shell-swatch" style="--swatch:#52595c"><span data-icon="check"></span></span><span>月岩灰</span><small>GRAPHITE</small></label>
+                <label class="shell-option"><input type="radio" name="shell" value="sand" /><span class="shell-swatch" style="--swatch:#c6b596"><span data-icon="check"></span></span><span>沙丘米</span><small>SAND</small></label>
+              </div>
+            </fieldset>
+            <fieldset class="option-section"><legend><span class="step-no">02</span>键帽主题 <span class="current-option" id="theme-label">原野</span></legend>
+              <div class="theme-options">
+                <label class="theme-option"><input type="radio" name="theme" value="field" checked /><span class="mini-keys" style="--cap1:#eeeddf;--cap2:#d4d7bd;--cap3:#6e7d52;--ink:#39422f"><i>A</i><i>S</i><i>D</i></span><span>原野 <small>FIELD</small></span><span class="theme-check" data-icon="check"></span></label>
+                <label class="theme-option"><input type="radio" name="theme" value="mist" /><span class="mini-keys" style="--cap1:#f0f0ea;--cap2:#d8dddd;--cap3:#a0b5bb;--ink:#39464b"><i>A</i><i>S</i><i>D</i></span><span>雾白 <small>MIST</small></span><span class="theme-check" data-icon="check"></span></label>
+                <label class="theme-option"><input type="radio" name="theme" value="dusk" /><span class="mini-keys" style="--cap1:#4c5552;--cap2:#343e39;--cap3:#cbb38b;--ink:#f1f0e6"><i>A</i><i>S</i><i>D</i></span><span>暮色 <small>DUSK</small></span><span class="theme-check" data-icon="check"></span></label>
+              </div>
+            </fieldset>
+            <div class="name-section"><label for="config-name"><span class="step-no">03</span>为它命名 <span class="optional">可选</span></label><div class="name-input-wrap"><input type="text" id="config-name" name="configurationName" value="我的 FORM 68" maxlength="40" spellcheck="false" placeholder="我的 FORM 68" /><span aria-hidden="true">↵</span></div></div>
+          </form>
+          <div class="config-summary" aria-live="polite" aria-atomic="true"><div><span class="summary-overline">你的专属搭配</span><span class="summary-dot"></span></div><strong id="summary-label">苔原绿 / 原野</strong><div class="summary-spec"><span>68 键 · 紧凑布局</span><code id="summary-code">F68–MS–FD</code></div></div>
+          <button class="save-button" type="button" id="save-config"><span data-icon="save"></span><span id="save-label">保存我的配置</span><span class="save-arrow" data-icon="arrow"></span></button>
+          <div class="config-footer"><span class="save-status" id="save-status"><i></i>默认配置</span><button type="button" class="reset-config" id="reset-config">恢复默认</button></div>
+          <p class="privacy-note">仅保存在当前浏览器，无需登录。</p>
+        </aside>
+      </div>
+
+      <section class="details-section" id="details" aria-labelledby="details-title">
+        <div class="details-intro"><div><span class="eyebrow">THOUGHTFULLY BUILT</span><h2 id="details-title">好的设计，藏在每一层。</h2></div><p>不止好看，也值得细看。<br />点击「拆解键盘」，探索 FORM 的结构语言。</p></div>
+        <div class="detail-grid">
+          <article class="detail-card"><div class="detail-top"><span class="detail-number">01 / THE LAYOUT</span><span class="detail-symbol">68<span>keys</span></span></div><h3>紧凑，但不将就。</h3><p>保留独立方向键与完整字母区。五行错位排列，让功能与桌面空间刚刚好。</p><button type="button" class="detail-bottom" data-feature="layout" aria-label="切换俯视查看紧凑布局">俯视紧凑布局 <span>↗</span></button></article>
+          <article class="detail-card"><div class="detail-top"><span class="detail-number">02 / THE PROFILE</span><div class="profile-illustration" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div><h3>每一枚，都有弧度。</h3><p>圆角、微凹键顶与高低有致的行列。从宽大的空格，到指尖熟悉的回车。</p><button type="button" class="detail-bottom" data-feature="typing" aria-label="开启键帽试打">体验立体键帽 <span>↗</span></button></article>
+          <article class="detail-card"><div class="detail-top"><span class="detail-number">03 / THE STRUCTURE</span><div class="layers-illustration" aria-hidden="true"><i></i><i></i><i></i></div></div><h3>层次分明，内外一致。</h3><p>倾斜底壳、开孔定位板与独立键帽。展开之间，看见每一层的连接。</p><button type="button" class="detail-bottom" data-feature="anatomy" aria-label="展开三层键盘结构">展开三层结构 <span>↗</span></button></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="footer-brand" href="#top">form.</a><span>为日常之物，赋予不日常的体验。</span><small>FORM 68 · 原创概念产品 / INTERACTIVE EDITION</small><button type="button" data-open-guide>操作帮助 <span data-icon="arrow"></span></button></footer>
+
+    <dialog id="guide-dialog" aria-labelledby="guide-title"><div class="dialog-heading"><span class="eyebrow">A LITTLE GUIDANCE</span><button class="icon-button" type="button" id="close-guide" aria-label="关闭使用指南"><span data-icon="close"></span></button></div><h2 id="guide-title">认识你的 FORM 68</h2><p class="guide-intro">从一个好看的物件，到一份顺手的默契。</p><div class="guide-steps"><section><span>01</span><div><h3>从任何角度看它</h3><p>拖动键盘旋转，滚轮或双指缩放。使用「立体」「俯视」切换角度，圆形箭头复位。缩放按钮也支持键盘操作。</p></div></section><section><span>02</span><div><h3>拆开看看，再亲手试试</h3><p>「拆解键盘」平滑展开三层结构，再次点击即可组装。开启触感实验室后，在预览区按 A—Z 或空格，或直接触摸键帽。输入框获得焦点时不捕获按键。</p></div></section><section><span>03</span><div><h3>留下你的专属搭配</h3><p>三种外壳与三种键帽主题可以自由组合。点击「保存我的配置」，刷新后恢复已保存的颜色与名称。「恢复默认」只移除此页面的配置，不影响其他网站数据。</p></div></section></div><div class="guide-note"><span data-icon="spark"></span><p>这是原创概念产品的交互展示，不是真实销售页面。可选键音由浏览器合成，并非机械轴体录音。</p></div><button class="guide-done" id="guide-done" type="button">开始探索 <span data-icon="arrow"></span></button></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"><span data-icon="check"></span><span id="toast-text"></span></div>
+    <noscript><div class="noscript-warning">请启用 JavaScript，以使用 3D 预览、配色配置与本地保存。</div></noscript>
+  </body>
+</html>

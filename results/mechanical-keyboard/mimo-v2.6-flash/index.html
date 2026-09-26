@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ORBIT 65 · 紧凑机械键盘</title>
+    <meta name="description" content="ORBIT 65 交互式产品展示与配置页面：3D 预览、外壳与键帽自由搭配、拆解视图与真实键程体验。" />
+    <script type="module" crossorigin src="./assets/index-Vk_tGqDm.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/three-eJgkS0Hg.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-DmROty6t.css">
+  </head>
+  <body>
+    <div class="app">
+      <!-- ───────────── 顶栏：产品名 + 简短介绍 ───────────── -->
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <ellipse cx="20" cy="20" rx="17" ry="9.5" transform="rotate(-24 20 20)" stroke="currentColor" stroke-width="2.4" opacity=".55" />
+              <circle cx="20" cy="20" r="7.5" fill="currentColor" />
+              <circle cx="33" cy="12" r="3" fill="currentColor" opacity=".8" />
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-row">
+              <h1>ORBIT 65</h1>
+              <span class="badge">三模块快拆</span>
+            </div>
+            <p class="tagline">紧凑 65% 机械键盘 · 键帽 / 定位板 / 底壳 三层结构</p>
+            <p class="intro">一体成型底壳搭配可拆定位板，三种外壳与三种键帽主题自由组合；进入体验模式后，敲击 A—Z 与空格即可感受真实键程回弹。</p>
+          </div>
+        </div>
+        <ul class="spec-chips" aria-label="产品规格">
+          <li><strong id="chip-key-count">68</strong> 键位</li>
+          <li>全键热插拔</li>
+          <li>Gasket 定位</li>
+          <li>1000&nbsp;Hz</li>
+        </ul>
+      </header>
+
+      <!-- ───────────── 主体：3D 视口 + 配置面板 ───────────── -->
+      <main class="stage">
+        <section class="viewport" id="viewport" aria-label="键盘 3D 预览">
+          <canvas id="kb-canvas"></canvas>
+          <div class="viewport-glow" aria-hidden="true"></div>
+          <div class="viewport-hint" id="viewport-hint">
+            <span class="hint-main">拖拽旋转 · 滚轮缩放 · 双击复位</span>
+            <span class="hint-alt" hidden>体验模式：按下 <kbd>A</kbd>—<kbd>Z</kbd> 或 <kbd>空格</kbd>，也可直接点击键帽</span>
+          </div>
+          <div class="viewport-status" id="viewport-status" hidden>
+            <span class="pulse-dot"></span><span id="status-text">体验模式</span>
+          </div>
+        </section>
+
+        <aside class="panel" aria-label="配置面板">
+          <!-- 外壳配色 -->
+          <section class="card">
+            <header class="card-head">
+              <h2>外壳配色</h2>
+              <span class="card-value" id="summary-shell-name">星野白</span>
+            </header>
+            <div class="swatch-list" role="radiogroup" aria-label="外壳配色">
+              <button class="swatch" type="button" role="radio" data-shell="starlight">
+                <span class="swatch-dot shell-dot" style="--c:#e7e8e4"></span>
+                <span class="swatch-meta"><strong>星野白</strong><small>Starlight White</small></span>
+                <span class="swatch-check" aria-hidden="true">✓</span>
+              </button>
+              <button class="swatch" type="button" role="radio" data-shell="spacegrey">
+                <span class="swatch-dot shell-dot" style="--c:#5f646b"></span>
+                <span class="swatch-meta"><strong>深空灰</strong><small>Space Grey</small></span>
+                <span class="swatch-check" aria-hidden="true">✓</span>
+              </button>
+              <button class="swatch" type="button" role="radio" data-shell="midnight">
+                <span class="swatch-dot shell-dot" style="--c:#17181b"></span>
+                <span class="swatch-meta"><strong>极夜黑</strong><small>Midnight Black</small></span>
+                <span class="swatch-check" aria-hidden="true">✓</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- 键帽主题 -->
+          <section class="card">
+            <header class="card-head">
+              <h2>键帽主题</h2>
+              <span class="card-value" id="summary-theme-name">复古灰白</span>
+            </header>
+            <div class="swatch-list" role="radiogroup" aria-label="键帽主题">
+              <button class="swatch" type="button" role="radio" data-theme="retro">
+                <span class="swatch-dot theme-dot" style="--a:#d8d2c4;--b:#b5503f;--c:#3b372f"></span>
+                <span class="swatch-meta"><strong>复古灰白</strong><small>复古米色 × 暗红点缀</small></span>
+                <span class="swatch-check" aria-hidden="true">✓</span>
+              </button>
+              <button class="swatch" type="button" role="radio" data-theme="ink">
+                <span class="swatch-dot theme-dot" style="--a:#232529;--b:#5b8cff;--c:#e9ebef"></span>
+                <span class="swatch-meta"><strong>墨黑透光</strong><small>石墨黑 × 星际蓝点缀</small></span>
+                <span class="swatch-check" aria-hidden="true">✓</span>
+              </button>
+              <button class="swatch" type="button" role="radio" data-theme="cream">
+                <span class="swatch-dot theme-dot" style="--a:#f0e7d6;--b:#f2854a;--c:#4a443a"></span>
+                <span class="swatch-meta"><strong>奶油汽水</strong><small>奶油白 × 橘子汽水点缀</small></span>
+                <span class="swatch-check" aria-hidden="true">✓</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- 结构 / 体验 -->
+          <section class="card">
+            <header class="card-head">
+              <h2>结构与体验</h2>
+            </header>
+            <div class="btn-stack">
+              <button class="ctl-btn" type="button" id="btn-explode" aria-pressed="false">
+                <span class="ctl-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3 3 7.5 12 12l9-4.5L12 3Z" /><path d="m3 12 9 4.5 9-4.5" /><path d="m3 16.5 9 4.5 9-4.5" />
+                  </svg>
+                </span>
+                <span class="ctl-body">
+                  <strong id="explode-label">拆解视图</strong>
+                  <small id="explode-desc">键帽 / 定位板 / 底壳 三层展开</small>
+                </span>
+              </button>
+              <button class="ctl-btn" type="button" id="btn-typing" aria-pressed="false">
+                <span class="ctl-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2.5" y="6" width="19" height="12" rx="2.4" />
+                    <path d="M6.5 10h.01M10 10h.01M13.5 10h.01M17 10h.01M8 14h8" />
+                  </svg>
+                </span>
+                <span class="ctl-body">
+                  <strong id="typing-label">键盘体验模式</strong>
+                  <small id="typing-desc">开启后敲击 A—Z / 空格体验键程</small>
+                </span>
+              </button>
+              <div class="sub-row">
+                <button class="chip-btn" type="button" id="btn-sound" aria-pressed="true">音效 · 开</button>
+                <button class="chip-btn" type="button" id="btn-reset-view">复位视角</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 配置摘要 -->
+          <section class="card summary-card">
+            <header class="card-head">
+              <h2>配置摘要</h2>
+              <span class="card-value live">实时同步</span>
+            </header>
+            <p class="summary-headline" id="summary-headline">ORBIT 65 · 星野白 × 复古灰白</p>
+            <dl class="summary-list">
+              <div><dt>外壳配色</dt><dd id="sum-shell">星野白</dd></div>
+              <div><dt>键帽主题</dt><dd id="sum-theme">复古灰白</dd></div>
+              <div><dt>结构状态</dt><dd id="sum-structure">组装完成</dd></div>
+              <div><dt>体验模式</dt><dd id="sum-typing">未启用</dd></div>
+              <div><dt>键位规模</dt><dd id="sum-keys">68 键 · 65% 配列</dd></div>
+            </dl>
+          </section>
+
+          <!-- 保存 / 恢复 -->
+          <section class="card actions-card">
+            <div class="btn-row">
+              <button class="primary-btn" type="button" id="btn-save">保存配置</button>
+              <button class="ghost-btn" type="button" id="btn-restore">恢复默认</button>
+            </div>
+            <p class="save-hint" id="save-hint">配置自动保存在本机浏览器，刷新后自动恢复。</p>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="footbar">
+        <span>ORBIT 65 交互展示 · Three.js 实时渲染</span>
+        <span class="foot-right" id="foot-note">拖拽空白处旋转视角，滚轮拉近观察键帽细节</span>
+      </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  </body>
+</html>

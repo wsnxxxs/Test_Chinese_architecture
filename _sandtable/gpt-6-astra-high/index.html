@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><script src="../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#eeeae1" />
+    <meta name="description" content="云栖古寺，一座以 Three.js 构筑的中式体素园林。在晨昏之间，探索古典建筑之美。" />
+    <title>云栖古寺 · 方寸之间</title>
+    <script type="module" crossorigin src="./assets/index-Bw4Jdp0P.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/three-BnGkkVgF.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-V_f_Ypi8.css">
+  </head>
+  <body>
+    <main id="app">
+      <div id="scene" aria-label="可交互的云栖古寺三维体素建筑群"></div>
+      <header class="header">
+        <a class="brand" href="./" aria-label="方寸之间首页"><span class="seal">方寸</span><span class="brand-name">方寸之间<small>SMALL WORLDS, TIMELESS STORIES</small></span></a>
+        <nav aria-label="主导航"><button class="nav-button active" id="explore">场景漫游</button><button class="nav-button" id="catalog">建筑图鉴<span class="nav-count">11</span></button><button class="nav-button" id="about">关于作品<svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></button></nav>
+        <div class="edition"><span></span>交互式体素建筑志 <b>VOL. 001</b></div>
+      </header>
+
+      <section class="intro">
+        <div class="eyebrow"><span class="short-line"></span>山水有境 · 建筑有声</div>
+        <h1>云栖古寺<span>YUNQI TEMPLE</span></h1>
+        <p>一砖一瓦，重拾东方的宁静。<br>于方寸之间，漫游千年营造。</p>
+        <div class="scene-tags"><span>中式古建</span><i></i><span>体素造景</span><i></i><span>自由探索</span></div>
+      </section>
+
+      <div class="vertical-note" aria-hidden="true"><span>山静似太古</span><i></i><span>日长如小年</span></div>
+      <div class="scene-caption"><span class="caption-dot"></span><span id="view-label">全景 · 中轴庭院</span><span class="caption-divider">/</span><span id="light-label">晨光 07:00</span></div>
+
+      <aside class="building-panel" id="building-panel" hidden>
+        <div class="panel-heading"><span>ARCHITECTURE INDEX</span><button class="close-button" id="close-panel" aria-label="关闭建筑图鉴">×</button></div>
+        <h2>建筑图鉴 <small>十一座，成一境。</small></h2>
+        <div id="building-list"></div>
+        <p class="panel-footnote">选择建筑，移步细观。拖动场景可继续探索。</p>
+      </aside>
+
+      <section class="bottom-bar">
+        <div class="project-meta"><span class="meta-index">01<small>/ COLLECTION</small></span><div><strong>一轴 · 两院 · 十一筑</strong><p>对称有序，向山而生</p></div></div>
+        <div class="controls-area">
+          <div class="interaction-hint"><span><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="6"/><path d="M12 3v7"/></svg>拖动旋转</span><span><svg viewBox="0 0 24 24"><path d="M8 5 12 2l4 3M12 2v6M8 19l4 3 4-3M12 16v6"/><rect x="5" y="10" width="14" height="4" rx="2"/></svg>滚轮缩放</span></div>
+          <div class="toolbar">
+            <div class="time-switch" role="group" aria-label="光照时段"><button id="morning" class="selected" aria-pressed="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></svg>晨光</button><button id="evening" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 16h18M5 20h14M7 16a5 5 0 0 1 10 0M12 3v3M3 8l2 2M21 8l-2 2"/></svg>暮色</button></div>
+            <span class="tool-divider"></span>
+            <button class="icon-button" id="auto-rotate" aria-label="自动环绕" aria-pressed="false" title="自动环绕"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M5.2 7a8 8 0 0 1 13-1L20 9M4 15l1.8 3A8 8 0 0 0 19 17"/></svg></button>
+            <button class="icon-button" id="reset" aria-label="恢复全景" title="恢复全景"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/><path d="M8 12h8M12 8v8"/></svg></button>
+            <button class="icon-button" id="capture" aria-label="保存场景图片" title="保存场景图片"><svg viewBox="0 0 24 24"><path d="M8 5l1-2h6l1 2h4v15H4V5z"/><circle cx="12" cy="12" r="4"/></svg></button>
+          </div>
+        </div>
+        <div class="compass" aria-label="场景方向"><span>N</span><svg id="compass-needle" viewBox="0 0 60 60"><path class="north" d="M30 9 36 34 30 30 24 34Z"/><path class="south" d="M30 51 24 26 30 30 36 26Z"/><circle cx="30" cy="30" r="23"/></svg></div>
+      </section>
+      <footer><span>以方为形，以境为意。</span><span><i class="live-dot"></i><span id="performance">正在构筑山河</span><span class="footer-divider">·</span>THREE.JS / VOXEL ART</span></footer>
+      <div class="toast" id="toast" role="status" hidden></div>
+      <div class="loading" id="loading"><span class="seal">方寸</span><p>正在构筑一方天地…</p></div>
+      <dialog id="about-dialog"><button class="close-button" id="close-about" aria-label="关闭关于作品">×</button><span class="eyebrow">ABOUT THIS LITTLE WORLD</span><h2>以方为形，以境为意。</h2><p>「方寸之间」是一次关于东方建筑的数字漫游。云栖古寺以中国古典寺院为灵感，将中轴院落、飞檐斗拱与山水意趣，凝练为一座可探索的体素微缩世界。</p><p>场景包含主殿、后殿、四座配殿、山门、钟鼓楼与双塔，共十一座建筑。它是一件艺术化创作，并非特定历史建筑的复原。</p><div class="about-details"><span>建造方式<strong>程序化体素 · Three.js</strong></span><span>探索方式<strong>拖动旋转 · 滚轮缩放 · 双指操作</strong></span></div><button class="primary-button" id="return-scene">入境，慢慢看 <span>↗</span></button></dialog>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="../../sandtable-bridge.js"></script><style data-aob-ui>html.aob-hide-ui #side-panel { display: none !important; }html.aob-hide-ui .header-badges { display: none !important; }</style>
+    <script data-aob-ui>(function(){if(document.documentElement.dataset.aobUi!==undefined)return;document.documentElement.dataset.aobUi="1";var held=/(?:^|[?&])aob=prev(?:&|$)/.test(location.search);function apply(){document.documentElement.classList.toggle("aob-hide-ui",held)}apply();window.addEventListener("keydown",function(e){if(e.key!=="h"&&e.key!=="H")return;var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.isContentEditable))return;held=!held;apply()});window.addEventListener("message",function(e){if(e.data==="aob-ui-show"){held=false;apply()}if(e.data==="aob-ui-hold"){held=true;apply()}})})();</script><script data-aob-probe>(function(){if(window.parent===window)return;var d=!1;function s(){if(d)return;d=!0;try{parent.postMessage("aob:work-ready","*")}catch(e){}}var r=window.requestAnimationFrame;window.requestAnimationFrame=function(c){s();return r.call(window,c)};if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){setTimeout(s,250)},{once:!0})}else{setTimeout(s,250)}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 体素中国古典建筑群 | Three.js Voxel Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="./assets/index-KYk926aL.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BkzhlEvV.css">
+</head>
+<body>
+  <!-- 3D 渲染画布容器 -->
+  <div id="canvas-container"></div>
+
+  <!-- 载入水墨风过渡屏 -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="seal-icon">营造</div>
+      <h1>中国古典建筑群</h1>
+      <p class="subtitle">3D 体素营造法式 · Three.js 高性能呈现</p>
+      <div class="spinner"></div>
+      <div id="loading-status">正在生成体素三维构件...</div>
+    </div>
+  </div>
+
+  <!-- 顶部标题徽标 -->
+  <header class="app-header">
+    <div class="header-seal">殿</div>
+    <div class="header-text">
+      <h2>紫禁晨暮 · 中式殿阁体素群</h2>
+      <span>七座中轴规制建筑 · 重檐庑殿 · 飞檐斗拱 · 丹陛御道</span>
+    </div>
+    <div class="header-badges">
+      <div class="stat-badge"><span id="fps-counter">60 FPS</span></div>
+      <div class="stat-badge">体素数: <strong id="voxel-count">计算中...</strong></div>
+      <div class="stat-badge">批次实例: <strong id="instance-count">0</strong></div>
+    </div>
+  </header>
+
+  <!-- 右侧交互控制面板 -->
+  <aside id="side-panel" class="side-panel">
+    <button id="btn-toggle-panel" class="toggle-panel-btn" title="收起/展开面板">☰</button>
+
+    <div class="panel-section">
+      <div class="section-title">
+        <span class="symbol">◆</span> 视角导览
+      </div>
+      <div class="button-grid">
+        <button class="view-btn active" data-view="overview">
+          <span class="btn-icon">🏛️</span>
+          <span>全景俯瞰</span>
+        </button>
+        <button class="view-btn" data-view="shanmen">
+          <span class="btn-icon">🚪</span>
+          <span>山门迎宾</span>
+        </button>
+        <button class="view-btn" data-view="mainHall">
+          <span class="btn-icon">👑</span>
+          <span>大雄主殿</span>
+        </button>
+        <button class="view-btn" data-view="pagoda">
+          <span class="btn-icon">🗼</span>
+          <span>高台宝塔</span>
+        </button>
+        <button class="view-btn" data-view="bellTower">
+          <span class="btn-icon">🔔</span>
+          <span>钟楼配殿</span>
+        </button>
+      </div>
+      <div class="control-row">
+        <button id="btn-auto-rotate" class="toggle-btn">
+          <span class="rotate-icon">🔄</span> 自动环绕巡礼
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">
+        <span class="symbol">◆</span> 晨昏气象光影
+      </div>
+      <div class="button-grid-2">
+        <button class="light-btn active" data-mode="sunset">
+          <span>🌄 暮色晚霞</span>
+        </button>
+        <button class="light-btn" data-mode="noon">
+          <span>☀️ 晴空正午</span>
+        </button>
+        <button class="light-btn" data-mode="dawn">
+          <span>🌫️ 晨曦晓雾</span>
+        </button>
+        <button class="light-btn" data-mode="night">
+          <span>🏮 华灯初上</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-section architecture-info">
+      <div class="section-title">
+        <span class="symbol">◆</span> 营造规制特色
+      </div>
+      <ul class="info-list">
+        <li><strong>核心中轴线：</strong>山门殿 → 广庭御道 → 丹陛御阶 → 大雄宝殿 → 崇台高塔</li>
+        <li><strong>主殿制式：</strong>最高等级「重檐庑殿顶」，金黄琉璃瓦剪孔雀绿边，四角张扬飞檐翘角与脊吻神兽</li>
+        <li><strong>东西对称：</strong>左右配殿各具仪轨，前庭分列重檐钟楼与鼓楼</li>
+        <li><strong>构架细节：</strong>三交六椀菱花隔扇门、青绿贴金和玺斗拱、汉白玉雕龙御道石</li>
+      </ul>
+    </div>
+
+    <div class="panel-footer">
+      <span>交互提示：按住鼠标左键旋转 · 右键平移 · 滚轮缩放视角</span>
+    </div>
+  </aside>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#efe9dc" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>Willowmere — 桌面微缩铁路镇</title>
+    <meta name="description" content="一座有河流、车站和缓缓行驶列车的桌面微缩铁路小镇。" />
+    <script type="module" crossorigin src="./assets/index-D0EKeSUL.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Dt4ihMKK.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="scene" aria-label="可旋转缩放的微缩铁路小镇三维沙盘"></div>
+
+      <header class="masthead">
+        <div class="brand-mark" aria-hidden="true"><span>W</span></div>
+        <div class="brand-copy">
+          <div class="eyebrow">A LIVING TABLETOP WORLD <span class="divider">/</span> 001</div>
+          <h1>Willowmere <span>Railway</span></h1>
+          <p>沿着河岸，驶过一座会呼吸的小镇。</p>
+        </div>
+      </header>
+
+      <div class="scene-note" aria-hidden="true">
+        <span class="note-line"></span>
+        <span>EST. 1908&nbsp; · &nbsp;A MODEL IN MOTION</span>
+      </div>
+
+      <div class="view-hint" aria-hidden="true">
+        <span class="hint-orbit">↗</span>
+        <span>拖动旋转 <i>·</i> 滚轮缩放</span>
+      </div>
+
+      <section class="controls" aria-label="沙盘控制">
+        <div class="control-intro">
+          <div class="live-indicator"><span class="live-dot"></span><span id="train-status">列车运行中</span></div>
+          <strong>WILLOWMERE LOCAL</strong>
+          <span class="control-caption">环线列车 · 经停柳溪车站</span>
+        </div>
+
+        <div class="control-divider"></div>
+
+        <div class="control-actions">
+          <button id="play-pause" class="primary-button" type="button" aria-label="暂停列车"><span id="play-icon">Ⅱ</span><span id="play-text">暂停</span></button>
+          <div class="speed-control">
+            <label for="speed">速度 <span id="speed-value">1.0×</span></label>
+            <input id="speed" type="range" min="0.5" max="2" step="0.1" value="1" aria-label="列车速度" />
+          </div>
+          <button id="reset" class="icon-button" type="button" aria-label="复位视角与列车" title="复位视角与列车"><span>↺</span><span>复位</span></button>
+          <button id="day-night" class="mode-button" type="button" aria-label="切换为夜晚"><span id="mode-icon" aria-hidden="true">☾</span><span id="mode-text">夜晚</span></button>
+        </div>
+      </section>
+
+      <div class="mobile-hint">拖动旋转 · 双指缩放</div>
+    </div>
+  </body>
+</html>

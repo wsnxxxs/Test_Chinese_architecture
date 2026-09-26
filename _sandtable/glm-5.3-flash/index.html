@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><script src="../../sandtable-bridge.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>体素古刹 · Voxel Chinese Temple</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #1a1630;
+        font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+      }
+      #app {
+        width: 100vw;
+        height: 100vh;
+      }
+      #hud {
+        position: fixed;
+        left: 18px;
+        bottom: 16px;
+        color: rgba(255, 235, 214, 0.85);
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+        pointer-events: none;
+        user-select: none;
+        transition: opacity 2s ease;
+      }
+      #hud .title {
+        font-size: 18px;
+        letter-spacing: 6px;
+        margin-bottom: 4px;
+        color: rgba(255, 216, 170, 0.95);
+      }
+      #hud.fade {
+        opacity: 0;
+      }
+      #fps {
+        position: fixed;
+        right: 14px;
+        bottom: 12px;
+        color: rgba(255, 235, 214, 0.55);
+        font-size: 12px;
+        font-family: Consolas, monospace;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+        pointer-events: none;
+        user-select: none;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-IIb4E5Hh.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="hud">
+      <div class="title">灵 霄 古 刹</div>
+      <div>拖动旋转 · 滚轮缩放 · 右键平移</div>
+    </div>
+    <div id="fps"></div>
+  </body>
+</html>

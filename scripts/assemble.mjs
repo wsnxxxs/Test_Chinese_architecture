@@ -76,6 +76,7 @@ for (const file of ['three.module.js', 'three.core.js']) {
   cpSync(join(ROOT, 'node_modules/three/build', file), join(DIST, 'vendor', file));
 }
 cpSync(join(ROOT, 'node_modules/three/examples/jsm/controls/OrbitControls.js'), join(DIST, 'vendor/OrbitControls.js'));
+cpSync(join(ROOT, 'node_modules/three/examples/jsm/utils/BufferGeometryUtils.js'), join(DIST, 'vendor/BufferGeometryUtils.js'));
 
 function enableSandtable(target) {
   let captures = 0;

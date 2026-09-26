@@ -7,17 +7,11 @@ const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
 // The host only moves page containers. Each result keeps its own rendering,
 // frame loop, camera, effects, UI and dependencies, without injected code.
-export function createExhibition(root, task, { label, vendorOf, cover, initial = [] }) {
+export function createExhibition(root, task, { label, vendorOf, cover, header, initial = [] }) {
   document.body.classList.add('is-viewer');
   document.title = `原作展厅 · ${task.title}`;
   root.innerHTML = `<main class="sandtable exhibition">
-    <header class="sandbar">
-      <a href="#/${task.id}" class="sandback" aria-label="返回作品列表">← <span>同题异答</span></a>
-      <span class="sandbar-rule"></span><div><strong>原作展厅</strong><span class="sandbar-sub">每一份答案，以原本的样子呈现</span></div>
-      <nav class="display-modes" aria-label="展示模式"><a aria-current="page" href="#/${task.id}/exhibition">原作展厅</a><a data-switch-mode href="#/${task.id}/sandtable">三维沙盘</a></nav>
-      <span class="sand-count">已选择 <b data-count>0</b> 件</span>
-      <button class="btn sm" data-action="panel" aria-expanded="true" aria-controls="exhibition-library">选择模型</button>
-    </header>
+    ${header}
     <div class="sandbody">
       <aside class="sand-library" id="exhibition-library" aria-label="模型选择">
         <div class="sand-library-head"><span class="kicker">COLLECTION / 模型作品</span><h2>把原作放在一起</h2><p>选择想看的模型，近看每一份完整的答案。</p></div>
@@ -78,7 +72,7 @@ export function createExhibition(root, task, { label, vendorOf, cover, initial =
     const ids = [...entries.keys()];
     history.replaceState(null, '', `#/${task.id}/exhibition${ids.length ? `/${ids.join(',')}` : ''}`);
     $('[data-switch-mode]', el).href = `#/${task.id}/sandtable${ids.length ? `/${ids.join(',')}` : ''}`;
-    $('[aria-current="page"]', el).href = location.hash;
+    $('.display-modes [aria-current="page"]', el).href = location.hash;
     $('[data-count]', el).textContent = ids.length;
     $('.exhibition-empty', el).hidden = ids.length > 0;
     $('.exhibition-toolbar', el).hidden = !ids.length;

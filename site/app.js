@@ -113,6 +113,17 @@ function header(crumbs = []) {
     </div>
   </div></header>`;
 }
+function galleryStageHeader(t, mode) {
+  const current = mode === 'sandtable' ? '三维沙盘' : '原作展厅';
+  const modes = [['exhibition', '原作展厅'], ['sandtable', '三维沙盘']];
+  return `<header class="topbar sandbar"><div class="wrap topbar-in sandbar-in">
+    <a class="brand" href="#/" aria-label="${esc(DATA.title)} · 首页">${LOGO}<span class="wordmark">${esc(DATA.title)}</span></a>
+    <a class="sand-task-back" href="${taskHref(t)}" aria-label="返回作品列表">${icon('prev')}</a>
+    <nav class="crumbs sand-crumbs" aria-label="位置"><span class="sep" aria-hidden="true">/</span><a href="${taskHref(t)}">${esc(t.title)}</a><span class="sep" aria-hidden="true">/</span><span aria-current="page">${current}</span></nav>
+    <nav class="display-modes" aria-label="展示模式">${modes.map(([id, name]) => `<a ${id === mode ? 'aria-current="page"' : 'data-switch-mode'} href="#/${t.id}/${id}">${name}</a>`).join('')}</nav>
+    <div class="sandbar-tools"><span class="sand-count">已选择 <b data-count>0</b> 件</span><button class="btn sm" data-action="panel" aria-expanded="true" aria-controls="${mode === 'sandtable' ? 'sand-library' : 'exhibition-library'}">选择模型</button>${themeButton()}</div>
+  </div></header>`;
+}
 const footer = () => `<footer class="footer"><div class="wrap footer-in">
   <p class="footer-brand">${LOGO}<span>${esc(DATA.title)}</span><span class="muted">前端作品档案</span></p>
   <p class="footer-links"><a href="${esc(DATA.repo)}" target="_blank" rel="noopener">项目仓库</a><a href="${esc(DATA.repo)}#readme" target="_blank" rel="noopener">参与贡献</a></p>
@@ -283,7 +294,7 @@ function renderTask(t) {
       <button data-go="results" aria-pressed="true">作品<span class="count">${t.results.length}</span></button>
       ${t.conditions.length ? '<button data-go="shots" aria-pressed="false">截图对照</button>' : ''}
       <button data-go="prompt" aria-pressed="false">提示词</button>
-      ${hasExhibition(t) ? `<a class="sand-entry" href="${sandtableHref(t)}">${icon('full')}三维沙盘 <span>自由摆放 · 昼夜光影</span>${icon('arrow')}</a>` : ''}
+      ${hasExhibition(t) ? `<a class="sand-entry" href="${sandtableHref(t)}">${icon('full')}三维沙盘 <span>自由摆放 · 统一视角</span>${icon('arrow')}</a>` : ''}
     </div></nav>
 
     <section id="results" data-panel="results" class="block wrap">
@@ -792,7 +803,7 @@ async function route() {
         ? (await import('./sandtable.js')).createSandtable
         : (await import('./exhibition.js')).createExhibition;
       if (version !== routeVersion) return;
-      exhibition = create(root, t, { label, vendorOf, cover, initial: (vs ?? '').split(',').filter((id) => t.results.some((r) => r.id === id)) });
+      exhibition = create(root, t, { label, vendorOf, cover, header: galleryStageHeader(t, a), initial: (vs ?? '').split(',').filter((id) => t.results.some((r) => r.id === id)) });
     } catch (error) {
       if (version !== routeVersion) return;
       root.innerHTML = `<main class="empty-page wrap"><h1>展厅加载失败</h1><p>${esc(error.message)}</p><a class="btn" href="${taskHref(t)}">返回作品</a></main>`;

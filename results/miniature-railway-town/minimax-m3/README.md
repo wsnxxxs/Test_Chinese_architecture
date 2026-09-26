@@ -88,6 +88,6 @@ npm run preview
 - 来源：用户提供的 MinimaxM3-铁路小镇-默认.zip，整理到桌面 miniature-railway-town/minimax-m3/。未提供生成提示词原始日志，按铁路题归档，不声称逐字一致。
 - 保留核心源码、配置、README 中原有许可说明；不收录临时验证脚本、benchmark_artifacts 清单、缓存与重复锁文件。保留原作相对路径配置与布局。
 - 仓库运行：npm install；npm run build --workspace=gallery-miniature-railway-town-minimax-m3。桌面目录可独立 npm install、npm run build。
-- 本次核验：构建、默认桌面与手机首屏、卡片模型及一项关键交互。具体结果见仓库 docs/new-results-2026-09-26.md，不代表全部交互或手机真机性能验证。
+- 本次核验：构建、默认桌面与手机首屏、卡片模型及一项关键交互。具体结果见仓库 docs/archive/2026-09-26-new-results.md，不代表全部交互或手机真机性能验证。
 
 - 本次目视记录：原作地表出现明显斑块和闪烁；默认视角裁切部分底座，手机标题/状态面板重叠且底部控制条超出横向视口。保留交付状态。暂停按钮可切换到运行按钮，状态显示已暂停；未做全部交互验证。

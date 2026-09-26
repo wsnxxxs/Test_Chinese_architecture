@@ -91,4 +91,4 @@ npm run preview   # 本地预览构建产物 → http://localhost:4173
 - 保留核心源码、必要配置和已有说明/展示资源；不收录原交付测试、缓存和重复锁文件。原说明中的测试结果属于交付者记录，不代表本次复验。
 - 为 GitHub Pages 子路径设置 Vite `base: './'`，原作布局与交互保持交付状态。
 - 仓库运行：`npm install`，`npm run build --workspace=gallery-mechanical-keyboard-mimo-v2.6-flash`；桌面目录可独立 `npm install && npm run build`。
-- 本次核验：构建、桌面与手机默认首屏、卡片模型包及一项关键交互；具体结果见 [收录记录](../../../docs/new-results-2026-09-26.md)。未做全部交互或手机真机性能验证。
+- 本次核验：构建、桌面与手机默认首屏、卡片模型包及一项关键交互；具体结果见 [收录记录](../../../docs/archive/2026-09-26-new-results.md)。未做全部交互或手机真机性能验证。

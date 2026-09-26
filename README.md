@@ -126,7 +126,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | Gemini 3.7 Flash | 华夏九重天 · 3D 体素中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.7-flash) | [项目说明](results/gemini-3.7-flash/README.md) |
 | LongCat 2.5 | Voxel 中式古建筑群 · 晨光 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/longcat-2.5) | [项目说明](results/longcat-2.5/README.md) |
 
-新增五份建筑作品来自用户提供的 architecture-gallery.zip，四份重复交付复用原有记录；来源与对应关系见[收录记录](docs/architecture-gallery-import.md)。
+新增五份建筑作品来自用户提供的 architecture-gallery.zip，四份重复交付复用原有记录；来源与对应关系见[收录记录](docs/archive/2026-09-26-architecture-gallery-import.md)。
 
 ### 桌面微缩铁路小镇
 
@@ -189,6 +189,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 ```text
 gallery.json                         站点信息与模型注册表
 README.md                            使用说明与完整作品目录
+HANDOFF.md                          当前状态与文档地图
 tasks/
   chinese-architecture/              建筑题提示词、元数据与截图
   miniature-railway-town/             铁路题提示词、元数据与截图
@@ -205,15 +206,17 @@ scripts/
 docs/
   intake-workflow.md                 作品收录流程
   preview-loading.md                 卡片模型生成与加载说明
-  result-folder-archive.md            本地结果归档核对记录
   sandtable.md                       中式建筑沙盘说明
+  ARCHITECTURE.md                    架构、代码地图与本地验证
+  PRODUCT.md / DESIGN.md / IDEAS.md  产品行为 / 界面规范 / 想法库
+  archive/                           按日期归档的轮次记录（含模板 _TEMPLATE.md）
 .github/workflows/deploy-pages.yml    GitHub Pages 发布流程
 dist/                                构建产物，不提交到主分支
 ```
 
 ### 本地结果归档
 
-2026-09-26 已核对桌面现有的铁路与键盘结果文件夹，补齐 7 份遗漏作品，覆盖对应题目的全部 27 份已上线结果。两个目录中的 `RESULTS.md` 提供作品索引，`PROMPT.md` 保存题目原文；Terra 键盘项目保留原有 `aeris-65/` 内层结构。归档范围和验证记录见[本地结果归档核对](docs/result-folder-archive.md)。
+2026-09-26 已核对桌面现有的铁路与键盘结果文件夹，补齐 7 份遗漏作品，覆盖对应题目的全部 27 份已上线结果。两个目录中的 `RESULTS.md` 提供作品索引，`PROMPT.md` 保存题目原文；Terra 键盘项目保留原有 `aeris-65/` 内层结构。归档范围和验证记录见[本地结果归档核对](docs/archive/2026-09-26-result-folder-archive.md)。
 
 这些桌面目录属于本地归档，仓库运行与发布使用 `results/` 内的项目。
 

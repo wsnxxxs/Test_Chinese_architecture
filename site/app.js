@@ -39,6 +39,8 @@ function setResultSort(value) {
 const cover = (r) => Object.values(r.captures)[0] ?? r.gallery[0]?.src ?? '';
 const taskHref = (t) => `#/${t.id}`;
 const viewHref = (t, a, b) => `#/${t.id}/${a}${b ? `/vs/${b}` : ''}`;
+const hasExhibition = (t) => t.id === 'chinese-architecture';
+const sandtableHref = (t, ids = []) => `#/${t.id}/sandtable${ids.length ? `/${ids.join(',')}` : ''}`;
 
 // ---- icons & marks --------------------------------------------------------------------
 const ICONS = {
@@ -147,7 +149,7 @@ function renderHome() {
         </dl>
         <div class="actions">
           <a class="btn primary" href="${taskHref(t)}">浏览作品${icon('right')}</a>
-          ${b ? `<a class="btn" href="${viewHref(t, a.id, b.id)}">${icon('split')}并排对比</a>` : ''}
+          ${hasExhibition(t) ? `<a class="btn" href="${sandtableHref(t)}">${icon('full')}三维沙盘</a>` : b ? `<a class="btn" href="${viewHref(t, a.id, b.id)}">${icon('split')}并排对比</a>` : ''}
         </div>
       </div>
     </article>`;
@@ -281,12 +283,13 @@ function renderTask(t) {
       <button data-go="results" aria-pressed="true">作品<span class="count">${t.results.length}</span></button>
       ${t.conditions.length ? '<button data-go="shots" aria-pressed="false">截图对照</button>' : ''}
       <button data-go="prompt" aria-pressed="false">提示词</button>
+      ${hasExhibition(t) ? `<a class="sand-entry" href="${sandtableHref(t)}">${icon('full')}三维沙盘 <span>自由摆放 · 昼夜光影</span>${icon('arrow')}</a>` : ''}
     </div></nav>
 
     <section id="results" data-panel="results" class="block wrap">
       <div class="block-head"><h2 id="filter-heading">全部作品</h2><p id="filter-count">${t.results.length} 件作品</p>
         ${sortControl()}
-        ${t.results.length > 1 ? '<p class="block-hint">选中两件作品即可并排对比</p>' : ''}</div>
+        ${t.results.length > 1 ? `<p class="block-hint">${hasExhibition(t) ? '选中作品加入三维沙盘，或选两件并排对比' : '选中两件作品即可并排对比'}</p>` : ''}</div>
       <div class="chips" role="group" aria-label="按模型厂商筛选">
         <button class="chip" data-vendor="" aria-pressed="true">全部<span>${t.results.length}</span></button>
         ${vendors.map((v) => `<button class="chip" data-vendor="${esc(v)}" aria-pressed="false">${esc(v)}<span>${vendorCounts.get(v)}</span></button>`).join('')}
@@ -369,11 +372,11 @@ function filterResults(t) {
   $('.filter-empty').hidden = shown.length > 0;
 }
 
-// Compare tray: pick up to two results; a third pick replaces the oldest.
+// Architecture supports a multi-result exhibition; other tasks keep two panes.
 function togglePick(t, id) {
   const picks = taskState.picks;
   if (picks.includes(id)) taskState.picks = picks.filter((x) => x !== id);
-  else taskState.picks = [...picks, id].slice(-2);
+  else taskState.picks = hasExhibition(t) ? [...picks, id] : [...picks, id].slice(-2);
   syncPicks(t);
 }
 
@@ -394,10 +397,11 @@ function syncPicks(t) {
   const slot = (r, i) => (r
     ? `<li class="slot"><span class="slot-thumb">${img(cover(r), '', '', true)}</span><span class="slot-text"><b>${esc(r.title)}</b><small>${esc(label(r))}</small></span><button class="slot-x" data-unpick="${esc(r.id)}" aria-label="移出对比：${esc(r.title)}">${icon('close')}</button></li>`
     : `<li class="slot empty"><span class="slot-thumb">${pad(i + 1)}</span><span class="slot-text"><b>再选一件</b><small>点击作品上的「对比」</small></span></li>`);
-  tray.innerHTML = `<ol class="slots">${slot(chosen[0], 0)}<li class="vs" aria-hidden="true">vs</li>${slot(chosen[1], 1)}</ol>
+  tray.innerHTML = `<ol class="slots">${slot(chosen[0], 0)}<li class="vs" aria-hidden="true">${chosen.length > 2 ? `+${chosen.length - 1}` : 'vs'}</li>${chosen.length <= 2 ? slot(chosen[1], 1) : `<li class="slot"><span class="slot-text"><b>共 ${chosen.length} 件作品</b><small>在同一画布上查看原作</small></span></li>`}</ol>
     <div class="tray-actions">
       <button class="icon-btn" data-clear-picks aria-label="清空对比" title="清空">${icon('close')}</button>
-      ${chosen[1] ? `<a class="btn primary" href="${viewHref(t, chosen[0].id, chosen[1].id)}">并排对比${icon('right')}</a>` : `<span class="btn primary is-disabled" aria-disabled="true">并排对比${icon('right')}</span>`}
+      ${chosen.length === 2 ? `<a class="btn${hasExhibition(t) ? '' : ' primary'}" href="${viewHref(t, chosen[0].id, chosen[1].id)}">并排对比${icon('right')}</a>` : ''}
+      ${hasExhibition(t) ? `<a class="btn primary" href="${sandtableHref(t, picks)}">进入沙盘${icon('right')}</a>` : chosen.length < 2 ? `<span class="btn primary is-disabled" aria-disabled="true">并排对比${icon('right')}</span>` : ''}
     </div>`;
   settleImages();
 }
@@ -527,6 +531,7 @@ function createViewer(t) {
       </div>
       <span class="split-context">并排对比 · 点击一栏以选中</span>
       <div class="vtools">
+        ${hasExhibition(t) ? `<button class="vtool" data-v="exhibition" title="将当前作品加入三维沙盘">${icon('full')}<span class="vtool-text">沙盘</span></button>` : ''}
         <button class="vtool" data-v="guide" aria-label="操作指南" aria-pressed="false" title="操作指南（G）">${icon('guide')}<span class="vtool-text">指南</span></button>
         ${many ? `<button class="vtool" data-v="split" aria-label="并排对比" aria-pressed="false" title="并排对比（S）">${icon('split')}<span class="vtool-text">并排</span></button>` : ''}
         <a class="vtool" data-v="open" aria-label="在新窗口打开独立页面" target="_blank" rel="noopener" title="在新窗口打开独立页面">${icon('arrow')}<span class="vtool-text">新窗口</span></a>
@@ -679,6 +684,7 @@ function createViewer(t) {
 
   el.addEventListener('click', (e) => {
     const v = e.target.closest('[data-v]')?.dataset.v;
+    if (v === 'exhibition') { location.hash = sandtableHref(t, state.panes); return; }
     if (v === 'guide') return toggleGuide();
     if (v === 'split') return toggleSplit();
     if (v === 'full') return fullscreen();
@@ -755,11 +761,17 @@ function notFound(msg) {
   root.innerHTML = `${header()}<main class="page wrap empty-page"><p class="kicker"><span class="num">404</span></p><h1>找不到页面</h1><p>${esc(msg)}</p><a class="btn primary" href="#/">回到首页${icon('right')}</a></main>`;
 }
 
-function route() {
+let exhibition = null;
+let routeVersion = 0;
+async function route() {
+  const version = ++routeVersion;
   const parts = location.hash.replace(/^#\/?/, '').split('#')[0].split('/').filter(Boolean).map(decodeURIComponent);
   const [taskId, a, vs, b] = parts;
   const t = DATA.tasks.find((x) => x.id === taskId);
-  const inViewer = t && a;
+  const inExhibition = t && hasExhibition(t) && (a === 'exhibition' || a === 'sandtable');
+  const inViewer = t && a && !inExhibition;
+  exhibition?.destroy();
+  exhibition = null;
 
   if (viewer && (!inViewer || viewer.task !== t)) {
     viewer.destroy();
@@ -772,7 +784,20 @@ function route() {
 
   if (!taskId) renderHome();
   else if (!t) notFound(`没有 id 为「${taskId}」的题目。`);
-  else if (!inViewer) {
+  else if (inExhibition) {
+    document.body.classList.remove('has-tray');
+    root.innerHTML = '<main class="empty-page wrap"><p>正在打开预览…</p></main>';
+    try {
+      const create = a === 'sandtable'
+        ? (await import('./sandtable.js')).createSandtable
+        : (await import('./exhibition.js')).createExhibition;
+      if (version !== routeVersion) return;
+      exhibition = create(root, t, { label, vendorOf, cover, initial: (vs ?? '').split(',').filter((id) => t.results.some((r) => r.id === id)) });
+    } catch (error) {
+      if (version !== routeVersion) return;
+      root.innerHTML = `<main class="empty-page wrap"><h1>展厅加载失败</h1><p>${esc(error.message)}</p><a class="btn" href="${taskHref(t)}">返回作品</a></main>`;
+    }
+  } else if (!inViewer) {
     renderTask(t);
     activatePanel(location.hash.split('#')[2], false);
   } else {

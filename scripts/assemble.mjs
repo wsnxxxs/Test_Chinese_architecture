@@ -70,6 +70,32 @@ function images(source, cover) {
 
 rmSync(DIST, { recursive: true, force: true });
 cpSync(join(ROOT, 'site'), DIST, { recursive: true });
+// Keep the gallery viewer self-contained on static hosts, including subpaths.
+mkdirSync(join(DIST, 'vendor'), { recursive: true });
+for (const file of ['three.module.js', 'three.core.js']) {
+  cpSync(join(ROOT, 'node_modules/three/build', file), join(DIST, 'vendor', file));
+}
+cpSync(join(ROOT, 'node_modules/three/examples/jsm/controls/OrbitControls.js'), join(DIST, 'vendor/OrbitControls.js'));
+
+function enableSandtable(target) {
+  let captures = 0;
+  walk(target, (path) => {
+    if (!['.js', '.html'].includes(extname(path))) return;
+    const source = readFileSync(path, 'utf8');
+    let patched = source.replace(/this\.isScene\s*=\s*(?:!0|true)\b/g, (match) => {
+      captures++;
+      return `${match},window.__galleryCaptureScene?.(this)`;
+    });
+    // Sonnet frees CPU voxel buffers after GPU upload. Keep them for this
+    // temporary export only; normal standalone previews retain that optimization.
+    if (target.endsWith('sonnet-5.5-max')) patched = patched.replace(/this\.array\s*=\s*null/g, '(window.__galleryCaptureScene||(this.array=null))');
+    if (patched !== source) writeFileSync(path, patched);
+  });
+  if (!captures) throw new Error(`No Three.js scene found for sandtable: ${target}`);
+  const entry = join(target, 'index.html');
+  const bridge = relative(target, join(DIST, 'sandtable-bridge.js')).split('\\').join('/');
+  writeFileSync(entry, readFileSync(entry, 'utf8').replace(/<head[^>]*>/i, (head) => `${head}<script src="${bridge}"></script>`));
+}
 
 function assembleResult(entry, taskConfig) {
   const taskId = taskConfig.id;
@@ -90,6 +116,13 @@ function assembleResult(entry, taskConfig) {
   if (!existsSync(built)) throw new Error(`Missing build output: ${built}`);
   const target = join(DIST, resultPath);
   cpSync(built, target, { recursive: true });
+  // The original pages remain byte-for-byte intact. Scene extraction runs only
+  // in a separate copy used by the optional simplified layout sandtable.
+  if (taskId === 'chinese-architecture') {
+    const sandtableTarget = join(DIST, '_sandtable', entry.id);
+    cpSync(built, sandtableTarget, { recursive: true });
+    enableSandtable(sandtableTarget);
+  }
 
   const picturePaths = images(source, entry.cover);
   for (const path of picturePaths) {

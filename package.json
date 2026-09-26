@@ -14,6 +14,7 @@
     "check": "npm run check --workspace=opus-5.5-high"
   },
   "devDependencies": {
+    "three": "^0.186.1",
     "vite": "^7.3.6"
   }
 }

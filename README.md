@@ -70,12 +70,13 @@
 
 ## 桌面微缩铁路小镇
 
-本题收录 15 份作品，支持在线运行、并排对比与手机截图预览。本次新增两份 MiMo 作品：
+本题收录 16 份作品，支持在线运行、并排对比与手机截图预览。新增结果如下，Extra 为模型思考等级：
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
 | MiMo V2.6 Flash | 微缩铁路小镇 · Miniature Railway Town | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/mimo-v2.6-flash) | [项目说明](results/miniature-railway-town/mimo-v2.6-flash/README.md) |
 | MiMo V2.6 Pro | 青溪镇 · 桌面微缩铁路沙盘 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/mimo-v2.6-pro) | [项目说明](results/miniature-railway-town/mimo-v2.6-pro/README.md) |
+| DeepSeek V4.1 Flash Extra | 微缩铁路小镇 · Miniature Railway Town | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4.1-flash-extra) | [项目说明](results/miniature-railway-town/deepseek-v4.1-flash-extra/README.md) |
 
 ## 机械键盘 · 交互式产品配置器
 
@@ -119,9 +120,9 @@ tasks/chinese-architecture/task.json     题目信息、原有作品的详细数
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
 tasks/miniature-railway-town/            第二道题目的提示词、元数据与手机截图
 tasks/mechanical-keyboard/              第三道题目的提示词、元数据与统一截图
-results/manifest.json                    56 个结果的简要目录
+results/manifest.json                    57 个结果的简要目录
 results/                                  第一题的 31 个独立前端项目
-results/miniature-railway-town/           第二题的 15 个独立前端项目
+results/miniature-railway-town/           第二题的 16 个独立前端项目
 results/mechanical-keyboard/             第三题的 10 个独立前端项目
 site/                                     “同题异答”作品画廊与对比界面
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json

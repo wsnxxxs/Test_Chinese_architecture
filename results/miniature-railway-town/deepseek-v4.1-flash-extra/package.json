@@ -1,0 +1,14 @@
+{
+  "name": "railway-deepseek-v4.1-flash-extra",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "node ../../../scripts/build-static-result.mjs",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "vite": "^7.3.6"
+  }
+}

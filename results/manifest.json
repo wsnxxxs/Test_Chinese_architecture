@@ -553,5 +553,16 @@
     "description": "木质底座上的青溪镇，钢桁架桥与石拱桥连接闭合铁路，三节列车独立沿轨道运行。",
     "cover": "docs/cover.png",
     "addedAt": "2026-09-26T04:52:39.000Z"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "deepseek-v4.1-flash-extra",
+    "model": "DeepSeek V4.1 Flash Extra",
+    "modelId": "deepseek-v4.1-flash",
+    "effort": "Extra",
+    "title": "微缩铁路小镇 · Miniature Railway Town",
+    "description": "傍晚光照中的铁路沙盘，提供列车运行与暂停、车速调整、视角控制和昼夜切换。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:58:40.576Z"
   }
 ]

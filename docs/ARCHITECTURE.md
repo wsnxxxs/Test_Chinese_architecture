@@ -11,7 +11,7 @@
 | 主站 | 原生 ES Module + 手写 CSS，无框架、无打包 | `site/` 原样复制进 `dist/`，模板字符串拼 HTML，hash 路由 |
 | 三维 | Three.js（根 devDependency `^0.186`） | 仅卡片小模型、沙盘、模型包生成页使用；构建时从 `node_modules/three` 复制到 `dist/vendor/`，页面用 importmap 引用，不走 CDN |
 | 作品 | 各自独立的 npm 工作区 | Vite / React / 原生页面等由原作决定，版本互不统一；主站不改原作代码 |
-| 脚本 | Node.js ESM（`.mjs`），仅用内置模块 | 例外：`capture-results.mjs` 依赖 Playwright |
+| 脚本 | Node.js ESM（`.mjs`），仅用内置模块 | 例外：`capture-results.mjs`、`bake-previews.mjs --auto` 依赖 Playwright |
 | 预览服务 | `vite preview` | 只用于静态托管 `dist/`，主站不经过 Vite 构建 |
 | 发布 | GitHub Actions → `gh-pages` 分支 → GitHub Pages | 见下文流水线 |
 
@@ -92,12 +92,14 @@ site/ + site/assets/scenes/*.sbox ─┘                 ├─> dist/_scenes|_s
 | `build-static-result.mjs` | 被只有静态交付的作品 `build` 脚本调用 | 把作品根的 `index.html`、`assets/`、`favicon.svg` 复制到该作品 `dist/` |
 | `check-intake.mjs` | `check:intake`（支持 `--task`、`--id`） | 校验模型注册与 Logo 来源、作品登记字段、带时区 `addedAt`、包名唯一、README/封面/双截图、`.sbox` 可解压非空且已压缩、已跟踪文件中无临时产物（含作品目录内的 `package-lock.json`）；`vendorNote` 与 >3 MiB 模型包记为警告 |
 | `capture-results.mjs` | `capture:results` | Playwright 按题目 `conditions.viewport` 拍 `first` / `mobile` 首屏，默认只补缺失图，需先起预览服务 |
-| `bake-previews.mjs` + `preview-baker.{html,js}` | `bake:previews` | 读 `dist/data.json` 列出缺包作品，起本地服务（默认 5174）；浏览器页逐个 iframe 打开 `previewLoader`，经 `importArchitecture` + `packPreview` 打包后 POST 回写 `site/assets/scenes/` |
+| `bake-previews.mjs` + `preview-baker.{html,js}` | `bake:previews` | 读 `dist/data.json` 列出缺包作品，起本地服务（默认 5174）；浏览器页逐个 iframe 打开 `previewLoader`，经 `importArchitecture` + `packPreview` 打包后 POST 回写 `site/assets/scenes/`；`--auto` 用无头 Chrome 驱动该页 |
+| `readme.mjs` | `readme` | 按 manifest、`gallery.json`、`task.json` 重写主 README 中 `catalog:*` 标记内的数量表与作品目录；`check-intake` 用同一函数判断是否过期 |
+| `intake.mjs` | `intake` | 收录编排：构建选中作品（及缺 `dist/` 者）→ assemble → 自起 vite preview 截图 → `bake --auto` → assemble → `readme` → `check-intake` |
 | `compact-previews.mjs` | 被 bake 调用，也可单独运行 | 把 v2 模型包量化压缩（位置 16 位、法线/颜色 8 位），v1 导入包不动 |
 
 `assemble.mjs` 关键约定：
 
-- 作品目录（`results.mjs`）：`entry.task` 存在时为 `results/<task>/<id>`，否则为 `results/<id>` 且题目视为 `LEGACY_TASK`（`chinese-architecture`）。`assemble`、`check-intake`、`capture-results` 共用这一规则。
+- 作品目录（`results.mjs`）：`entry.task` 存在时为 `results/<task>/<id>`，否则为 `results/<id>` 且题目视为 `LEGACY_TASK`（`chinese-architecture`）。`assemble`、`check-intake`、`capture-results` 共用这一规则；`resultFilter` 统一解析 `--task` 与 `--id=<id>|<task>/<id>[,...]`。
 - 模型 id 解析顺序：`task.json` 内同 id 的 `results[].model` → `manifest.modelId` → 作品 `id`；必须在 `gallery.json` 中注册，否则构建失败。
 - 标题、摘要、`effort`、`guide` 等同理优先取 `task.json.results[]`（仅建筑题 4 份历史作品使用），其次取 manifest。
 - 可提取副本：按题目 `sandtable` 开关复制到 `dist/_sandtable/<id>/` 或 `dist/_scenes/<task>/<id>/`，路径作为 `previewLoader` 写入 `data.json`，沙盘、卡片回退与模型包生成都从这里读取；用正则在构建产物中给 `this.isScene=true` 插入 `window.__galleryCaptureScene?.(this)` 钩子、给 `render` 加短路，并在 `<head>` 注入 `sandtable-bridge.js`。找不到场景即构建失败。`KEEP_CPU_BUFFERS` 列出需要在提取副本中保留 CPU 体素缓冲的作品（当前为 `sonnet-5.5-max`）。`dist/results/` 下的原作副本不做任何修改。

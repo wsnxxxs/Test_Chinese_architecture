@@ -2,6 +2,7 @@
   "title": "Boeing 787 · 交互式三维展示",
   "summary": "以实时三维网页展示 Boeing 787 的外形、观察视角和可动机构；原始生成提示词尚未随交付提供。",
   "prompt": "PROMPT.md",
+  "promptPending": true,
   "date": "2026-09-27",
   "order": 4,
   "tags": ["Three.js", "航空器", "产品展示", "机构交互"],

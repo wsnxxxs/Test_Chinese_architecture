@@ -3,16 +3,16 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { gunzipSync } from 'node:zlib';
-import { resultDir, taskIdOf } from './results.mjs';
+import { resultDir, resultFilter, taskIdOf } from './results.mjs';
+import { renderReadme } from './readme.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = path => JSON.parse(readFileSync(join(root, path), 'utf8'));
 const entries = read('results/manifest.json');
 const models = read('gallery.json').models;
 const tasks = new Map(readdirSync(join(root, 'tasks')).map(id => [id, read(`tasks/${id}/task.json`)]));
-const taskFilter = process.argv.find(arg => arg.startsWith('--task='))?.slice(7);
-const idFilter = process.argv.find(arg => arg.startsWith('--id='))?.slice(5);
-const selected = entries.filter(entry => (!taskFilter || taskIdOf(entry) === taskFilter) && (!idFilter || entry.id === idFilter));
+const matches = resultFilter();
+const selected = entries.filter(entry => matches(taskIdOf(entry), entry.id));
 const errors = [], warnings = [], keys = new Set(), packages = new Set();
 const requireFile = (path, label) => {
   if (!existsSync(join(root, path)) || !statSync(join(root, path)).isFile()) errors.push(`${label}: missing ${path}`);
@@ -77,6 +77,9 @@ for (const entry of entries) {
 const tracked = execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8' }).trim().split('\n');
 const temporary = /(?:^|\/)(?:node_modules|dist|\.cache|\.vite|\.playwright-cli|output|test-results|playwright-report|tests?|verification|__pycache__)(?:\/|$)|(?:\.log|\.tmp|\.bak|\.zip|\.pyc)$|(?:^|\/)playwright\.config\.|^results\/.+\/package-lock\.json$/;
 for (const path of tracked) if (path.startsWith('results/') && temporary.test(path)) errors.push(`Unnecessary delivery file: ${path}`);
+try {
+  if (renderReadme() !== readFileSync(join(root, 'README.md'), 'utf8')) errors.push('README.md catalog is stale; run npm run readme');
+} catch (error) { errors.push(error.message); }
 for (const warning of warnings) console.warn(`WARN ${warning}`);
 for (const error of errors) console.error(`ERROR ${error}`);
 console.log(`Intake check: ${selected.length} result(s), ${errors.length} error(s), ${warnings.length} warning(s).`);

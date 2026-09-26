@@ -20,7 +20,7 @@
 
 ## 重新生成
 
-先构建作品和站点，再运行 `npm run bake:previews`。打开终端显示的本地生成页，点击「开始生成」；完成后执行 `node scripts/assemble.mjs`。生成脚本将压缩后的包写入 `site/assets/scenes/`，无需在访问画廊时再执行建模。
+收录时由 `npm run intake` 自动完成。单独运行时先构建作品和站点，再运行 `npm run bake:previews -- --auto`（无头生成）；不加 `--auto` 则打开终端显示的本地生成页，点击「开始生成」。完成后执行 `node scripts/assemble.mjs`。生成脚本将压缩后的包写入 `site/assets/scenes/`，无需在访问画廊时再执行建模。
 
 修改已有作品模型时用 `npm run bake:previews -- --force`。导入的九份原始包不在强制重生成范围内。`node scripts/compact-previews.mjs` 可压缩此前生成但尚未压缩的第二版模型包；正常生成流程已自动执行这一步。
 

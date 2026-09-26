@@ -7,13 +7,14 @@
 1. 本文：当前进行到哪、剩余什么、哪些不能碰。
 2. `AGENTS.md`：仓库工作约定。
 3. 按任务读 `docs/PRODUCT.md`、`docs/ARCHITECTURE.md`、`docs/DESIGN.md`、`docs/intake-workflow.md`。
-4. 轮次记录按日期在 `docs/archive/`：最新 `2026-09-27-工程清理-wsnxxxs.md`，其余为 2026-09-26 至 2026-09-27 的收录与文档记录。历史记录里的旧待办、旧口径不可当现状。
+4. 轮次记录按日期在 `docs/archive/`：最新 `2026-09-27-收录流程提速-wsnxxxs.md`，其余为 2026-09-26 至 2026-09-27 的收录与文档记录。历史记录里的旧待办、旧口径不可当现状。
 
 ## 当前状态（2026-09-27）
 
 - 本轮新增 `HANDOFF.md`、`docs/archive/`、`docs/PRODUCT.md`、`docs/ARCHITECTURE.md`、`docs/DESIGN.md`、`docs/IDEAS.md`，四份历史轮次记录迁入 `docs/archive/` 加日期前缀，同步修正主 README 与 7 份作品 README 的引用。
 - `AGENTS.md` 已按新体系重写：合并协作规范；文档地图移入 `AGENTS.md`。
 - 项目基线：5 道题目 / 81 份作品 / 32 个模型 / 15 家厂商（2026-09-27 口径，随收录变化）；Node.js ≥ 22.13，`npm install && npm run dev` 本地起画廊。
+- 收录流程提速（已提交）：新增 `npm run intake -- --id=<task>/<id>[,...]`，只构建选中作品并自动截图、无头生成模型包、收录检查；各单步脚本支持批量 `--id`；`docs/intake-workflow.md` 第 4–7 节改写并新增批量/并行分工。主 README 数量与作品目录改由 `npm run readme` 按 manifest 生成（`catalog` 标记区块），manifest `model` 统一为目录显示名。
 - 已收录并提交 Kimi K3 Max（Max 档位）的 PRISM-68 机械键盘作品；该轮归档记录尚未补齐。
 
 ## 生产运行与同步

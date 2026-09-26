@@ -2,6 +2,7 @@
   "title": "腾势 Z Racing · 交互式三维展示",
   "summary": "参考图片与给定尺寸展示腾势 Z 2026 款 Racing 赛道版外观；原始生成提示词尚未随交付提供。",
   "prompt": "PROMPT.md",
+  "promptPending": true,
   "date": "2026-09-27",
   "order": 5,
   "tags": ["Three.js", "汽车", "产品展示", "多视角交互"],

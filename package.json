@@ -17,7 +17,9 @@
     "bake:previews": "node scripts/bake-previews.mjs",
     "check": "node scripts/check-syntax.mjs",
     "check:intake": "node scripts/check-intake.mjs",
-    "capture:results": "node scripts/capture-results.mjs"
+    "capture:results": "node scripts/capture-results.mjs",
+    "intake": "node scripts/intake.mjs",
+    "readme": "node scripts/readme.mjs"
   },
   "devDependencies": {
     "playwright": "^1.63.0",

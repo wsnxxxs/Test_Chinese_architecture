@@ -2,16 +2,16 @@ import { chromium } from 'playwright';
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resultDir, taskIdOf } from './results.mjs';
+import { resultDir, resultFilter, taskIdOf } from './results.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = name => process.argv.find(value => value.startsWith(`--${name}=`))?.slice(name.length + 3);
-const taskFilter = arg('task'), idFilter = arg('id'), conditionFilter = arg('condition');
+const selected = resultFilter(), conditionFilter = arg('condition');
 const force = process.argv.includes('--force');
 const base = arg('url') ?? 'http://127.0.0.1:4173/';
 const wait = Number(arg('wait') ?? 3500);
 const entries = JSON.parse(readFileSync(join(root, 'results/manifest.json'), 'utf8'))
-  .filter(entry => (!taskFilter || taskIdOf(entry) === taskFilter) && (!idFilter || entry.id === idFilter));
+  .filter(entry => selected(taskIdOf(entry), entry.id));
 if (!entries.length) throw new Error('No matching results. Check --task and --id.');
 if (conditionFilter && !['first', 'mobile'].includes(conditionFilter)) throw new Error('Use --condition=first or --condition=mobile.');
 const browser = await chromium.launch({ channel: arg('browser') ?? 'chrome' });

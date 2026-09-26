@@ -65,7 +65,7 @@
   },
   {
     "id": "mimo-v2.6-pro",
-    "model": "MIMO V2.6 Pro",
+    "model": "MiMo V2.6 Pro",
     "title": "体素中华",
     "description": "三进院落与十二座建筑构成的古典建筑群，含双塔、钟鼓楼和三套光照氛围。",
     "cover": "docs/screenshot-wide.png",
@@ -145,7 +145,7 @@
   },
   {
     "id": "space-bunny",
-    "model": "Space-bunny",
+    "model": "Space-bunny（暂归 MiniMax）",
     "title": "体素宫城 · Voxel Palace",
     "description": "中轴对称的体素宫城，包含主殿、山门、宝塔、钟鼓楼、配殿与御河，支持晨曦、正午和暮色光照。",
     "cover": "docs/dpr1-dawn.png",
@@ -396,7 +396,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-5.6-luna-max",
-    "model": "GPT-5.6-Luna Max",
+    "model": "GPT-5.6 Luna Max",
     "modelId": "gpt-5.6-luna",
     "effort": "Max",
     "title": "Sora Atelier 75",
@@ -407,7 +407,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-5.6-sol-max",
-    "model": "GPT-5.6-Sol Max",
+    "model": "GPT-5.6 Sol Max",
     "modelId": "gpt-5.6-sol",
     "effort": "Max",
     "title": "KEPLER 65",
@@ -418,7 +418,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-5.6-terra-max",
-    "model": "GPT-5.6-Terra Max",
+    "model": "GPT-5.6 Terra Max",
     "modelId": "gpt-5.6-terra",
     "effort": "Max",
     "title": "AERIS 65",
@@ -429,7 +429,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-6-astra-high",
-    "model": "GPT-6-Astra High",
+    "model": "GPT-6 Astra High",
     "modelId": "gpt-6-astra",
     "effort": "High",
     "title": "Form 68",
@@ -440,7 +440,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-6-luna-max",
-    "model": "GPT-6-Luna Max",
+    "model": "GPT-6 Luna Max",
     "modelId": "gpt-6-luna",
     "effort": "Max",
     "title": "FORMA 68",
@@ -451,7 +451,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-6-sol-high",
-    "model": "GPT-6-Sol High",
+    "model": "GPT-6 Sol High",
     "modelId": "gpt-6-sol",
     "effort": "High",
     "title": "ORBIT 68",
@@ -462,7 +462,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-6-sol-max",
-    "model": "GPT-6-Sol Max",
+    "model": "GPT-6 Sol Max",
     "modelId": "gpt-6-sol",
     "effort": "Max",
     "title": "LOOM 68 · Keyboard Studio",
@@ -597,7 +597,7 @@
   },
   {
     "id": "deepseek-v4.1-flash-e0910",
-    "model": "DeepSeek V4.1 Flash Max",
+    "model": "DeepSeek V4.1 Flash E0910 Max",
     "modelId": "deepseek-v4.1-flash",
     "effort": "Max",
     "title": "古城 · 体素中式建筑群",
@@ -617,7 +617,7 @@
   },
   {
     "id": "minimax-m3-20260926",
-    "model": "MiniMax M3",
+    "model": "MiniMax M3 · 2026-09-26 版本",
     "modelId": "minimax-m3",
     "effort": "",
     "title": "体素中式院落",
@@ -782,7 +782,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-6-luna-max-arena",
-    "model": "GPT-6 Luna Max",
+    "model": "GPT-6 Luna Max · Arena",
     "modelId": "gpt-6-luna",
     "effort": "Max",
     "sourceLabel": "Arena",
@@ -794,7 +794,7 @@
   {
     "task": "mechanical-keyboard",
     "id": "gpt-6-astra-max-arena",
-    "model": "GPT-6 Astra Max",
+    "model": "GPT-6 Astra Max · Arena",
     "modelId": "gpt-6-astra",
     "effort": "Max",
     "sourceLabel": "Arena",

@@ -18,7 +18,7 @@
 
 导入直接复制顶点与实例缓冲，避免将大型几何转换为 JSON；专用载入副本只构建场景，不运行原作的 GPU 渲染与阴影。相同内容的材质先去重再合并绘制，轴对齐、相互接触的不透明体素会剔除内部面，旋转部件和透明材质保留原几何。载入按短时间片让出主线程；拖动持续丢帧时自动降低像素密度，最低为 0.55，高负载下画面会稍软。沙盘关闭多重采样抗锯齿，并把默认画布控制在约 120 万像素以内。
 
-这套优化统一用于全部 30 件中式建筑作品。大型、不透明且没有纹理的网格还会生成远景细节层级：按位置与法线边界聚合顶点，平均小范围内的颜色，保留发光和材质附加顶点属性。总览距离足够远时使用简化网格，聚焦近看时恢复完整几何；切换距离随画布像素高度变化，并保留缓冲区间，避免来回切换。透明部件、纹理材质及不适合简化的网格继续使用原几何。控制台会记录各作品的绘制对象、完整网格和远景网格三角形数量。
+这套优化统一用于全部中式建筑作品。大型、不透明且没有纹理的网格还会生成远景细节层级：按位置与法线边界聚合顶点，平均小范围内的颜色，保留发光和材质附加顶点属性。总览距离足够远时使用简化网格，聚焦近看时恢复完整几何；切换距离随画布像素高度变化，并保留缓冲区间，避免来回切换。透明部件、纹理材质及不适合简化的网格继续使用原几何。控制台会记录各作品的绘制对象、完整网格和远景网格三角形数量。
 
 原作展厅中，侧栏支持模型搜索、厂商筛选、加入和移除。拖动画布平移，滚轮或双指缩放；点击作品或「操作原作」进入专注视图，直接使用原作的相机、光照切换和其他交互。点击「返回画布」或按 Esc 返回，不重新加载作品。工具栏提供总览、缩放与 1:1 显示。选择记录在链接中，刷新或返回时恢复；手机端通过「选择模型」展开侧栏。
 
@@ -64,8 +64,9 @@
 | GPT-5.6 Terra Max | 云岫古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-5.6-terra-max) | [项目说明](results/gpt-5.6-terra-max/README.md) |
 | GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
 | GPT-6 Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
+| LongCat 2.5 | Voxel 中式古建筑群 · 晨光 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/longcat-2.5) | [项目说明](results/longcat-2.5/README.md) |
 
-本题共 30 个结果，28 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。所有作品均提供手机界面截图；原有 4 个作品保留统一首屏截图，其余作品的首屏使用项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
+本题共 31 个结果，29 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。所有作品均提供手机界面截图；原有 4 个作品保留统一首屏截图，LongCat 使用 1440×900 默认首屏截图，其余作品的首屏使用项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
 
 ## 机械键盘 · 交互式产品配置器
 
@@ -109,8 +110,8 @@ tasks/chinese-architecture/task.json     题目信息、原有作品的详细数
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
 tasks/miniature-railway-town/            第二道题目的提示词、元数据与手机截图
 tasks/mechanical-keyboard/              第三道题目的提示词、元数据与统一截图
-results/manifest.json                    53 个结果的简要目录
-results/                                  第一题的 30 个独立前端项目
+results/manifest.json                    54 个结果的简要目录
+results/                                  第一题的 31 个独立前端项目
 results/miniature-railway-town/           第二题的 13 个独立前端项目
 results/mechanical-keyboard/             第三题的 10 个独立前端项目
 site/                                     “同题异答”作品画廊与对比界面

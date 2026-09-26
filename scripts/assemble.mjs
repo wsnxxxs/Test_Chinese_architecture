@@ -126,6 +126,10 @@ function assembleResult(entry, taskConfig) {
     const sandtableTarget = join(DIST, '_sandtable', entry.id);
     cpSync(built, sandtableTarget, { recursive: true });
     enableSandtable(sandtableTarget);
+  } else {
+    const previewTarget = join(DIST, '_scenes', taskId, entry.id);
+    cpSync(built, previewTarget, { recursive: true });
+    enableSandtable(previewTarget);
   }
 
   const picturePaths = images(source, entry.cover);
@@ -158,6 +162,9 @@ function assembleResult(entry, taskConfig) {
   const repoPath = `${galleryConfig.repo}/tree/${galleryConfig.branch}/${resultPath}`;
   return {
     id: entry.id,
+    previewModel: existsSync(join(ROOT, 'site', 'assets', 'scenes', taskId, `${entry.id}.sbox`))
+      ? `assets/scenes/${taskId}/${entry.id}.sbox` : null,
+    previewLoader: taskId === 'chinese-architecture' ? `_sandtable/${entry.id}/` : `_scenes/${taskId}/${entry.id}/`,
     addedAt: entry.addedAt ?? null,
     model,
     effort: original?.effort ?? entry.effort ?? '',

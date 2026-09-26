@@ -224,11 +224,13 @@ function renderHome() {
 
 // ---- task -----------------------------------------------------------------------------
 const taskState = { task: null, cond: null, vendor: '', picks: [] };
+let resultPreviews = null;
 const panels = ['results', 'shots', 'prompt'];
 function activatePanel(name, updateHash = true) {
   const target = panels.includes(name) && $(`[data-panel="${name}"]`) ? name : 'results';
   $$('[data-panel]').forEach((el) => { el.hidden = el.dataset.panel !== target; });
   $$('[data-go]').forEach((el) => el.setAttribute('aria-pressed', String(el.dataset.go === target)));
+  resultPreviews?.setPaused(target !== 'results');
   if (updateHash) {
     const base = `#${location.hash.split('#')[1]}`;
     history.replaceState(null, '', target === 'results' ? base : `${base}#${target}`);
@@ -337,6 +339,7 @@ function renderTask(t) {
     setResultSort(e.target.value);
     const cards = new Map($$('.result').map((el) => [el.dataset.id, el]));
     $('.result-grid').append(...sortedResults(t).map((r) => cards.get(r.id)));
+    resultPreviews?.refresh();
   };
   root.onclick = (e) => {
     const go = e.target.closest('[data-go]');
@@ -381,6 +384,7 @@ function filterResults(t) {
   $('#filter-heading').textContent = taskState.vendor || '全部作品';
   $('#filter-count').textContent = `${shown.length} 件作品`;
   $('.filter-empty').hidden = shown.length > 0;
+  resultPreviews?.refresh();
 }
 
 // Architecture supports a multi-result exhibition; other tasks keep two panes.
@@ -469,6 +473,7 @@ const lightbox = (() => {
     if (el.hidden) return;
     el.hidden = true;
     document.body.classList.remove('lb-open');
+    resultPreviews?.setPaused(Boolean($('#results')?.hidden));
     lastFocus?.focus();
   };
   el.addEventListener('click', (e) => {
@@ -512,6 +517,7 @@ const lightbox = (() => {
       show();
       el.hidden = false;
       document.body.classList.add('lb-open');
+      resultPreviews?.setPaused(true);
       $('.lb-close', el).focus();
     },
     close,
@@ -783,6 +789,8 @@ async function route() {
   const inViewer = t && a && !inExhibition;
   exhibition?.destroy();
   exhibition = null;
+  resultPreviews?.destroy();
+  resultPreviews = null;
 
   if (viewer && (!inViewer || viewer.task !== t)) {
     viewer.destroy();
@@ -811,6 +819,14 @@ async function route() {
   } else if (!inViewer) {
     renderTask(t);
     activatePanel(location.hash.split('#')[2], false);
+    try {
+      const { createResultPreviews } = await import('./result-previews.js');
+      if (version !== routeVersion) return;
+      resultPreviews = createResultPreviews(root, t);
+      resultPreviews.setPaused($('#results').hidden);
+    } catch (error) {
+      console.error('Model previews unavailable:', error);
+    }
   } else {
     const ids = [a, vs === 'vs' ? b : null].filter(Boolean);
     const valid = ids.filter((id, i) => t.results.some((r) => r.id === id) && ids.indexOf(id) === i);

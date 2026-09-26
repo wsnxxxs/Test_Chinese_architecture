@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#172e29" />
+    <meta name="description" content="循中轴而入，见东方营造之美。以 Three.js 构筑的可交互体素古典建筑群。" />
+    <title>栖霞古境 · 体素山河</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script type="module" crossorigin src="./assets/index-ClZWHkLn.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BxR3vBAm.css">
+  </head>
+  <body>
+    <main id="app">
+      <div id="scene" aria-label="可旋转、缩放的中国古典建筑群三维场景"></div>
+      <header class="brand">
+        <span class="seal" aria-hidden="true">栖</span>
+        <div><span class="brand-name">栖霞古境</span><span class="brand-caption">QIXIA · VOXEL HERITAGE</span></div>
+      </header>
+
+      <section class="introduction" aria-label="场景介绍">
+        <h1>一砖一瓦，<br />自成山河。</h1>
+        <p>循中轴而入，见东方营造之美。</p>
+      </section>
+
+      <section class="building-info" aria-live="polite" aria-atomic="true">
+        <div class="info-rule"></div>
+        <button id="building-focus" class="building-title" title="聚焦当前建筑">
+          <span id="building-number">01</span><span class="slash">/</span><span id="building-name">太和殿</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M7 5h12v12" /></svg>
+        </button>
+        <p id="building-description">金瓦重檐，巍峨出岫。<br />为全境之主，彰显东方营造气象。</p>
+        <div class="building-pagination" aria-label="浏览建筑">
+          <button id="previous-building" aria-label="上一座建筑"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg></button>
+          <span id="building-counter">01 — 09</span>
+          <button id="next-building" aria-label="下一座建筑"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg></button>
+        </div>
+      </section>
+
+      <nav class="time-switch" aria-label="光影时段">
+        <button data-time="dawn" aria-pressed="false">晨曦</button>
+        <button data-time="dusk" aria-pressed="true">日暮</button>
+        <button data-time="night" aria-pressed="false">月夜</button>
+      </nav>
+
+      <div class="view-tools">
+        <nav class="view-switch" aria-label="场景视角">
+          <button data-view="overview" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5ZM3 7l9 5 9-5M12 12v10M7.5 4.5l9 5v5" /></svg><span>全景</span></button>
+          <i></i>
+          <button data-view="axis" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 5 3 2h14l3-2M3 3h18M4 11h16M7 7 5 22M17 7l2 15M8 11h8" /></svg><span>中轴</span></button>
+          <i></i>
+          <button data-view="top" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 6-10 6L2 8l10-6ZM2 12l10 6 10-6M2 16l10 6 10-6" /></svg><span>俯瞰</span></button>
+          <i></i>
+          <button id="auto-orbit" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13a9 7 0 0 1 18 0M3 13l-2-3M3 13l3-2M21 13l2-3M21 13l-3-2M7 19h1m4 1h1m4-1h1" /></svg><span>自动环绕</span></button>
+        </nav>
+        <button id="reset-view" class="reset-view" aria-label="重置视角" title="重置视角（R）"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10a9 9 0 1 0-2 8M21 3v7h-7" /></svg></button>
+      </div>
+
+      <footer class="interaction-hint"><svg viewBox="0 0 24 32" aria-hidden="true"><rect x="4" y="4" width="16" height="25" rx="8" /><path d="M12 4v11M4 15h16M10 1h4" /></svg><span class="desktop-hint">拖拽旋转 · 滚轮缩放 · 点击建筑探索</span><span class="mobile-hint">单指旋转 · 双指缩放 · 轻点建筑</span></footer>
+      <div class="compass" aria-hidden="true"><span class="north">北</span><span class="east">东</span><span class="south">南</span><span class="west">西</span><div class="compass-ring"><div id="compass-needle"><i></i><b></b></div></div></div>
+      <div id="building-tooltip" role="status" hidden></div>
+      <div id="loading" role="status"><span></span>山河入境…</div>
+      <div id="error-message" role="alert" hidden><h2>场景暂时无法呈现</h2><p>请使用支持 WebGL 2 的现代浏览器，并开启硬件加速。</p><button onclick="window.location.reload()">重新加载</button></div>
+    </main>
+  </body>
+</html>

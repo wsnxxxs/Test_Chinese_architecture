@@ -31,7 +31,7 @@ function copyGeometry(source) {
 
 // Export the original meshes, including instance matrices and vertex colours.
 // A shared exhibition light replaces each author's sky, fog and postprocessing.
-async function importArchitecture(scenes, id) {
+export async function importArchitecture(scenes, id, { architecture = true } = {}) {
   let sliceStart = performance.now();
   async function yieldImport() {
     if (performance.now() - sliceStart < 8) return;
@@ -55,7 +55,7 @@ async function importArchitecture(scenes, id) {
     if (!mesh.isMesh || !mesh.geometry?.attributes?.position) return;
     const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
     // Background domes and full-screen postprocessing quads are not architecture.
-    if (materials.every((m) => m.side === THREE.BackSide || m.isShaderMaterial || m.fog === false)) return;
+    if (materials.every((m) => m.side === THREE.BackSide || (architecture && (m.isShaderMaterial || m.fog === false)))) return;
     const bounds = new THREE.Box3().setFromObject(mesh);
     const size = bounds.getSize(new THREE.Vector3());
     if (bounds.isEmpty() || !Number.isFinite(size.length())) return;
@@ -68,14 +68,14 @@ async function importArchitecture(scenes, id) {
     meshes.push({ mesh, bounds, size });
   });
   // Ignore infinite floors when finding the footprint; keep actual raised terrain.
-  const solid = meshes.filter(({ size }) => size.y > Math.max(size.x, size.z) * 0.008);
+  const solid = architecture ? meshes.filter(({ size }) => size.y > Math.max(size.x, size.z) * 0.008) : meshes;
   const widths = solid.map(({ size }) => Math.max(size.x, size.z)).sort((a, b) => a - b);
   const sceneryLimit = (widths[Math.floor((widths.length - 1) * 0.75)] || 1) * 8;
   const bounds = new THREE.Box3();
   for (const item of solid) if (item.mesh.isInstancedMesh || Math.max(item.size.x, item.size.z) <= sceneryLimit) bounds.union(item.bounds);
   // Some results merge distant scenery or clouds into the world. These extents
   // follow each result's site/layout source and keep the complete compound.
-  const compoundBounds = {
+  const compoundBounds = architecture && {
     'mimo-v2.6-pro': [[-85, -1.4, -80], [85, 65, 90]],
     'mimo-v2.6-flash': [[-65, -4, -70], [65, 55, 65]],
     'sonnet-5.5-max': [[-128.5, 0, -190], [127.5, 112, 210]],
@@ -135,10 +135,14 @@ async function importArchitecture(scenes, id) {
   const batches = await batchArchitecture(group);
   const detail = await createArchitectureLod(group, scale);
   console.debug(`Sandtable ${id}: ${batches.before} → ${batches.after} mesh submissions; ${batches.trianglesBefore} → ${detail.detailed} triangles; overview ${detail.overview} triangles`);
-  return { group, lods: detail.lods, height: span.y * scale };
+  const previewBounds = new THREE.Box3(
+    new THREE.Vector3(-span.x * scale / 2, 2.1, -span.z * scale / 2),
+    new THREE.Vector3(span.x * scale / 2, span.y * scale + 2.1, span.z * scale / 2),
+  );
+  return { group, lods: detail.lods, height: span.y * scale, previewBounds };
 }
 
-function disposeObject(object) {
+export function disposeObject(object) {
   const geometries = new Set(), materials = new Set(), textures = new Set();
   object.traverse((o) => {
     if (o.geometry) geometries.add(o.geometry);

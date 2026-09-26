@@ -321,6 +321,12 @@ a.brand-mark:hover { border-color: var(--ink-2); transform: translateY(-1px); }
 .result-media > a { display: block; width: 100%; height: 100%; }
 .result-media img, .result-media .img-empty { width: 100%; height: 100%; object-fit: cover; }
 .result-media:hover img.is-loaded { transform: scale(1.03); }
+.result-model-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; visibility: hidden; }
+.has-model-preview .result-model-canvas { visibility: visible; }
+.has-model-preview .result-media > a > img { visibility: hidden; }
+.result-model-status { position: absolute; left: 12px; bottom: 12px; padding: 3px 9px; border-radius: 999px; background: var(--glass); color: var(--ink-2); font-size: 11px; pointer-events: none; }
+.result[data-preview-state="ready"] .result-model-status { display: none; }
+.result-model-loader { position: fixed; left: -1500px; top: 0; width: 1000px; height: 700px; border: 0; pointer-events: none; visibility: hidden; }
 .result.picked .result-media { box-shadow: 0 0 0 2px var(--accent); }
 .play, .pick {
   position: absolute; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px;
@@ -329,6 +335,7 @@ a.brand-mark:hover { border-color: var(--ink-2); transform: translateY(-1px); }
   transition: opacity 0.25s, transform 0.25s var(--ease), background-color 0.2s;
 }
 .play { left: 12px; bottom: 12px; opacity: 0; transform: translateY(4px); }
+.result-media .play, .result-media .pick { z-index: 1; }
 .play .i { width: 14px; height: 14px; }
 .result-media:hover .play, .result-media a:focus-visible .play { opacity: 1; transform: none; }
 .pick { top: 10px; right: 10px; padding-left: 5px; opacity: 0; }

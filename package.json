@@ -12,7 +12,7 @@
     "dev:opus": "npm run dev --workspace=opus-5.5-high",
     "build": "npm run build --workspaces && node scripts/assemble.mjs",
     "preview": "vite preview --host 0.0.0.0",
-    "check": "node --check site/app.js && node --check scripts/assemble.mjs"
+    "check": "node --check site/app.js && node --check site/result-previews.js && node --check site/sandtable.js && node --check scripts/assemble.mjs"
   },
   "devDependencies": {
     "three": "^0.186.1",

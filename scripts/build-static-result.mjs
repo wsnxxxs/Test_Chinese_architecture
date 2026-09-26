@@ -9,3 +9,6 @@ cpSync(join(root, 'index.html'), join(output, 'index.html'));
 if (existsSync(join(root, 'assets'))) {
   cpSync(join(root, 'assets'), join(output, 'assets'), { recursive: true });
 }
+if (existsSync(join(root, 'favicon.svg'))) {
+  cpSync(join(root, 'favicon.svg'), join(output, 'favicon.svg'));
+}

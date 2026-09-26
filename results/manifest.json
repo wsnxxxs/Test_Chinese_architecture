@@ -574,5 +574,55 @@
     "description": "暖色傍晚中的木质微缩沙盘，蒸汽列车沿闭合铁路经过小镇、河流桥梁与车站，支持三档光照和运行控制。",
     "cover": "docs/cover.png",
     "addedAt": "2026-09-26T05:31:41.123Z"
+  },
+  {
+    "id": "gpt-6-astra-max",
+    "model": "GPT-6 Astra Max",
+    "modelId": "gpt-6-astra",
+    "effort": "Max",
+    "title": "栖霞古境 · 体素山河",
+    "description": "以 Three.js 构筑的可交互体素古典建筑群，包含中轴院落、配殿、宝塔与建筑导览。",
+    "cover": "docs/preview.webp",
+    "addedAt": "2026-09-26T16:00:00+10:00"
+  },
+  {
+    "id": "claude-fable-5.1-max",
+    "model": "Claude Fable 5.1 Max",
+    "modelId": "claude-fable-5.1",
+    "effort": "Max",
+    "title": "体素 · 中式古建筑群",
+    "description": "山门、放生池、钟鼓楼、大雄宝殿、东西配殿与舍利宝塔组成的体素寺院。",
+    "cover": "docs/preview.webp",
+    "addedAt": "2026-09-26T16:00:00+10:00"
+  },
+  {
+    "id": "deepseek-v4.1-flash-e0910",
+    "model": "DeepSeek V4.1 Flash Max",
+    "modelId": "deepseek-v4.1-flash",
+    "effort": "Max",
+    "title": "古城 · 体素中式建筑群",
+    "description": "E0910 版本：按调色板分组生成的中轴体素古建群，提供晨、午、昏、夜四种光照。",
+    "cover": "docs/preview.webp",
+    "addedAt": "2026-09-26T16:00:00+10:00"
+  },
+  {
+    "id": "glm-5.3-flash-max",
+    "model": "GLM 5.3 Flash Max",
+    "modelId": "glm-5.3-flash",
+    "effort": "Max",
+    "title": "体素古刹",
+    "description": "压缩包中的新版寺院，包含中轴建筑、宝塔、灯火、远山与体素云层。",
+    "cover": "docs/preview.webp",
+    "addedAt": "2026-09-26T16:00:00+10:00"
+  },
+  {
+    "id": "minimax-m3-20260926",
+    "model": "MiniMax M3",
+    "modelId": "minimax-m3",
+    "effort": "",
+    "title": "体素中式院落",
+    "description": "2026-09-26 收录的独立版本：主殿、配殿、山门、五层宝塔与钟鼓楼组成的院落。",
+    "cover": "docs/preview.webp",
+    "addedAt": "2026-09-26T16:00:00+10:00"
   }
 ]

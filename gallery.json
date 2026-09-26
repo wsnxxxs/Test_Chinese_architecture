@@ -11,6 +11,7 @@
     {"id": "seed-2.1-pro", "name": "Seed 2.1 Pro", "vendor": "ByteDance Seed", "logo": "assets/brands/seed.ico", "brandUrl": "https://seed.bytedance.com/en/", "brandName": "ByteDance Seed"},
     {"id": "doubao-seed-evolving", "name": "Doubao Seed Evolving", "vendor": "ByteDance Seed", "logo": "assets/brands/seed.ico", "brandUrl": "https://seed.bytedance.com/en/", "brandName": "ByteDance Seed"},
     {"id": "step-5-preview", "name": "Step 5 Preview", "vendor": "StepFun", "logo": "assets/brands/stepfun.svg", "brandUrl": "https://www.stepfun.com/step-5-preview", "brandName": "StepFun"},
+    {"id": "claude-fable-5.1", "name": "Claude Fable 5.1", "vendor": "Anthropic", "logo": "assets/brands/claude.png", "brandUrl": "https://claude.com/", "brandName": "Claude"},
     {"id": "claude-opus-5.5", "name": "Claude Opus 5.5", "vendor": "Anthropic", "logo": "assets/brands/claude.png", "brandUrl": "https://claude.com/", "brandName": "Claude"},
     {"id": "claude-sonnet-5.5", "name": "Claude Sonnet 5.5", "vendor": "Anthropic", "logo": "assets/brands/claude.png", "brandUrl": "https://claude.com/", "brandName": "Claude"},
     {"id": "mimo-v2.6-pro", "name": "MiMo V2.6 Pro", "vendor": "Xiaomi", "logo": "assets/brands/mimo.png", "brandUrl": "https://mimo.mi.com/", "brandName": "Xiaomi MiMo"},

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>体素中国古典建筑群 · Voxel Chinese Classical Architecture</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #10131a; }
+  #app { position: fixed; inset: 0; }
+  canvas { display: block; width: 100%; height: 100%; }
+
+  #hud {
+    position: fixed; left: 16px; top: 14px; z-index: 10;
+    font: 13px/1.6 "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    color: #f3e9d8; text-shadow: 0 1px 3px rgba(0,0,0,.85);
+    pointer-events: none; user-select: none; max-width: 340px;
+  }
+  #hud h1 {
+    margin: 0 0 4px; font-size: 16px; font-weight: 600; letter-spacing: .08em;
+    color: #ffd9a0;
+  }
+  #hud .sub { font-size: 11px; opacity: .72; letter-spacing: .12em; margin-bottom: 8px; }
+  #hud .stats { font-size: 11.5px; opacity: .9; }
+  #hud .stats b { color: #ffd9a0; font-weight: 600; }
+
+  #tod {
+    position: fixed; left: 16px; bottom: 16px; z-index: 10;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    font: 12px/1.4 "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    pointer-events: auto;
+  }
+  #tod button {
+    pointer-events: auto; cursor: pointer;
+    background: rgba(20, 24, 34, .68); color: #f3e9d8;
+    border: 1px solid rgba(255, 214, 160, .35); border-radius: 999px;
+    padding: 6px 14px; font: inherit; letter-spacing: .06em;
+    backdrop-filter: blur(6px); transition: background .18s, border-color .18s, color .18s;
+  }
+  #tod button:hover { background: rgba(60, 44, 30, .82); border-color: rgba(255, 214, 160, .75); }
+  #tod button[aria-pressed="true"] {
+    background: rgba(255, 196, 120, .92); color: #2a1a0c; border-color: #ffd9a0; font-weight: 600;
+  }
+
+  #hint {
+    position: fixed; right: 16px; bottom: 16px; z-index: 10;
+    font: 11.5px/1.6 "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    color: rgba(243, 233, 216, .62); text-align: right; text-shadow: 0 1px 3px rgba(0,0,0,.8);
+    pointer-events: none; user-select: none;
+  }
+
+  #loading {
+    position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
+    background: #10131a; color: #ffd9a0; transition: opacity .5s ease;
+    font: 14px/1.6 "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; letter-spacing: .2em;
+  }
+  #loading.hidden { opacity: 0; pointer-events: none; }
+  #error {
+    position: fixed; inset: 0; z-index: 60; display: none; place-items: center; padding: 40px;
+    background: #1a0e0e; color: #ffb4a2; font: 13px/1.7 ui-monospace, Consolas, monospace;
+    white-space: pre-wrap; overflow: auto;
+  }
+</style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div id="hud">
+    <h1>体素中国古典建筑群</h1>
+    <div class="sub">VOXEL CHINESE CLASSICAL ARCHITECTURE</div>
+    <div class="stats" id="stats">初始化中…</div>
+  </div>
+
+  <div id="tod">
+    <button data-tod="morning" aria-pressed="false">晨</button>
+    <button data-tod="noon" aria-pressed="false">午</button>
+    <button data-tod="dusk" aria-pressed="true">昏</button>
+    <button data-tod="night" aria-pressed="false">夜</button>
+  </div>
+
+  <div id="hint">
+    拖拽旋转 · 滚轮缩放 · 右键平移<br />
+    按 1 / 2 / 3 / 4 切换晨 · 午 · 昏 · 夜
+  </div>
+
+  <div id="loading">正在营造…</div>
+  <div id="error"></div>
+
+  
+
+  <script type="module">
+    const errBox = document.getElementById('error');
+    function fatal(msg) {
+      errBox.style.display = 'grid';
+      errBox.textContent = String(msg && msg.stack ? msg.stack : msg);
+      document.getElementById('loading').classList.add('hidden');
+    }
+    window.addEventListener('error', (e) => fatal(e.error || e.message));
+    window.addEventListener('unhandledrejection', (e) => fatal(e.reason));
+    import('./src/main.js').catch(fatal);
+  </script>
+</body>
+</html>

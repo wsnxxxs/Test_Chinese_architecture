@@ -4,11 +4,11 @@
 
 **[打开在线画廊](https://wsnxxxs.github.io/same-prompt-gallery/)** · [作品清单](results/manifest.json) · [模型注册表](gallery.json)
 
-截至 2026-09-26，收录 **3 道题目、58 份作品、30 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
+截至 2026-09-26，收录 **3 道题目、63 份作品、31 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
 
 | 题目 | 作品数 | 提示词 | 在线题目页 |
 | --- | ---: | --- | --- |
-| 体素中国古典建筑群 | 31 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
+| 体素中国古典建筑群 | 36 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
 | 桌面微缩铁路小镇 | 17 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
 | 机械键盘 · 交互式产品配置器 | 10 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
 
@@ -50,6 +50,8 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 首页按题目浏览，模型索引按厂商列出各模型的作品。题目页可按厂商筛选，并切换「作品」「截图对照」「提示词」；作品默认按加入时间从新到旧排列，也可按厂商或模型名称排序。
 
+作品卡片以对应的真实三维模型预览，鼠标移动可轻微转动模型；静止时暂停绘制。「截图对照」继续显示原有静态截图。
+
 在作品卡片上选中两件作品，点击底部对比栏即可并排查看。在线预览支持使用 ← / → 或顶栏按钮切换作品，操作指南可按需展开。中式建筑题目还支持多件作品的三维沙盘与原作展厅。
 
 站点提供暖白与墨色主题，默认跟随系统，可通过顶栏日月按钮切换并保存选择。[品牌标识来源](site/assets/brands/README.md)记录模型标识的来源与下载地址。
@@ -86,10 +88,15 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ### 体素中国古典建筑群
 
-31 份作品，涉及 29 个模型。Grok、Qwen3.8 Max、Seed 2.1 Pro 和 Gemini 3.7 Flash 四份作品仅有已构建页面，仓库保留其静态资源并提供复制构建脚本。
+36 份作品，涉及 30 个模型。Grok、Qwen3.8 Max、Seed 2.1 Pro、Gemini 3.7 Flash，以及新增的 Astra Max、Fable Max、GLM Flash Max 和 MiniMax 日期版本以已构建页面交付，仓库保留其静态资源并提供复制构建脚本。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
+| GPT-6 Astra Max | 栖霞古境 · 体素山河 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-max) | [项目说明](results/gpt-6-astra-max/README.md) |
+| Claude Fable 5.1 Max | 体素 · 中式古建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/claude-fable-5.1-max) | [项目说明](results/claude-fable-5.1-max/README.md) |
+| DeepSeek V4.1 Flash E0910 Max | 古城 · 体素中式建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/deepseek-v4.1-flash-e0910) | [项目说明](results/deepseek-v4.1-flash-e0910/README.md) |
+| GLM 5.3 Flash Max | 体素古刹 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/glm-5.3-flash-max) | [项目说明](results/glm-5.3-flash-max/README.md) |
+| MiniMax M3 · 2026-09-26 版本 | 体素中式院落 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/minimax-m3-20260926) | [项目说明](results/minimax-m3-20260926/README.md) |
 | Grok 4.6 | 体素中式建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/grok-4.6) | [项目说明](results/grok-4.6/README.md) |
 | Qwen3.8 Max 0902 | 体素 · 中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-max-0902) | [项目说明](results/qwen3.8-max-0902/README.md) |
 | Qwen3.8 Flash next | 体素古建 · 中轴殿宇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/qwen3.8-flash-next) | [项目说明](results/qwen3.8-flash-next/README.md) |
@@ -121,6 +128,8 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | Gemini 3.8 Flash | 紫禁晨暮 · 中式殿阁体素群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.8-flash) | [项目说明](results/gemini-3.8-flash/README.md) |
 | Gemini 3.7 Flash | 华夏九重天 · 3D 体素中国古典建筑群 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.7-flash) | [项目说明](results/gemini-3.7-flash/README.md) |
 | LongCat 2.5 | Voxel 中式古建筑群 · 晨光 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/longcat-2.5) | [项目说明](results/longcat-2.5/README.md) |
+
+新增五份建筑作品来自用户提供的 architecture-gallery.zip，四份重复交付复用原有记录；来源与对应关系见[收录记录](docs/architecture-gallery-import.md)。
 
 ### 桌面微缩铁路小镇
 
@@ -181,8 +190,8 @@ tasks/
   miniature-railway-town/             铁路题提示词、元数据与截图
   mechanical-keyboard/               键盘题提示词、元数据与截图
 results/
-  manifest.json                      58 份作品的元数据
-  <模型标识>/                         建筑题的 31 个项目
+  manifest.json                      63 份作品的元数据
+  <模型标识>/                         建筑题的 36 个项目
   miniature-railway-town/<模型标识>/   铁路题的 17 个项目
   mechanical-keyboard/<模型标识>/     键盘题的 10 个项目
 site/                                画廊、在线预览、对比与展示界面

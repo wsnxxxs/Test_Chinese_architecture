@@ -1,0 +1,10 @@
+{
+  "name": "glm-5.3-flash-max",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node ../../scripts/build-static-result.mjs",
+    "preview": "vite preview"
+  }
+}

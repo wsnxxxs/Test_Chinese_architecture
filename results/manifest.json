@@ -689,5 +689,16 @@
     "cover": "docs/cover.jpg",
     "addedAt": "2026-09-26T10:07:14.698Z",
     "captureNote": "原作地表出现明显斑块和闪烁；默认视角裁切部分底座，手机标题/状态面板重叠且底部控制条超出横向视口。保留交付状态。"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "deepseek-v4.1-flash-high",
+    "model": "DeepSeek V4.1 Flash High",
+    "modelId": "deepseek-v4.1-flash",
+    "effort": "High",
+    "title": "桌面微缩铁路小镇",
+    "description": "木质沙盘中的闭合铁路连接车站、街区与钢桁架桥和双拱石桥，提供三档光照、运行暂停与速度控制。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-26T10:13:06.018Z"
   }
 ]

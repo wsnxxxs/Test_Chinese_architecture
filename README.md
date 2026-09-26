@@ -4,12 +4,12 @@
 
 **[打开在线画廊](https://wsnxxxs.github.io/same-prompt-gallery/)** · [作品清单](results/manifest.json) · [模型注册表](gallery.json)
 
-截至 2026-09-26，收录 **3 道题目、69 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
+截至 2026-09-26，收录 **3 道题目、70 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
 
 | 题目 | 作品数 | 提示词 | 在线题目页 |
 | --- | ---: | --- | --- |
 | 体素中国古典建筑群 | 36 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
-| 桌面微缩铁路小镇 | 20 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
+| 桌面微缩铁路小镇 | 21 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
 | 机械键盘 · 交互式产品配置器 | 13 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
 
 ## 快速运行
@@ -54,7 +54,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 作品卡片以对应的真实三维模型预览，鼠标移动可轻微转动模型；静止时暂停绘制。「截图对照」继续显示原有静态截图。
 
-全部 69 份作品已有预先生成的模型包，打开卡片直接读取模型，省去运行原作、重新合并与简化的等待。可见卡片优先加载，桌面最多并行读取 3 份，手机最多 2 份；手机降低绘制像素密度和离屏缓存，多张卡片分帧绘制。预览用位置、颜色、法线与纹理按卡片尺寸压缩，完整原作保留原始精度。
+全部 70 份作品已有预先生成的模型包，打开卡片直接读取模型，省去运行原作、重新合并与简化的等待。可见卡片优先加载，桌面最多并行读取 3 份，手机最多 2 份；手机降低绘制像素密度和离屏缓存，多张卡片分帧绘制。预览用位置、颜色、法线与纹理按卡片尺寸压缩，完整原作保留原始精度。
 
 在作品卡片上选中两件作品，点击底部对比栏即可并排查看。在线预览支持使用 ← / → 或顶栏按钮切换作品，操作指南可按需展开。中式建筑题目还支持多件作品的三维沙盘与原作展厅。
 
@@ -137,7 +137,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ### 桌面微缩铁路小镇
 
-20 份作品，涉及 18 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
+21 份作品，涉及 18 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -161,6 +161,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | SWE-2 | 溪口站 · 微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/swe-2) | [项目说明](results/miniature-railway-town/swe-2/README.md) |
 | Space-bunny Max | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/space-bunny-max) | [项目说明](results/miniature-railway-town/space-bunny-max/README.md) |
 | MiniMax M3 | 桌面微缩铁路镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/minimax-m3) | [项目说明](results/miniature-railway-town/minimax-m3/README.md) |
+| DeepSeek V4.1 Flash High | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4.1-flash-high) | [项目说明](results/miniature-railway-town/deepseek-v4.1-flash-high/README.md) |
 
 ### 机械键盘 · 交互式产品配置器
 
@@ -184,7 +185,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ## 截图与收录范围
 
-全部 69 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
+全部 70 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
 
 截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
 
@@ -200,9 +201,9 @@ tasks/
   miniature-railway-town/             铁路题提示词、元数据与截图
   mechanical-keyboard/               键盘题提示词、元数据与截图
 results/
-  manifest.json                      69 份作品的元数据
+  manifest.json                      70 份作品的元数据
   <模型标识>/                         建筑题的 36 个项目
-  miniature-railway-town/<模型标识>/   铁路题的 20 个项目
+  miniature-railway-town/<模型标识>/   铁路题的 21 个项目
   mechanical-keyboard/<模型标识>/     键盘题的 13 个项目
 site/                                画廊、在线预览、对比与展示界面
 scripts/

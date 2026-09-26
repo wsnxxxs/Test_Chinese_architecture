@@ -1,7 +1,7 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, extname, join, relative, resolve } from 'node:path';
+import { basename, dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { gzipSync } from 'node:zlib';
+import { resultDir, taskIdOf } from './results.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -13,7 +13,6 @@ const taskConfigs = readdirSync(join(ROOT, 'tasks')).map((id) => ({
 })).sort((a, b) => a.date.localeCompare(b.date) || (a.order ?? 0) - (b.order ?? 0));
 const modelIds = new Set(galleryConfig.models.map((model) => model.id));
 const ids = new Set();
-const taskIdOf = (entry) => entry.task ?? 'chinese-architecture';
 for (const entry of entries) {
   if (!taskConfigs.some((task) => task.id === taskIdOf(entry))) {
     throw new Error(`Unknown task for ${entry.id}: ${taskIdOf(entry)}`);
@@ -29,33 +28,8 @@ function walk(dir, callback, skipped = new Set()) {
   }
 }
 
-const sourceExtensions = new Set(['.js', '.mjs', '.cjs', '.ts', '.tsx', '.jsx', '.css', '.html', '.glsl', '.wgsl']);
 const imageExtensions = new Set(['.png', '.jpg', '.jpeg', '.webp']);
-const sourceSkip = new Set(['node_modules', 'dist', 'docs', 'screenshots', 'public', '.git', '.playwright-cli', 'output']);
 const mediaSkip = new Set(['node_modules', 'dist', 'public', '.git', '.playwright-cli', 'output']);
-
-function sourceStats(source) {
-  let files = 0;
-  let lines = 0;
-  walk(source, (path) => {
-    if (!sourceExtensions.has(extname(path)) || /\.config\.[a-z]+$/.test(path)) return;
-    files++;
-    lines += readFileSync(path, 'utf8').split('\n').filter((line) => line.trim()).length;
-  }, sourceSkip);
-  return { files, lines };
-}
-
-function buildStats(built) {
-  let bytes = 0;
-  let gzip = 0;
-  walk(built, (path) => {
-    if (!['.js', '.css', '.html'].includes(extname(path))) return;
-    const content = readFileSync(path);
-    bytes += content.length;
-    gzip += gzipSync(content).length;
-  });
-  return { bytes, gzip };
-}
 
 function images(source, cover) {
   const found = [];
@@ -78,6 +52,9 @@ for (const file of ['three.module.js', 'three.core.js']) {
 cpSync(join(ROOT, 'node_modules/three/examples/jsm/controls/OrbitControls.js'), join(DIST, 'vendor/OrbitControls.js'));
 cpSync(join(ROOT, 'node_modules/three/examples/jsm/utils/BufferGeometryUtils.js'), join(DIST, 'vendor/BufferGeometryUtils.js'));
 
+// Results whose original frees CPU voxel buffers after uploading them to the GPU.
+const KEEP_CPU_BUFFERS = new Set(['sonnet-5.5-max']);
+
 function enableSandtable(target) {
   let captures = 0;
   walk(target, (path) => {
@@ -93,7 +70,7 @@ function enableSandtable(target) {
     patched = patched.replace(/this\.render\s*=\s*function\s*\([^)]*\)\s*\{/g, (match) => `${match}if(window.__galleryCaptureScene)return;`);
     // Sonnet frees CPU voxel buffers after GPU upload. Keep them for this
     // temporary export only; normal standalone previews retain that optimization.
-    if (target.endsWith('sonnet-5.5-max')) patched = patched.replace(/this\.array\s*=\s*null/g, '(window.__galleryCaptureScene||(this.array=null))');
+    if (KEEP_CPU_BUFFERS.has(basename(target))) patched = patched.replace(/this\.array\s*=\s*null/g, '(window.__galleryCaptureScene||(this.array=null))');
     if (patched !== source) writeFileSync(path, patched);
   });
   if (!captures) throw new Error(`No Three.js scene found for sandtable: ${target}`);
@@ -115,23 +92,18 @@ function assembleResult(entry, taskConfig) {
   const model = original?.model ?? entry.modelId ?? entry.id;
   if (!modelIds.has(model)) throw new Error(`Unknown model for ${entry.id}: ${model}`);
 
-  const resultPath = entry.task ? `results/${taskId}/${entry.id}` : `results/${entry.id}`;
+  const resultPath = resultDir(entry);
   const source = join(ROOT, resultPath);
   const built = join(source, 'dist');
   if (!existsSync(built)) throw new Error(`Missing build output: ${built}`);
   const target = join(DIST, resultPath);
   cpSync(built, target, { recursive: true });
   // The original pages remain byte-for-byte intact. Scene extraction runs only
-  // in a separate copy used by the optional simplified layout sandtable.
-  if (taskId === 'chinese-architecture') {
-    const sandtableTarget = join(DIST, '_sandtable', entry.id);
-    cpSync(built, sandtableTarget, { recursive: true });
-    enableSandtable(sandtableTarget);
-  } else {
-    const previewTarget = join(DIST, '_scenes', taskId, entry.id);
-    cpSync(built, previewTarget, { recursive: true });
-    enableSandtable(previewTarget);
-  }
+  // in a separate copy, shared by the sandtable and preview model baking.
+  const previewLoader = taskConfig.sandtable ? `_sandtable/${entry.id}/` : `_scenes/${taskId}/${entry.id}/`;
+  const extractionTarget = join(DIST, previewLoader);
+  cpSync(built, extractionTarget, { recursive: true });
+  enableSandtable(extractionTarget);
 
   const picturePaths = images(source, entry.cover);
   for (const path of picturePaths) {
@@ -157,15 +129,12 @@ function assembleResult(entry, taskConfig) {
     `<script>location.replace(${JSON.stringify(redirect)} + location.search + location.hash)</script>` +
     `<a href="${redirect}">页面已迁移，点此打开</a>`);
 
-  const packageJson = JSON.parse(readFileSync(join(source, 'package.json'), 'utf8'));
-  const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
-  const stack = ['Three.js', dependencies.react ? 'React' : null, dependencies.vite ? 'Vite' : '原生页面'].filter(Boolean).join(' · ');
   const repoPath = `${galleryConfig.repo}/tree/${galleryConfig.branch}/${resultPath}`;
   return {
     id: entry.id,
     previewModel: existsSync(join(ROOT, 'site', 'assets', 'scenes', taskId, `${entry.id}.sbox`))
       ? `assets/scenes/${taskId}/${entry.id}.sbox` : null,
-    previewLoader: taskId === 'chinese-architecture' ? `_sandtable/${entry.id}/` : `_scenes/${taskId}/${entry.id}/`,
+    previewLoader,
     addedAt: entry.addedAt ?? null,
     model,
     effort: original?.effort ?? entry.effort ?? '',
@@ -175,8 +144,6 @@ function assembleResult(entry, taskConfig) {
     scene: `${resultPath}/`,
     source: repoPath,
     readme: existsSync(join(source, 'README.md')) ? `${galleryConfig.repo}/blob/${galleryConfig.branch}/${resultPath}/README.md` : null,
-    facts: original?.facts ?? { stack },
-    stats: { ...sourceStats(source), ...buildStats(built) },
     gallery: original
       ? original.gallery.map((item) => ({ src: `${resultPath}/${item.src}`, caption: item.caption }))
       : picturePaths.map((path) => ({ src: `${resultPath}/${path}`, caption: path === entry.cover ? '作品预览' : path.split('/').at(-1) })),
@@ -198,16 +165,15 @@ const data = {
     summary: taskConfig.summary,
     date: taskConfig.date,
     tags: taskConfig.tags,
+    sandtable: !!taskConfig.sandtable,
+    sceneProfile: taskConfig.sceneProfile ?? null,
     prompt: readFileSync(join(ROOT, 'tasks', taskConfig.id, taskConfig.prompt), 'utf8'),
     promptUrl: `${galleryConfig.repo}/blob/${galleryConfig.branch}/tasks/${taskConfig.id}/${taskConfig.prompt}`,
     conditions: taskConfig.conditions.map(({ id, label, note, mobile }) => ({ id, label, note, mobile: !!mobile })),
-    facts: taskConfig.facts,
-    factsNote: taskConfig.factsNote,
     results: entries.filter((entry) => taskIdOf(entry) === taskConfig.id).map((entry) => assembleResult(entry, taskConfig)),
   })),
 };
 
 writeFileSync(join(DIST, 'data.json'), JSON.stringify(data));
-writeFileSync(join(DIST, 'results.json'), JSON.stringify(entries, null, 2));
 writeFileSync(join(DIST, '.nojekyll'), '');
 console.log(`Assembled ${entries.length} result(s) across ${data.tasks.length} task(s) in dist/`);

@@ -41,7 +41,7 @@ function setResultSort(value) {
 const cover = (r) => Object.values(r.captures)[0] ?? r.gallery[0]?.src ?? '';
 const taskHref = (t) => `#/${t.id}`;
 const viewHref = (t, a, b) => `#/${t.id}/${a}${b ? `/vs/${b}` : ''}`;
-const hasExhibition = (t) => t.id === 'chinese-architecture';
+const hasExhibition = (t) => t.sandtable;
 const sandtableHref = (t, ids = []) => `#/${t.id}/sandtable${ids.length ? `/${ids.join(',')}` : ''}`;
 
 // ---- icons & marks --------------------------------------------------------------------

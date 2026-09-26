@@ -4,6 +4,7 @@ import { disposeObject } from './scene-resources.js';
 import { readModel } from './preview-model.js';
 
 export function createResultPreviews(root, task) {
+  const architecture = task.sceneProfile === 'architecture', railway = task.sceneProfile === 'railway';
   const abort = new AbortController(), { signal } = abort;
   const mobile = matchMedia('(max-width: 640px)').matches;
   const parallelLoads = mobile ? 2 : 3;
@@ -82,7 +83,7 @@ export function createResultPreviews(root, task) {
       lod.levels.forEach((level, index) => { level.object.visible = index === lod.levels.length - 1; });
     }
     const pivot = new THREE.Group(); pivot.add(group);
-    if (task.id === 'chinese-architecture') {
+    if (architecture) {
       const size = previewBounds.getSize(new THREE.Vector3());
       const base = new THREE.Mesh(new THREE.BoxGeometry(size.x + 0.7, 1.25, size.z + 0.7), new THREE.MeshStandardMaterial({ color: 0x223336, roughness: 1 }));
       base.position.y = previewBounds.min.y - 0.65;
@@ -94,7 +95,7 @@ export function createResultPreviews(root, task) {
     const fill = new THREE.DirectionalLight(0xb5d9db, 0.55); fill.position.set(70, 50, -80); scene.add(fill);
     Object.assign(entry, { scene, pivot, bounds: previewBounds, dirty: true });
     // Clip distant scenery from extraction copies, as in the existing sandtable.
-    if (task.id === 'chinese-architecture' && (imported.clip || !entry.result.previewModel)) {
+    if (architecture && (imported.clip || !entry.result.previewModel)) {
       const { min, max } = previewBounds;
       entry.localPlanes = [
         new THREE.Plane(new THREE.Vector3(1, 0, 0), -min.x), new THREE.Plane(new THREE.Vector3(-1, 0, 0), max.x),
@@ -160,7 +161,7 @@ export function createResultPreviews(root, task) {
     job.importing = true; clearTimeout(job.timeout);
     try {
       const { importArchitecture } = await import('./sandtable.js');
-      await finish(job, await importArchitecture(job.iframe.contentWindow.__galleryScenes, job.entry.result.id, { architecture: task.id === 'chinese-architecture', railwayPreview: task.id === 'miniature-railway-town' }));
+      await finish(job, await importArchitecture(job.iframe.contentWindow.__galleryScenes, job.entry.result.id, { architecture, railwayPreview: railway }));
     } catch (error) { await finish(job, null, error); }
   }, { signal });
 

@@ -385,7 +385,7 @@ export function createSandtable(root, task, { label, vendorOf, cover, header, in
     const frame = document.createElement('iframe');
     frame.className = 'sand-loader'; frame.setAttribute('aria-hidden', 'true'); frame.tabIndex = -1;
     frame.title = `正在载入 ${label(entry.result)}`;
-    const src = new URL(`_sandtable/${entry.result.id}/`, location.href); src.searchParams.set('sandtable', '1');
+    const src = new URL(entry.result.previewLoader, location.href); src.searchParams.set('sandtable', '1');
     frame.src = src.href;
     loading = { entry, frame, timeout: setTimeout(() => {
       setStatus(entry, '载入超时', 'error'); stopLoader(); pump();

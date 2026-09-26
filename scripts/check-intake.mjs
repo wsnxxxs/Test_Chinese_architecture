@@ -3,6 +3,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { gunzipSync } from 'node:zlib';
+import { resultDir, taskIdOf } from './results.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = path => JSON.parse(readFileSync(join(root, path), 'utf8'));
@@ -11,7 +12,7 @@ const models = read('gallery.json').models;
 const tasks = new Map(readdirSync(join(root, 'tasks')).map(id => [id, read(`tasks/${id}/task.json`)]));
 const taskFilter = process.argv.find(arg => arg.startsWith('--task='))?.slice(7);
 const idFilter = process.argv.find(arg => arg.startsWith('--id='))?.slice(5);
-const selected = entries.filter(entry => (!taskFilter || (entry.task ?? 'chinese-architecture') === taskFilter) && (!idFilter || entry.id === idFilter));
+const selected = entries.filter(entry => (!taskFilter || taskIdOf(entry) === taskFilter) && (!idFilter || entry.id === idFilter));
 const errors = [], warnings = [], keys = new Set(), packages = new Set();
 const requireFile = (path, label) => {
   if (!existsSync(join(root, path)) || !statSync(join(root, path)).isFile()) errors.push(`${label}: missing ${path}`);
@@ -32,10 +33,10 @@ for (const model of models) {
   if (model.vendorNote) warnings.push(`${model.id}: ${model.vendorNote}`);
 }
 for (const entry of entries) {
-  const taskId = entry.task ?? 'chinese-architecture', key = `${taskId}/${entry.id}`;
+  const taskId = taskIdOf(entry), key = `${taskId}/${entry.id}`;
   if (keys.has(key)) errors.push(`Duplicate result: ${key}`);
   keys.add(key);
-  const source = entry.task ? `results/${key}` : `results/${entry.id}`;
+  const source = resultDir(entry);
   if (!existsSync(join(root, source, 'package.json'))) { errors.push(`${key}: missing package.json`); continue; }
   const pkg = read(`${source}/package.json`);
   if (!pkg.name || packages.has(pkg.name)) errors.push(`${key}: missing or duplicate workspace name ${pkg.name}`);
@@ -74,7 +75,7 @@ for (const entry of entries) {
 }
 // Inspect tracked files only: local dependencies and build output are working tools.
 const tracked = execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8' }).trim().split('\n');
-const temporary = /(?:^|\/)(?:node_modules|dist|\.cache|\.vite|\.playwright-cli|output|test-results|playwright-report|tests?|verification|__pycache__)(?:\/|$)|(?:\.log|\.tmp|\.bak|\.zip|\.pyc)$|(?:^|\/)playwright\.config\./;
+const temporary = /(?:^|\/)(?:node_modules|dist|\.cache|\.vite|\.playwright-cli|output|test-results|playwright-report|tests?|verification|__pycache__)(?:\/|$)|(?:\.log|\.tmp|\.bak|\.zip|\.pyc)$|(?:^|\/)playwright\.config\.|^results\/.+\/package-lock\.json$/;
 for (const path of tracked) if (path.startsWith('results/') && temporary.test(path)) errors.push(`Unnecessary delivery file: ${path}`);
 for (const warning of warnings) console.warn(`WARN ${warning}`);
 for (const error of errors) console.error(`ERROR ${error}`);

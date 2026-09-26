@@ -12,7 +12,7 @@ const port = Number(process.argv.find(arg => arg.startsWith('--port='))?.slice(7
 const taskFilter = process.argv.find(arg => arg.startsWith('--task='))?.slice(7);
 const idFilter = process.argv.find(arg => arg.startsWith('--id='))?.slice(5);
 const data = JSON.parse(readFileSync(join(dist, 'data.json'), 'utf8'));
-const jobs = data.tasks.flatMap(task => task.results.map(result => ({ task: task.id, id: result.id, loader: result.previewLoader }))).filter(job => {
+const jobs = data.tasks.flatMap(task => task.results.map(result => ({ task: task.id, profile: task.sceneProfile, id: result.id, loader: result.previewLoader }))).filter(job => {
   if (taskFilter && job.task !== taskFilter) return false;
   if (idFilter && job.id !== idFilter) return false;
   const path = join(root, 'site/assets/scenes', job.task, `${job.id}.sbox`);

@@ -3,6 +3,7 @@
   "summary": "用 Three.js 创建手工模型质感的桌面铁路沙盘：闭合铁路串联车站、小镇和跨河桥梁，三节列车独立沿轨道运行，支持到站停留、调速与昼夜切换。",
   "prompt": "PROMPT.md",
   "date": "2026-09-26",
+  "sceneProfile": "railway",
   "tags": [
     "Three.js",
     "WebGL",
@@ -30,12 +31,5 @@
       "mobile": true
     }
   ],
-  "facts": [
-    {
-      "id": "stack",
-      "label": "技术栈"
-    }
-  ],
-  "factsNote": "技术栈来自各项目依赖，构建体积由脚本实测。截图用于展示实际效果，不代表提示词中的全部要求均已验证。",
   "results": []
 }

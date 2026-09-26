@@ -9,8 +9,8 @@ window.addEventListener('message', async event => {
   const job = current; job.importing = true; clearTimeout(job.timeout);
   let imported;
   try {
-    imported = await importArchitecture(job.frame.contentWindow.__galleryScenes, job.item.id, { architecture: job.item.task === 'chinese-architecture', railwayPreview: job.item.task === 'miniature-railway-town' });
-    const buffer = await packPreview(imported, job.item.task === 'chinese-architecture');
+    imported = await importArchitecture(job.frame.contentWindow.__galleryScenes, job.item.id, { architecture: job.item.profile === 'architecture', railwayPreview: job.item.profile === 'railway' });
+    const buffer = await packPreview(imported, job.item.profile === 'architecture');
     const response = await fetch(`/__bake/save/${job.item.task}/${job.item.id}`, { method: 'POST', body: buffer });
     if (!response.ok) throw new Error(await response.text());
     job.resolve(Math.round(buffer.byteLength / 1024));

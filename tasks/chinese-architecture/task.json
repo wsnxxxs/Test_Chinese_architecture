@@ -3,19 +3,13 @@
   "summary": "用 Three.js 做一个打开即可浏览的体素风格中国古典建筑群：中轴对称布局，中式屋顶与构件，带晨昏光影。",
   "prompt": "PROMPT.md",
   "date": "2026-09-25",
+  "sandtable": true,
+  "sceneProfile": "architecture",
   "tags": ["Three.js", "WebGL", "3D 场景", "体素"],
   "conditions": [
     { "id": "first", "label": "首屏", "note": "1440×900，打开页面后以默认状态截图。", "viewport": [1440, 900] },
     { "id": "mobile", "label": "手机界面预览", "note": "390×844 竖屏，打开页面后不做任何操作；所有作品均提供截图。", "viewport": [390, 844], "mobile": true }
   ],
-  "facts": [
-    { "id": "buildings", "label": "建筑" },
-    { "id": "scale", "label": "体素规模" },
-    { "id": "lighting", "label": "光照" },
-    { "id": "camera", "label": "视角与标注" },
-    { "id": "stack", "label": "技术栈" }
-  ],
-  "factsNote": "已有建筑与体素数据来自各结果 README 或页面统计；缺少资料的项目标为 —。构建体积由脚本实测。",
   "results": [
     {
       "id": "opus-5.5-high",
@@ -24,13 +18,6 @@
       "title": "云山古刹",
       "summary": "五进院落的中轴寺院，院外有放生池、石拱桥和环形群山。时间可在 24 小时内连续调节，夜里灯笼和窗纸会亮起。",
       "aliases": ["results/opus-5.5-high"],
-      "facts": {
-        "buildings": "12 座：大雄宝殿、天王殿、山门殿、配殿×2、禅堂×2、钟鼓楼、碑亭×2、八角七层宝塔",
-        "scale": "约 40 万实体体素（192×112×288）",
-        "lighting": "24 小时连续昼夜，4 个时段预设，灯火泛光",
-        "camera": "自动环游、建筑标注、URL 指定机位",
-        "stack": "Three.js 0.186 · Vite 7"
-      },
       "gallery": [
         { "src": "docs/dusk.jpg", "caption": "黄昏全景" },
         { "src": "docs/dawn.jpg", "caption": "清晨薄雾" },
@@ -71,13 +58,6 @@
       "title": "云栖古刹",
       "summary": "规模最大的一份：四进台地院落，配殿、禅堂、角楼、双塔、牌坊一应俱全，外加云、鸟、行人、锦鲤。有 6 个预设视角和可点击的建筑标注。",
       "aliases": ["results/sonnet-5.5-max"],
-      "facts": {
-        "buildings": "约 23 座：大雄宝殿、山门、天王殿、钟鼓楼、藏经阁、双塔、配殿×4、禅堂×2、碑亭×2、八角亭×2、角楼×4、牌坊",
-        "scale": "约 180 万实体体素（256×112×400）",
-        "lighting": "连续昼夜，5 个时段预设，晨雾暮霭与泛光",
-        "camera": "6 个预设视角，可点击标注飞行，环游",
-        "stack": "Three.js 0.186 · Vite 6"
-      },
       "gallery": [
         { "src": "docs/01-overview-golden-hour.jpg", "caption": "夕照全景（开启标注）" },
         { "src": "docs/02-dawn.jpg", "caption": "黎明" },
@@ -124,13 +104,6 @@
       "title": "体素古寺",
       "summary": "代码最短的一份，只有 4 个 JS 源文件。整座寺院是一个网格、两次绘制调用，山门、双塔、钟鼓楼、主殿和后殿沿中轴排开，四周是松林缓坡。",
       "aliases": ["results/sonnet-5.5-high"],
-      "facts": {
-        "buildings": "13 座 + 牌坊：山门、钟鼓楼、双塔、双亭、主殿、后殿、配殿×4",
-        "scale": "约 48.5 万体素（页面统计）",
-        "lighting": "晨 / 昏 / 夜 3 个预设",
-        "camera": "自动旋转",
-        "stack": "Three.js 0.170 · Vite 5"
-      },
       "gallery": [
         { "src": "docs/overview.png", "caption": "黄昏概览" }
       ],
@@ -156,13 +129,6 @@
       "title": "体素中华",
       "summary": "三进院落、十二座建筑，用大块体素搭成：全场只有 5 千多个盒体、4 次绘制调用，是体量最轻的一份。",
       "aliases": ["results/mimo-v2.6-pro"],
-      "facts": {
-        "buildings": "12 座：主殿、后殿、配殿×2、厢房×2、山门、垂花门、钟鼓楼、双塔",
-        "scale": "5,211 个体素盒，合并为 4 次绘制调用",
-        "lighting": "晨曦 / 暮色 / 夜景 3 个预设",
-        "camera": "自动旋转（默认开启）",
-        "stack": "Three.js 0.170 · Vite 5"
-      },
       "gallery": [
         { "src": "docs/screenshot-wide.png", "caption": "暮色全貌" },
         { "src": "docs/screenshot-dusk.png", "caption": "暮色" },

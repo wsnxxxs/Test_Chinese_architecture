@@ -207,7 +207,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 全部 81 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
 
-截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
+截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。
 
 仓库收录作品核心源码或已交付的静态页面、运行与构建配置、已有许可说明和展示图片；原交付中的测试、验证报告与临时辅助脚本不收录。作品 README 中保留模型、运行方法和已知提示词差异。
 
@@ -234,6 +234,9 @@ site/                                画廊、在线预览、对比与展示界�
 scripts/
   assemble.mjs                       汇总站点并生成 dist/data.json
   build-static-result.mjs             复制构建静态作品
+  check-syntax.mjs / check-intake.mjs 语法检查 / 收录检查
+  capture-results.mjs                统一截图
+  bake-previews.mjs                  卡片模型包生成
 docs/
   intake-workflow.md                 作品收录流程
   preview-loading.md                 卡片模型生成与加载说明

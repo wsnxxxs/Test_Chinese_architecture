@@ -8,11 +8,13 @@
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
-    "preview": "node scripts/serve.mjs --dist --port 4173",
-    "test": "node --test tests/*.test.mjs",
-    "check": "node scripts/check.mjs"
+    "preview": "node scripts/serve.mjs --dist --port 4173"
   },
-  "dependencies": { "three": "0.180.0" },
-  "engines": { "node": ">=20.0.0" },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "license": "MIT"
 }

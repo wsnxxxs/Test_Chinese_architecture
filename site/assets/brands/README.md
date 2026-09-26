@@ -17,5 +17,8 @@ These local copies of the original site assets appear beside model names in the 
 | `qwen.png` | Qwen / Alibaba Cloud | https://chat.qwen.ai/ | https://assets.alicdn.com/g/qwenweb/qwen-chat-fe/0.2.91/favicon.png |
 | `seed.ico` | Seed / ByteDance | https://seed.bytedance.com/en/ | https://lf3-static.bytednsdoc.com/obj/eden-cn/lapzild-tss/ljhwZthlaukjlkulzlp/favicon_1/favicon.ico |
 | `stepfun.svg` | Step 5 Preview / StepFun | https://www.stepfun.com/step-5-preview | https://www.stepfun.com/step_favicon.svg |
+| `longcat.svg` | LongCat 2.5 / Meituan | https://longcat.ai/ | https://s3plus.meituan.net/aigc-media-resources/longcat/yeqian-logo.svg |
+
+The LongCat mark was retrieved from its official site's favicon on 2026-09-26.
 
 The `HY3` attribution is also confirmed in [Tencent's official repository](https://github.com/Tencent-Hunyuan/Hy3). The Astra entries use OpenAI branding based on the [official GPT-6 Astra page](https://openai.com/index/gpt-6-astra/).

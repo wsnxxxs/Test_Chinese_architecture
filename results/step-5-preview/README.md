@@ -71,8 +71,6 @@ voxel-chinese-temple/
 ├── index.html            # 页面 + HUD（标题/图例/统计/晨昏切换）
 ├── package.json
 ├── preview.png           # 场景预览图
-├── scripts/
-│   └── shot.mjs          # 无头浏览器截图脚本（可选，用于视觉验证）
 └── src/
     ├── main.js           # 渲染器、相机、光照、天空、晨昏预设、主循环
     ├── scene.js          # 场景装配：地面/道路/宫墙/建筑/陈设/植被
@@ -86,4 +84,3 @@ voxel-chinese-temple/
 - `npm install` / `npm run build` / `npm run preview` / `npm run dev` 均正常（Vite 5.4 + Three 0.169，构建无错误无警告）。
 - 已用无头 Edge（SwiftShader 软件渲染）实际渲染并截图核对：全景、主殿正面、山门、钟鼓楼、宝塔、院落后侧等多视角均正确，晨/昏两种预设均正常切换。
 - 截图环境中帧率为 2–5 FPS，这是纯 CPU 软件光栅化 1600×900 的结果；场景几何预算很低（约 3.1 万三角形、单 draw call、单张 2048² 阴影贴图），在任何独立/集成 GPU 上都可轻松达到 60 FPS（页面右上角实时显示帧率与体素数）。
-- 可选验证脚本：`node scripts/shot.mjs out.png <相机x,y,z> <目标x,y,z> [等待ms]`（需先启动 preview 服务，并安装 `puppeteer-core`）。

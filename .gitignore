@@ -3,3 +3,9 @@ dist
 .DS_Store
 *.log
 .playwright-cli/
+output/
+test-results/
+playwright-report/
+**/tests/
+**/verification/
+**/playwright.config.*

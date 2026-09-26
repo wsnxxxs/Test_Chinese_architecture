@@ -148,7 +148,7 @@
     "model": "Space-bunny",
     "title": "体素宫城 · Voxel Palace",
     "description": "中轴对称的体素宫城，包含主殿、山门、宝塔、钟鼓楼、配殿与御河，支持晨曦、正午和暮色光照。",
-    "cover": "verify/dpr1-dawn.png",
+    "cover": "docs/dpr1-dawn.png",
     "addedAt": "2026-09-25T15:08:08+10:00"
   },
   {
@@ -469,5 +469,35 @@
     "description": "鼠尾草绿工作室风格的紧凑键盘展示，搭配配色、分层结构与本地保存配置。",
     "cover": "docs/cover.png",
     "addedAt": "2026-09-26T04:20:09.147Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "astra-pro",
+    "model": "GPT-6 Astra Pro",
+    "modelId": "astra-pro",
+    "title": "FORM 68 / 物构",
+    "description": "暖白与苔原绿的 68 键产品工作室，提供外观组合、分层拆解、触感实验室与配置保存。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:39:24.259Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "longcat-2.5",
+    "model": "LongCat 2.5",
+    "modelId": "longcat-2.5",
+    "title": "APEX-65",
+    "description": "以深色配置面板展示紧凑键盘，支持外壳配色、键帽主题、拆解组装与按键体验。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:39:24.259Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "deepseek-v4.1-flash",
+    "model": "DeepSeek V4.1 Flash",
+    "modelId": "deepseek-v4.1-flash",
+    "title": "MERIDIAN 65",
+    "description": "单文件机械键盘配置器，提供三维产品预览、分层拆解、外观组合与本地保存。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:39:24.259Z"
   }
 ]

@@ -69,7 +69,7 @@
 
 ## 机械键盘 · 交互式产品配置器
 
-本题收录 7 份作品，保留各模型独立的产品展示与配置实现。提供在线预览、并排对比、1440×900 默认首屏和 390×844 手机截图。截图与构建检查用于确认画廊集成，不代表全部产品交互要求均已验证。
+本题收录 10 份作品，保留各模型独立的产品展示与配置实现。提供在线预览、并排对比、1440×900 默认首屏和 390×844 手机截图。截图与构建检查用于确认画廊集成，不代表全部产品交互要求均已验证。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -80,6 +80,11 @@
 | GPT-6 Luna Max | FORMA 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-luna-max) | [项目说明](results/mechanical-keyboard/gpt-6-luna-max/README.md) |
 | GPT-6 Sol High | ORBIT 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-sol-high) | [项目说明](results/mechanical-keyboard/gpt-6-sol-high/README.md) |
 | GPT-6 Sol Max | LOOM 68 · Keyboard Studio | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-sol-max) | [项目说明](results/mechanical-keyboard/gpt-6-sol-max/README.md) |
+| GPT-6 Astra Pro | FORM 68 / 物构 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/astra-pro) | [项目说明](results/mechanical-keyboard/astra-pro/README.md) |
+| LongCat 2.5 | APEX-65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/longcat-2.5) | [项目说明](results/mechanical-keyboard/longcat-2.5/README.md) |
+| DeepSeek V4.1 Flash | MERIDIAN 65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/deepseek-v4.1-flash) | [项目说明](results/mechanical-keyboard/deepseek-v4.1-flash/README.md) |
+
+仓库保留作品核心源码、运行与构建配置、许可说明和画廊展示图片；原交付中的测试、验证报告与临时辅助脚本不收录。
 
 ## 运行
 
@@ -90,7 +95,7 @@ npm install
 npm run dev       # 构建全部结果并在 http://localhost:5173 打开同题异答
 npm run build     # 将站点、模型数据和全部结果构建到 dist/
 npm run preview   # 预览已构建的 dist/，默认 http://localhost:4173
-npm run check     # 运行 Opus 作品的体素检查
+npm run check     # 检查画廊页面和汇总脚本的 JavaScript 语法
 npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 ```
 
@@ -104,10 +109,10 @@ tasks/chinese-architecture/task.json     题目信息、原有作品的详细数
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
 tasks/miniature-railway-town/            第二道题目的提示词、元数据与手机截图
 tasks/mechanical-keyboard/              第三道题目的提示词、元数据与统一截图
-results/manifest.json                    50 个结果的简要目录
+results/manifest.json                    53 个结果的简要目录
 results/                                  第一题的 30 个独立前端项目
 results/miniature-railway-town/           第二题的 13 个独立前端项目
-results/mechanical-keyboard/             第三题的 7 个独立前端项目
+results/mechanical-keyboard/             第三题的 10 个独立前端项目
 site/                                     “同题异答”作品画廊与对比界面
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 .github/workflows/                        GitHub Pages 自动发布

@@ -4,7 +4,6 @@
 
 打开页面即自动进入场景（相机自动巡航），无需任何操作即可看到建筑群全貌。
 
----
 
 ## 快速开始
 
@@ -136,28 +135,4 @@ npm run preview # 预览构建产物 → http://127.0.0.1:5288
 │  └─ render/
 │     ├─ sky.js               天幕渐变、太阳、阴影、雾、灯笼点光、预设插值
 │     └─ post.js              自建后期链
-├─ scripts/
-│  ├─ verify.mjs              零依赖 CDP 验收（真机 GPU 帧率/截图/报错）
-│  ├─ test-voxel-key.mjs      体素键编解码自检
-│  └─ debug-glow.mjs          发光层坐标审计
-└─ verify/                    验收产物（截图 + JSON 报告）
 ```
-
----
-
-## 验收
-
-```bash
-npm run build
-node scripts/verify.mjs --dpr 1                        # 1600×900
-node scripts/verify.mjs --dpr 1 --width 2560 --height 1440 --tag qhd
-node scripts/verify.mjs --dpr 1 --width 3840 --height 2160 --tag uhd
-node scripts/verify.mjs --dpr 2 --tag hidpi
-node scripts/test-voxel-key.mjs                         # 体素键编解码自检
-```
-
-`verify.mjs` 用 Node 内置 `http` 托管 `dist/`，拉起无头 Chrome（`--use-angle=d3d11`，真实 GPU），通过 CDP 注入 rAF 计数器测帧率、读 `window.__VOXEL` 状态、抓画布直出 PNG，并收集控制台报错。
-
-> 注：内置浏览器在后台标签页会冻结 rAF 与定时器，帧率与截图不可信，故采用独立无头 Chrome。
-
-页面暴露了验收接口：`window.__VOXEL.stats() / setPreset() / setCamera() / setPost() / capture()`。

@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#e5e7e4">
+<meta name="description" content="程序化构建的 Boeing 787-9 Dreamliner 实时三维与机构展示。">
+<title>787–9 Dreamliner · Airframe Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e2936'/%3E%3Cpath d='M9 40 54 17 35 47 31 35Z' fill='%2384dbd1'/%3E%3C/svg%3E">
+<style>
+:root{--ink:#14313c;--muted:#647879;--panel:#132b35;--edge:rgba(226,244,240,.12);--accent:#89d7c8;--sans:Inter,"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--mono:"SFMono-Regular",Consolas,monospace;--rail:306px}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{background:#dce0dc;color:var(--ink);font-family:var(--sans);font-size:13px;-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #39a994;outline-offset:4px}button{touch-action:manipulation}button:disabled{cursor:wait;opacity:.5}#stage{position:absolute;inset:0 calc(var(--rail) + 30px) 0 0;touch-action:none}#stage canvas{display:block;width:100%;height:100%;outline:none}.masthead{position:absolute;left:32px;top:27px;display:flex;align-items:center;gap:11px;z-index:2;pointer-events:none}.mark{width:32px;height:32px;color:#28454e}.brand{font-size:11px;font-weight:700;letter-spacing:2.8px}.brand small{display:block;margin-top:5px;letter-spacing:2px;font-size:8px;font-weight:500;color:#748585}.edition{padding-left:17px;margin-left:9px;border-left:1px solid #a9b7b4;font:10px/1.7 var(--mono);letter-spacing:1px;color:#718280}.aircraft-title{position:absolute;left:33px;top:107px;pointer-events:none;z-index:1}.eyebrow{font-size:9px;letter-spacing:2.5px;font-weight:650;color:#6a7d7c}.aircraft-title h1{font-size:clamp(36px,4.7vw,66px);font-weight:450;letter-spacing:-3px;line-height:1;margin:10px 0 6px}.aircraft-title h1 span{color:#8a9c99;font-weight:300}.aircraft-title p{margin:0;color:#657977;font-size:12px;letter-spacing:2px}.live{display:flex;align-items:center;gap:7px;margin-top:17px;font:9px var(--mono);letter-spacing:1px;color:#658078}.live i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#4a9a87;box-shadow:0 0 0 4px #4a9a8712}.top-actions{position:absolute;right:calc(var(--rail) + 50px);top:27px;z-index:5;display:flex;gap:7px}.icon-button{height:34px;min-width:34px;border:1px solid #99aaa554;border-radius:50%;background:#f4f7f070;color:#31524f;display:grid;place-items:center;backdrop-filter:blur(9px)}.icon-button:hover,.icon-button.active{background:#eff8f0;border-color:#6c9386}.icon-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5}.icon-button.text{border-radius:20px;padding:0 12px;display:flex;gap:6px;font-size:10px}.camera-bar{position:absolute;bottom:111px;left:50%;transform:translateX(-50%);display:flex;gap:3px;padding:5px;background:#f0f4edf2;border:1px solid #ffffffa0;box-shadow:0 5px 25px #203f3520;border-radius:10px;z-index:4;white-space:nowrap;backdrop-filter:blur(12px)}.camera-bar button{background:none;border:0;padding:9px 15px;color:#637872;font-size:11px;border-radius:6px;transition:background .2s}.camera-bar button:hover{background:#dee8df;color:#153e36}.camera-bar button.active{background:#183e40;color:#f2f5e9}.camera-bar .sep{height:20px;align-self:center;border-left:1px solid #d1dcd2;margin:0 3px}.specs{position:absolute;left:33px;bottom:29px;display:flex;gap:32px;z-index:2;pointer-events:none}.spec{border-left:1px solid #a9b8af;padding-left:13px}.spec:first-child{border-left:0;padding-left:0}.spec label{display:block;font-size:8px;letter-spacing:1.5px;color:#7b8d84;margin-bottom:6px}.spec strong{font-size:21px;font-weight:450;letter-spacing:-.6px}.spec strong em{font-size:10px;font-weight:400;font-style:normal;margin-left:5px;color:#87988c}.interaction-hint{position:absolute;right:25px;bottom:32px;color:#82948a;font-size:9px;line-height:1.9;text-align:right;letter-spacing:.5px;pointer-events:none}.view-tag{position:absolute;bottom:173px;left:50%;transform:translateX(-50%);font:9px var(--mono);letter-spacing:2px;color:#749089;pointer-events:none;white-space:nowrap}.panel{position:absolute;width:var(--rail);right:22px;top:22px;bottom:22px;background:linear-gradient(153deg,#1a343e,#102730 75%);border:1px solid #ffffff16;border-radius:15px;box-shadow:0 12px 35px #173a3520;color:#dce9e4;z-index:6;display:flex;flex-direction:column;overflow:hidden}.panel-top{padding:24px 22px 17px;flex-shrink:0}.panel-heading{display:flex;justify-content:space-between;align-items:center}.panel-heading h2{margin:0;font-size:13px;font-weight:550;letter-spacing:1.2px}.status-chip{font:8px var(--mono);color:#8abcb0;border:1px solid #80aa9b44;padding:5px 6px;border-radius:4px;letter-spacing:1px}.panel-top p{font-size:10px;color:#87a29f;margin:8px 0 0;letter-spacing:.25px}.configuration{display:flex;gap:4px;margin-top:20px;border:1px solid #91b1a326;border-radius:7px;padding:4px}.configuration button{border:0;background:none;color:#93ada7;font-size:10px;padding:7px 0;flex:1;border-radius:4px}.configuration button.active{background:#426354;color:#dcf8de}.configuration button:hover{color:white;background:#ffffff0c}.panel-scroll{overflow-y:auto;overflow-x:hidden;padding:0 22px 12px;flex:1;scrollbar-width:thin;scrollbar-color:#3d625b transparent}.section{border-top:1px solid var(--edge);padding:19px 0 17px}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.section-title>span{display:flex;gap:9px;align-items:center;font-size:11px;font-weight:500}.section-title .number{font:8px var(--mono);color:#5e8682;letter-spacing:1px}.readout{font:10px var(--mono);letter-spacing:.5px;color:#a5dcc7;font-variant-numeric:tabular-nums}.readout.moving{color:#e9cfa0}.segment{display:flex;gap:4px;background:#071e253d;border:1px solid #91b1a323;border-radius:6px;padding:3px}.segment button{border:0;background:transparent;color:#749a92;flex:1;padding:8px 5px;border-radius:3px;font-size:10px}.segment button.active{background:#83c9b6;color:#153e38;box-shadow:0 1px 8px #0001}.gear-indicators{margin-top:10px;display:flex;justify-content:center;gap:26px;font:8px var(--mono);letter-spacing:1px;color:#6c9388}.gear-indicators span::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:#91d8b0;margin-right:5px}.gear-indicators.moving span::before{background:#e3bd7d}.gear-indicators.up span::before{background:#466760}.slider-row{margin:16px 0 0}.slider-heading{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}.slider-heading label{font-size:11px;color:#cbded5}.slider-heading label small{color:#678c85;font-size:8px;margin-left:7px;letter-spacing:.7px}.slider-heading output{font:10px var(--mono);color:#9cceba;min-width:45px;text-align:right}.range{display:block;width:100%;height:16px;margin:0;appearance:none;-webkit-appearance:none;background:transparent;cursor:ew-resize;--fill:0%}.range::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:linear-gradient(to right,#8ecfb8 var(--fill),#36544e var(--fill))}.range::-moz-range-track{height:3px;border-radius:2px;background:#36544e}.range::-moz-range-progress{height:3px;background:#8ecfb8}.range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:10px;height:10px;margin-top:-3.5px;border:2px solid #d4f1d9;border-radius:50%;background:#b8e4c4;box-shadow:0 0 0 4px #b8e4c411}.range::-moz-range-thumb{width:9px;height:9px;border:1px solid #e5f5df;border-radius:50%;background:#b8e4c4}.ticks{display:flex;justify-content:space-between;margin-top:4px;font:8px var(--mono);color:#587e73}.note{font-size:9px;line-height:1.7;color:#78998b;margin:8px 0 0}.fan-controls{display:flex;align-items:center;gap:12px}.power{border:1px solid #74ae9840;background:#244c43;color:#bcdec8;border-radius:6px;padding:9px 12px;display:flex;align-items:center;gap:7px;font-size:10px}.power svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8}.power.active{background:#afdcc0;color:#194033}.rpm-block{flex:1}.rpm-line{font:18px var(--mono);color:#bedfcb}.rpm-line small{font:8px var(--mono);color:#739988;margin-left:5px}.rpm-meter{height:3px;background:#33564a;margin-top:7px;border-radius:2px;overflow:hidden}.rpm-meter b{display:block;background:#aad9b7;height:100%;width:0%}.panel-bottom{flex-shrink:0;border-top:1px solid var(--edge);padding:14px 21px;display:flex;gap:8px;align-items:center;justify-content:space-between;color:#6a9482;font:8px var(--mono);letter-spacing:.4px}.panel-bottom button{background:none;border:0;color:#a6c8b2;padding:2px;font-size:9px}.quality-select{background:transparent;border:0;color:#96bba6;font-size:9px;outline:none;max-width:91px}.quality-select option{background:#142f32;color:#e3f0e6}.extras{display:flex;gap:7px;margin-top:14px}.extras button{flex:1;background:none;border:1px solid #527a673d;border-radius:5px;color:#8baf99;font-size:9px;padding:7px 0}.extras button.active{background:#446b532d;color:#b1d7b5;border-color:#73a47b90}.hotspot{position:absolute;display:flex;align-items:center;gap:6px;border:1px solid #ffffffc0;color:#35574d;background:#f0f5eade;border-radius:5px;padding:6px 8px;font-size:9px;white-space:nowrap;z-index:3;box-shadow:0 3px 12px #20443310;transform:translate(10px,-50%)}.hotspot:before{content:"";height:5px;width:5px;background:#55a08a;border:2px solid #f5f8ed;border-radius:50%;position:absolute;left:-16px;box-shadow:0 0 0 1px #61988b}.hotspot small{color:#95a89c;font:8px var(--mono)}.hotspot:hover{background:white}#loading{position:fixed;inset:0;z-index:30;background:#e3e8e1;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .5s;gap:20px}#loading.hide{opacity:0;pointer-events:none}.loader-mark{width:42px;height:42px;border:1px solid #acbfb2;border-top-color:#375c4b;border-radius:50%;animation:spin 1.2s linear infinite}#loading h2{font-size:17px;font-weight:450;letter-spacing:4px;margin:0}#loading p{font:10px var(--sans);letter-spacing:1px;color:#749181;max-width:470px;text-align:center;padding:0 20px;line-height:1.9;margin:0}#loading.error .loader-mark{animation:none;border-color:#a56d49}#loading.error p{color:#91634b}#loading button{background:#284f41;color:#eff6e8;border:0;border-radius:6px;padding:10px 18px;display:none}#loading.error button{display:block}@keyframes spin{to{transform:rotate(360deg)}}dialog{padding:0;max-width:560px;width:calc(100% - 40px);border:1px solid #72977c80;border-radius:14px;background:#eef2e8;color:#244d3d;box-shadow:0 25px 100px #0f281e50}dialog::backdrop{background:#15322985;backdrop-filter:blur(7px)}.dialog-content{padding:31px}.dialog-content h2{font-weight:500;margin:0 0 20px;font-size:24px}.dialog-content p{font-size:12px;line-height:1.9;color:#52735f;margin:12px 0}.dialog-content h3{font-size:12px;font-weight:650;margin:23px 0 6px}.dialog-content a{color:#296b4f}.dialog-content .close{position:absolute;right:15px;top:14px;border:0;background:none;font-size:22px;color:#6a8972}.dialog-content .small{font-size:10px;color:#78927c}.kbd{font:10px var(--mono);border:1px solid #bacaba;border-radius:3px;padding:1px 5px}#mobile-toggle{display:none}.toast{position:absolute;bottom:204px;left:50%;transform:translateX(-50%);background:#203f36e8;color:#c6e5c8;border:1px solid #aac3a632;border-radius:6px;padding:8px 14px;font-size:10px;z-index:8;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}.toast.show{opacity:1}
+@media(min-height:880px){.panel-top{padding-top:28px}.section{padding:23px 0}.slider-row{margin-top:22px}.aircraft-title{top:125px}.camera-bar{bottom:132px}.view-tag{bottom:193px}}
+@media(max-width:1150px){:root{--rail:278px}.masthead,.aircraft-title,.specs{left:24px}.edition{display:none}.specs{gap:20px}.interaction-hint{display:none}.top-actions .text{font-size:0;padding:0;width:34px}.panel-top,.panel-scroll{padding-left:19px;padding-right:19px}.camera-bar button{padding:9px 10px}.aircraft-title h1{font-size:49px}}
+@media(max-width:760px){:root{--rail:285px}#stage{right:0;bottom:0}.masthead{top:21px;left:20px}.brand{font-size:9px;letter-spacing:2px}.brand small{font-size:7px}.mark{width:27px;height:27px}.aircraft-title{left:21px;top:87px}.aircraft-title h1{font-size:40px;letter-spacing:-2px}.aircraft-title p{font-size:9px}.aircraft-title .eyebrow{font-size:8px}.live{margin-top:11px;font-size:8px}.top-actions{right:19px;top:22px}.top-actions #autorotate{display:none}.panel{transform:translateX(calc(100% + 30px));transition:transform .3s;top:68px;bottom:85px;right:13px}.panel.open{transform:translateX(0)}#mobile-toggle{display:grid}.camera-bar{bottom:97px;max-width:calc(100% - 30px)}.camera-bar button{padding:9px 10px;font-size:10px}.specs{left:22px;bottom:28px;gap:25px}.spec label{font-size:7px}.spec strong{font-size:19px}.view-tag{bottom:154px;font-size:8px}.toast{bottom:182px;font-size:9px}.panel-bottom{padding:14px}.hotspot{font-size:8px}.edition{display:none}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.loader-mark{animation-duration:3s}}
+</style>
+<script type="importmap">
+{"imports":{"three":"./assets/three.module.js","three/addons/":"./assets/"}}
+</script>
+</head>
+<body>
+<div id="stage" aria-label="Boeing 787-9 三维交互展示">
+ <div class="aircraft-title"><div class="eyebrow">BOEING / WIDEBODY COLLECTION</div><h1>787<span>–</span>9</h1><p>D R E A M L I N E R</p><div class="live"><i></i><span id="scene-status">PROCEDURAL AIRFRAME · 01</span></div></div>
+ <div class="view-tag" id="view-tag">PERSPECTIVE / 自由观察</div>
+ <nav class="camera-bar" aria-label="观察视角"><button data-view="hero" class="active" title="透视全景 · 按 1">透视</button><button data-view="front" title="正面 · 按 2">正面</button><button data-view="side" title="侧面 · 按 3">侧面</button><button data-view="top" title="俯视 · 按 4">俯视</button><span class="sep"></span><button data-view="engine" title="发动机细节 · 按 5">发动机</button><button data-view="gear" title="起落架细节 · 按 6">起落架</button></nav>
+ <div class="specs"><div class="spec"><label>LENGTH / 机长</label><strong>62.8<em>m</em></strong></div><div class="spec"><label>SPAN / 翼展</label><strong>60.1<em>m</em></strong></div><div class="spec"><label>HEIGHT / 全高</label><strong>17.0<em>m</em></strong></div></div>
+ <div class="interaction-hint">拖动旋转 · 滚轮缩放 · 右键平移<br>双击部位聚焦 · R 复位视角</div><div class="toast" id="toast"></div>
+</div>
+<header class="masthead"><svg class="mark" viewBox="0 0 40 40" fill="none"><path d="M4 29 36 8 26 32 20 23 4 29Z" stroke="currentColor" stroke-width="1.25"/><path d="m20 23 16-15M8 33l11-7" stroke="currentColor" stroke-width="1.25"/></svg><div class="brand">AIRFRAME STUDIO<small>航空器 · 数字结构展厅</small></div><div class="edition">ENGINEERING SERIES<br>NO. 787–09</div></header>
+<div class="top-actions"><button class="icon-button text" id="autorotate" title="环绕展示" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2M20 3v6h-6"/></svg>环绕</button><button class="icon-button" id="reset-view" title="复位视角 (R)"><svg viewBox="0 0 24 24"><path d="M3 9V3m0 6h6M3.5 9A9 9 0 1 1 3 15"/></svg></button><button class="icon-button" id="info-button" title="操作与模型说明"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v7m0-10v1"/></svg></button><button class="icon-button" id="mobile-toggle" title="显示机构面板" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18M8 3v6m8 0v6m-9 0v6"/></svg></button></div>
+<aside class="panel" id="panel" aria-label="飞机机构控制">
+ <div class="panel-top"><div class="panel-heading"><h2>机构控制台</h2><span class="status-chip" id="config-chip">PARKED</span></div><p>独立机构 / 实时联动 / 可重复操作</p><div class="configuration" aria-label="构型预设"><button data-config="park" class="active">停放</button><button data-config="takeoff">起飞</button><button data-config="landing">着陆</button><button data-config="cruise">巡航</button></div></div>
+ <div class="panel-scroll">
+  <section class="section"><div class="section-title"><span><b class="number">01</b>起落架</span><output class="readout" id="gear-status" aria-live="polite">DOWN · 锁定</output></div><div class="segment"><button id="gear-down" class="active" aria-pressed="true">放下</button><button id="gear-up" aria-pressed="false">收起</button></div><div class="gear-indicators" id="gear-indicators"><span>LEFT</span><span>NOSE</span><span>RIGHT</span></div></section>
+  <section class="section"><div class="section-title"><span><b class="number">02</b>机翼增升与减速</span><span class="readout" style="font-size:8px">L / R SYNC</span></div>
+   <div class="slider-row"><div class="slider-heading"><label for="flaps">襟翼<small>FOWLER</small></label><output id="flaps-out" for="flaps">0°</output></div><input class="range" id="flaps" type="range" min="0" max="30" step="1" value="0" aria-label="襟翼角度"><div class="ticks"><span>0°</span><span>15°</span><span>30°</span></div></div>
+   <div class="slider-row"><div class="slider-heading"><label for="slats">前缘缝翼<small>SLATS</small></label><output id="slats-out" for="slats">0%</output></div><input class="range" id="slats" type="range" min="0" max="100" step="1" value="0" aria-label="前缘缝翼伸出量"></div>
+   <div class="slider-row"><div class="slider-heading"><label for="spoilers">扰流板<small>SPOILERS</small></label><output id="spoilers-out" for="spoilers">0°</output></div><input class="range" id="spoilers" type="range" min="0" max="60" step="1" value="0" aria-label="扰流板角度"></div>
+  </section>
+  <section class="section"><div class="section-title"><span><b class="number">03</b>水平安定面</span><span class="readout" style="font-size:8px">ALL-MOVING</span></div><div class="slider-row" style="margin-top:0"><div class="slider-heading"><label for="trim">配平角度<small>TRIM</small></label><output id="trim-out" for="trim">0.0°</output></div><input class="range" id="trim" type="range" min="-5" max="5" step="0.1" value="0" style="--fill:50%" aria-label="水平安定面配平角度"><div class="ticks"><span>−5°</span><span>NEUTRAL</span><span>+5°</span></div></div></section>
+  <section class="section"><div class="section-title"><span><b class="number">04</b>双发风扇</span><output class="readout" id="fan-state" aria-live="polite">OFF</output></div><div class="fan-controls"><button class="power" id="fan-toggle" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 2v10M6 5a9 9 0 1 0 12 0"/></svg><span>启动</span></button><div class="rpm-block"><div class="rpm-line"><span id="rpm">0000</span><small>RPM</small></div><div class="rpm-meter"><b id="rpm-bar"></b></div></div></div><p class="note">仅风扇与整流锥旋转；转速为展示设定。</p></section>
+  <div class="extras"><button id="labels-toggle" aria-pressed="false">部件标注</button><button id="dimensions-toggle" aria-pressed="false">尺寸测量</button><button id="lights-toggle" class="active" aria-pressed="true">航行灯</button></div>
+ </div>
+ <div class="panel-bottom"><span id="performance">WEBGL / INITIALIZING</span><select class="quality-select" id="quality" aria-label="渲染质量"><option value="auto">自适应画质</option><option value="high">高画质</option><option value="low">性能优先</option></select></div>
+</aside>
+<div id="loading" role="status"><div class="loader-mark"></div><h2>AIRFRAME STUDIO</h2><p id="load-note">正在装配机身、翼面与动力系统…</p><button onclick="location.reload()">重新加载</button></div>
+<dialog id="info"><div class="dialog-content"><button class="close" aria-label="关闭说明">×</button><div class="eyebrow">MODEL NOTES / 787–9</div><h2>看见结构，也看见运动。</h2><p>左键或单指拖动旋转，滚轮或双指缩放，右键拖动平移。双击模型可聚焦部位。<span class="kbd">1–6</span> 切换预设，<span class="kbd">R</span> 复位镜头，<span class="kbd">G</span> 收放起落架，<span class="kbd">F</span> 启停风扇。</p><h3>模型与机构</h3><p>1 个场景单位对应 1 米。机身采用连续截面放样，翼面采用带后掠、渐缩、上反角与扭转的翼型曲面。GEnx 风格发动机包含 18 片扭转风扇叶片、厚唇口、静子、旁通涵道、核心机与锯齿形尾缘。</p><p>客舱与驾驶舱玻璃使用具有透射、折射与环境反射的物理材质；蒙皮开口后方设有内部墙面、地板、座椅和驾驶舱暗部。收放机构包含转轴、折叠撑杆及分阶段舱门动作。左右主起落架各为四轮小车，前起落架为双轮。</p><h3>展示边界</h3><p>这是程序化视觉近似，不是 Boeing 官方模型、工业 CAD、飞行模拟或维修培训工具。机构行程与干涉余量经过可视化设计，未依据完整制造图纸。收起起落架时机体保持固定，避免把机构演示误解为实际滑行或飞行。</p><p class="small">尺寸参考：<a href="https://www.boeing.com/commercial/787" target="_blank" rel="noopener noreferrer">Boeing 787 官方规格</a>。风扇构型参考：<a href="https://www.geaerospace.com/commercial/aircraft-engines/genx" target="_blank" rel="noopener noreferrer">GE Aerospace GEnx</a>。渲染：Three.js r170 与官方 OrbitControls。无外部模型、图片、字体或 HDR 资源；涂装、遮罩及环境反射均在本文件运行时生成。</p><p class="small" id="validation-note">运行需要支持 WebGL 2 与 import maps 的现代浏览器，以及可访问 jsDelivr 的网络。已完成 JavaScript 语法、DOM 引用和机构端点的静态检查；制作环境未能加载 CDN 依赖，未完成实际三维渲染与帧率验证。低性能设备可选择“性能优先”。实际帧率取决于设备与视角。</p></div></dialog>
+<noscript><div style="position:fixed;inset:0;z-index:99;background:#e3e8e1;display:grid;place-items:center">请启用 JavaScript 以查看三维飞机。</div></noscript>
+<script type="module">
+/*
+ * AIRFRAME STUDIO — Boeing 787-9, a procedural visual study.
+ * All dimensional data are in metres. X runs nose (-) to tail (+), Y is up,
+ * Z is spanwise. No model/image/font/HDR is loaded. Only Three & OrbitControls.
+ * Sources: https://www.boeing.com/commercial/787
+ *          https://www.geaerospace.com/commercial/aircraft-engines/genx
+ * Geometry and kinematics are illustrative approximations, not certified data.
+ */
+const $ = id => document.getElementById(id);
+const loadingTimer=setTimeout(()=>{$('load-note').textContent='首次加载需要连接 jsDelivr CDN。若长时间无响应，请检查网络或刷新页面。';},18000);
+function fail(error){clearTimeout(loadingTimer);console.error(error);$('loading').style.display='flex';$('loading').classList.remove('hide');$('loading').classList.add('error');$('load-note').textContent='无法初始化三维场景。请确认浏览器支持 WebGL 2，且可访问 jsDelivr CDN。详情：'+(error.message||error);}
+try {
+const THREE = await import('three');
+const {OrbitControls} = await import('three/addons/controls/OrbitControls.js');
+const {Vector3:V3,Vector2:V2,Matrix4:M4,Quaternion:Quat} = THREE;
+const PI=Math.PI,TAU=2*PI,DEG=PI/180;
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const mix=(a,b,t)=>a+(b-a)*t;
+const smooth=(a,b,x)=>{let t=clamp((x-a)/(b-a));return t*t*(3-2*t)};
+const damp=(a,b,rate,dt)=>mix(a,b,1-Math.exp(-rate*dt));
+const v=(x=0,y=0,z=0)=>new V3(x,y,z);
+const mobile=matchMedia('(max-width:760px)').matches;
+const stage=$('stage'), scene=new THREE.Scene();
+const galleryPreview=new URLSearchParams(location.search).has('sandtable');
+if(galleryPreview)scene.rotation.y=PI*155/180;
+scene.background=new THREE.Color(0xdbe0da);scene.fog=new THREE.Fog(0xdbe0da,155,380);
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.4:1.7));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.domElement.tabIndex=0;renderer.domElement.setAttribute('aria-label','可旋转的 Boeing 787-9 三维场景');stage.prepend(renderer.domElement);
+const camera=new THREE.PerspectiveCamera(37,1,.12,650);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=.075;controls.minDistance=4;controls.maxDistance=220;controls.maxPolarAngle=PI*.53;controls.minPolarAngle=.012;controls.zoomSpeed=.8;controls.panSpeed=.75;controls.autoRotateSpeed=.48;controls.target.set(0,5,0);
+const aircraft=new THREE.Group();aircraft.name='Boeing 787-9';scene.add(aircraft);
+const dynamic=[],fans=[],gears=[],trackLinks=[],lightObjects=[];
+const mat={};
+function material(name,options,physical=false){const m=physical?new THREE.MeshPhysicalMaterial(options):new THREE.MeshStandardMaterial(options);m.name=name;mat[name]=m;return m;}
+material('porcelain',{color:0xf1f4ef,metalness:.18,roughness:.29,clearcoat:.62,clearcoatRoughness:.22},true);
+material('wing',{color:0xe7ede9,metalness:.28,roughness:.35});
+material('wingLower',{color:0xbecbca,metalness:.3,roughness:.4});
+if(galleryPreview){
+ mat.wing.side=mat.wingLower.side=THREE.DoubleSide;
+ mat.wing.color.setHex(0xcbd7d4);mat.wing.metalness=.12;mat.wing.roughness=.52;
+ mat.wingLower.color.setHex(0xaebfbd);mat.wingLower.metalness=.14;mat.wingLower.roughness=.55;
+}
+material('navy',{color:0x063245,metalness:.26,roughness:.27,clearcoat:.65,clearcoatRoughness:.24},true);
+material('teal',{color:0x228e9e,metalness:.35,roughness:.28});
+material('titanium',{color:0x9daeb3,metalness:.92,roughness:.24});
+material('chrome',{color:0xd6e0dc,metalness:1,roughness:.15});
+material('alloy',{color:0x798889,metalness:.72,roughness:.37});
+material('warmMetal',{color:0x767267,metalness:.9,roughness:.36});
+material('rubber',{color:0x171e21,metalness:0,roughness:.92});
+material('tread',{color:0x0d1417,metalness:0,roughness:.98});
+material('fan',{color:0x334149,metalness:.65,roughness:.33,side:THREE.DoubleSide});
+material('duct',{color:0x26363d,metalness:.32,roughness:.67,side:THREE.DoubleSide});
+material('cavity',{color:0x1a2930,metalness:.07,roughness:.85,side:THREE.DoubleSide});
+material('interior',{color:0x708386,metalness:.02,roughness:.85,side:THREE.BackSide});
+material('seat',{color:0x243e4d,metalness:.03,roughness:.94});
+material('glass',{color:0x83adb7,metalness:0,roughness:.075,transmission:.82,thickness:.065,ior:1.48,attenuationColor:0x80a8b1,attenuationDistance:1.5,clearcoat:1,clearcoatRoughness:.065,envMapIntensity:1.2,side:THREE.DoubleSide},true);
+material('cockpitGlass',{color:0xa1c5c7,metalness:0,roughness:.065,transmission:.87,thickness:.10,ior:1.52,attenuationColor:0x7eaaa9,attenuationDistance:2,clearcoat:1,envMapIntensity:1.6,side:THREE.DoubleSide},true);
+material('frame',{color:0x8c9d9e,metalness:.6,roughness:.35});
+material('white',{color:0xf6f6e9,metalness:.1,roughness:.47});
+material('red',{color:0x9a5142,metalness:.3,roughness:.4});
+function mesh(geometry,m,parent=aircraft,name=''){const o=new THREE.Mesh(geometry,m);o.name=name;o.castShadow=true;o.receiveShadow=true;parent.add(o);return o;}
+function box(w,h,d,x,y,z,m,parent=aircraft){const o=mesh(new THREE.BoxGeometry(w,h,d),m,parent);o.position.set(x,y,z);return o;}
+function ellipsoid(rx,ry,rz,x,y,z,m,parent=aircraft,segments=32){const o=mesh(new THREE.SphereGeometry(1,segments,Math.max(12,segments/2)),m,parent);o.scale.set(rx,ry,rz);o.position.set(x,y,z);return o;}
+function rod(a,b,r,m,parent=aircraft,r2=r,segments=12){const d=b.clone().sub(a);const o=mesh(new THREE.CylinderGeometry(r2,r,d.length(),segments,1),m,parent);o.position.copy(a).add(b).multiplyScalar(.5);o.quaternion.setFromUnitVectors(v(0,1,0),d.normalize());return o;}
+function movingRod(r,m,parent=aircraft){const o=mesh(new THREE.CylinderGeometry(r,r,1,10),m,parent);o.userData.noBatch=true;return o;}
+function fitRod(o,a,b){const d=b.clone().sub(a);o.position.copy(a).add(b).multiplyScalar(.5);o.scale.y=Math.max(.0001,d.length());o.quaternion.setFromUnitVectors(v(0,1,0),d.normalize());}
+function line(points,color=0x6f8586,opacity=.45,parent=aircraft,loop=false){const g=new THREE.BufferGeometry().setFromPoints(points),m=new THREE.LineBasicMaterial({color,transparent:opacity<1,opacity});const o=loop?new THREE.LineLoop(g,m):new THREE.Line(g,m);parent.add(o);return o;}
+function curveTube(points,r,m,parent=aircraft,segments=40){return mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points),segments,r,5,false),m,parent);}
+function geometry(pos,indices,uv){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));if(indices)g.setIndex(indices);if(uv)g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));else g.setAttribute('uv',new THREE.Float32BufferAttribute(new Float32Array(pos.length/3*2),2));g.computeVertexNormals();return g;}
+function combine(gs){const positions=[],normals=[],uvs=[],indices=[];let off=0;for(const g of gs){const p=g.getAttribute('position'),n=g.getAttribute('normal'),u=g.getAttribute('uv');for(let i=0;i<p.count;i++){positions.push(p.getX(i),p.getY(i),p.getZ(i));normals.push(n?n.getX(i):0,n?n.getY(i):1,n?n.getZ(i):0);uvs.push(u?u.getX(i):0,u?u.getY(i):0);}if(g.index)for(let i=0;i<g.index.count;i++)indices.push(off+g.index.getX(i));else for(let i=0;i<p.count;i++)indices.push(off+i);off+=p.count;}const g=geometry(positions,indices,uvs);g.setAttribute('normal',new THREE.Float32BufferAttribute(normals,3));return g;}
+/* Merge static meshes by material, keeping independent motion roots intact. */
+function batchStatic(root){root.updateWorldMatrix(true,true);const inv=root.matrixWorld.clone().invert(),batches=new Map();function walk(o){for(const c of [...o.children]){if(c.userData.dynamicRoot||c.userData.noBatch)continue;if(c.isMesh&&!c.isInstancedMesh&&!Array.isArray(c.material)){const key=c.material.uuid+'|'+c.castShadow+'|'+c.receiveShadow;let b=batches.get(key);if(!b){b={m:c.material,cast:c.castShadow,receive:c.receiveShadow,gs:[],objects:[]};batches.set(key,b);}b.gs.push(c.geometry.clone().applyMatrix4(new M4().multiplyMatrices(inv,c.matrixWorld)));b.objects.push(c);}else walk(c);}}walk(root);for(const b of batches.values()){if(b.gs.length<2){b.gs.forEach(g=>g.dispose());continue;}const o=new THREE.Mesh(combine(b.gs),b.m);o.castShadow=b.cast;o.receiveShadow=b.receive;o.name=b.m.name+' / batched';root.add(o);b.objects.forEach(m=>m.removeFromParent());b.gs.forEach(g=>g.dispose());}}
+function canvasTexture(c){const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());return t;}
+/* Shape-preserving Hermite interpolation: continuous, non-oscillating loft. */
+function interpolator(stations,column){const x=stations.map(a=>a[0]),y=stations.map(a=>a[column]),d=[],m=[];for(let i=0;i<x.length-1;i++)d.push((y[i+1]-y[i])/(x[i+1]-x[i]));m[0]=d[0];m[x.length-1]=d[d.length-1];for(let i=1;i<x.length-1;i++){if(d[i-1]*d[i]<=0)m[i]=0;else{let h0=x[i]-x[i-1],h1=x[i+1]-x[i],w1=2*h1+h0,w2=h1+2*h0;m[i]=(w1+w2)/(w1/d[i-1]+w2/d[i]);}}return value=>{let k=0;while(k<x.length-2&&value>x[k+1])k++;let h=x[k+1]-x[k],t=clamp((value-x[k])/h),t2=t*t,t3=t2*t;return(2*t3-3*t2+1)*y[k]+(t3-2*t2+t)*h*m[k]+(-2*t3+3*t2)*y[k+1]+(t3-t2)*h*m[k+1];};}
+/* ── 01 / Fuselage: continuous elliptical loft, real masked apertures ── */
+const bodyStations=[[-31.4,4.90,.015,.015],[-31.03,4.97,.53,.59],[-30.20,5.10,1.08,1.20],[-29.10,5.29,1.65,1.73],[-27.80,5.48,2.20,2.19],[-26.20,5.59,2.70,2.64],[-23.50,5.60,2.95,2.855],[-20,5.60,2.985,2.885],[14.5,5.60,2.985,2.885],[18.5,5.62,2.80,2.68],[22,5.69,2.35,2.22],[25.1,5.84,1.76,1.61],[28.1,6.06,1.02,.91],[30.2,6.29,.38,.32],[31.4,6.40,.018,.018]];
+const bodyCY=interpolator(bodyStations,1),bodyRY=interpolator(bodyStations,2),bodyRZ=interpolator(bodyStations,3);
+function bodyPoint(x,t,offset=0){return v(x,bodyCY(x)+Math.max(.001,bodyRY(x)+offset)*Math.cos(t),Math.max(.001,bodyRZ(x)+offset)*Math.sin(t));}
+function bodyAngle(x,y,side){const a=Math.acos(clamp((y-bodyCY(x))/bodyRY(x),-.99,.99));return side>0?a:TAU-a;}
+function bodyGeometry(inset=0){const p=[],uv=[],ix=[],nx=380,nt=128;for(let i=0;i<=nx;i++){let x=mix(-31.4,31.4,i/nx);for(let j=0;j<=nt;j++){const q=bodyPoint(x,j/nt*TAU,inset);p.push(q.x,q.y,q.z);uv.push(i/nx,1-j/nt);}}for(let i=0;i<nx;i++)for(let j=0;j<nt;j++){let a=i*(nt+1)+j,b=a+nt+1;ix.push(a,a+1,b,a+1,b+1,b);}return geometry(p,ix,uv);}
+const paint=document.createElement('canvas');paint.width=8192;paint.height=1024;const pc=paint.getContext('2d');
+const maskCanvas=document.createElement('canvas');maskCanvas.width=paint.width;maskCanvas.height=paint.height;const mc=maskCanvas.getContext('2d');mc.fillStyle='white';mc.fillRect(0,0,paint.width,paint.height);
+const tx=x=>(x+31.4)/62.8*paint.width,tt=t=>t/TAU*paint.height;
+pc.fillStyle='#f0f4f1';pc.fillRect(0,0,paint.width,paint.height);
+/* Sweeping paint is generated per axial strip; it is not a downloaded image. */
+for(let px=0;px<paint.width;px+=2){const x=px/paint.width*62.8-31.4,edge=1.86-.70*smooth(5,31.4,x)+.06*Math.sin((x+26)*.065);const y0=tt(edge),y1=tt(TAU-edge);pc.fillStyle='#113e53';pc.fillRect(px,y0,2,y1-y0);pc.fillStyle='#2c8fa4';pc.fillRect(px,y0-tt(.06),2,tt(.065));pc.fillRect(px,y1,2,tt(.065));pc.fillStyle='#78bec5';pc.fillRect(px,y0-tt(.078),2,tt(.017));pc.fillRect(px,y1+tt(.065),2,tt(.017));}
+function paintText(text,x,t,height,width,side=1,color='#29576b',weight=500){pc.save();pc.translate(tx(x),tt(t));pc.scale(side,1);pc.fillStyle=color;pc.font=`${weight} ${height}px Arial, sans-serif`;pc.textAlign='center';pc.textBaseline='middle';pc.fillText(text,0,0,width);pc.restore();}
+for(const side of [1,-1]){const theta=t=>side>0?t:TAU-t;paintText('D R E A M L I N E R',-11.1,theta(.96),34,1920,side,'#285b71',400);paintText('BOEING',-21.7,theta(.91),17,300,side,'#3b6b7c',600);paintText('787–9',17.0,theta(.89),46,580,side,'#2e697b',500);paintText('N789EX',22.5,theta(1.24),17,315,side,'#548392',500);}
+for(const x of [-24.5,-11.5,3.8,18.1]){pc.strokeStyle='rgba(98,129,133,.17)';pc.lineWidth=.7;pc.beginPath();pc.moveTo(tx(x),0);pc.lineTo(tx(x),paint.height);pc.stroke();}
+const windowSpecs=[];
+function roundedContour(x,t,w,h,round=.22,steps=5){const q=[],rx=w*round,ry=h*round;const centers=[[x+w/2-rx,t+h/2-ry,0],[x-w/2+rx,t+h/2-ry,PI/2],[x-w/2+rx,t-h/2+ry,PI],[x+w/2-rx,t-h/2+ry,PI*1.5]];for(const [cx,cy,angle]of centers)for(let i=0;i<=steps;i++){const a=angle+i/steps*PI/2;q.push([cx+rx*Math.cos(a),cy+ry*Math.sin(a)]);}return q;}
+function traceUV(ctx,contour){ctx.beginPath();contour.forEach((p,i)=>i?ctx.lineTo(tx(p[0]),tt(p[1])):ctx.moveTo(tx(p[0]),tt(p[1])));ctx.closePath();}
+function aperture(contour){pc.save();traceUV(pc,contour);pc.globalCompositeOperation='destination-out';pc.fill();pc.restore();mc.fillStyle='#000';traceUV(mc,contour);mc.fill();}
+function glassPolygon(contour,m=mat.glass,offset=.012){const c=contour.reduce((p,q)=>[p[0]+q[0]/contour.length,p[1]+q[1]/contour.length],[0,0]),p=[],idx=[];const mid=bodyPoint(c[0],c[1],offset);p.push(...mid.toArray());/* Radial subdivision follows the fuselage rather than flattening the glass. */for(const a of contour)p.push(...bodyPoint(a[0],a[1],offset).toArray());for(let i=0;i<contour.length;i++)idx.push(0,1+i,1+(i+1)%contour.length);const o=mesh(geometry(p,idx),m);o.castShadow=false;o.receiveShadow=false;o.name='Transmission pane';return o;}
+function windowFrame(x,t,w,h){const inner=roundedContour(x,t,w,h,.25,5),outer=roundedContour(x,t,w+.058,h+.019,.25,5),p=[],idx=[];for(let i=0;i<inner.length;i++){p.push(...bodyPoint(...inner[i],.017).toArray(),...bodyPoint(...outer[i],.018).toArray());}for(let i=0;i<inner.length;i++){const a=i*2,b=((i+1)%inner.length)*2;idx.push(a,b,a+1,b,b+1,a+1);}const fm=mat.frame;fm.side=THREE.DoubleSide;mesh(geometry(p,idx),fm);}
+function addWindow(x,y,side,w=.305,h=.485){const t=bodyAngle(x,y,side),angularH=h/(bodyRY(x)*Math.max(.35,Math.abs(Math.sin(t))));const contour=roundedContour(x,t,w,angularH,.26,5);aperture(contour);windowFrame(x,t,w,angularH);glassPolygon(roundedContour(x,t,w+.009,angularH+.004,.26,6));windowSpecs.push({x,y,side});}
+const doors=[-23.35,-9.6,10.7,22.0];
+for(const side of [-1,1]){
+ for(let x=-22.37;x<21.20;x+=.565){if(doors.some(d=>Math.abs(x-d)<.72))continue;addWindow(x,6.70,side);}
+ for(const x of doors){const outline=[],w=1.02,bottom=4.77,top=6.97;for(let i=0;i<=12;i++){const a=PI*1.5+i/12*TAU;let xx=x+Math.sign(Math.cos(a))*(w/2-.12)+.12*Math.cos(a),yy=(top+bottom)/2+Math.sign(Math.sin(a))*((top-bottom)/2-.17)+.17*Math.sin(a);outline.push([xx,bodyAngle(xx,yy,side)]);}pc.strokeStyle='#729399';pc.lineWidth=1.5;traceUV(pc,outline);pc.stroke();addWindow(x,6.54,side,.23,.33);const handleP=bodyPoint(x+.22,bodyAngle(x+.22,5.58,side),.028);const handle=box(.24,.045,.055,handleP.x,handleP.y,handleP.z,mat.titanium);paintText('EXIT',x,bodyAngle(x,6.85,side),8,70,side,'#667f81',600);}
+ /* Cargo doors below the passenger deck, closed flush to the skin. */
+ if(side===1)for(const [x,w]of[[-15.0,2.35],[15.1,2.20]]){const c=[];for(const [dx,y]of[[-w/2,3.90],[w/2,3.90],[w/2,5.0],[-w/2,5.0]])c.push([x+dx,bodyAngle(x+dx,y,side)]);pc.strokeStyle='#8eb9c3';pc.lineWidth=1.3;traceUV(pc,c);pc.stroke();}
+}
+/* Four 787-style windshield panes. Both skin and inner liner are cut out. */
+const windshield=[ [[-28.50,.10],[-27.32,.09],[-26.96,.69],[-28.13,.93]], [[-27.01,.77],[-25.85,.91],[-25.62,1.265],[-26.76,1.275]] ];
+for(const side of [-1,1])for(const poly of windshield){const c=poly.map(([x,t])=>[x,side>0?t:TAU-t]);aperture(c);glassPolygon(c,mat.cockpitGlass,.020);const edges=c.map(p=>bodyPoint(p[0],p[1],.039));edges.push(edges[0]);curveTube(edges,.025,mat.navy,aircraft,36);}
+/* Real belly apertures: wheel bays are masked into the exterior and liner. */
+aperture([[-26.15,PI-.255],[-22.15,PI-.255],[-22.15,PI+.255],[-26.15,PI+.255]]);
+aperture([[2.8,PI-.94],[7.3,PI-.94],[7.3,PI+.94],[2.8,PI+.94]]);
+const bodyMap=canvasTexture(paint),bodyMask=canvasTexture(maskCanvas);
+const bodyMat=new THREE.MeshPhysicalMaterial({color:0xffffff,map:bodyMap,alphaTest:.48,metalness:.16,roughness:.3,clearcoat:.65,clearcoatRoughness:.22});bodyMat.name='Painted composite skin';
+const fuselage=mesh(bodyGeometry(),bodyMat,aircraft,'Continuous fuselage loft');
+const linerMat=mat.interior.clone();linerMat.alphaMap=bodyMask;linerMat.alphaTest=.5;linerMat.name='Perforated inner cabin liner';const liner=mesh(bodyGeometry(-.15),linerMat);liner.castShadow=false;
+/* Visible internal volume, not a black patch immediately behind each pane. */
+box(44,.11,4.85,-1.3,5.57,0,mat.cavity);box(44,.08,4.2,-1.3,7.86,0,mat.interior);
+const seatRows=[];for(let x=-21.4;x<19.5;x+=1.1)if(!doors.some(d=>Math.abs(d-x)<1.1))for(const z of[-1.96,-1.42,.92,1.45,1.98])seatRows.push([x,6.1,z]);
+for(const kind of ['back','cushion']){const geo=kind==='back'?new THREE.BoxGeometry(.14,.73,.46):new THREE.BoxGeometry(.51,.12,.46);const seats=new THREE.InstancedMesh(geo,mat.seat,seatRows.length);const dummy=new THREE.Object3D();seatRows.forEach(([x,y,z],i)=>{dummy.position.set(x+(kind==='back'?.2:0),y+(kind==='back'?.22:-.17),z);dummy.rotation.z=kind==='back'?-.08:0;dummy.updateMatrix();seats.setMatrixAt(i,dummy.matrix);});seats.castShadow=false;seats.receiveShadow=true;aircraft.add(seats);}
+box(3.1,.12,2.65,-26.75,5.71,0,mat.cavity);
+box(1.1,.5,2.55,-27.54,6.17,0,mat.duct);
+for(const side of[-1,1]){const chair=box(.46,.73,.57,-25.94,6.35,side*.67,mat.seat);chair.rotation.z=-.12;box(.66,.13,.57,-26.17,5.99,side*.67,mat.seat);const displayMat=new THREE.MeshStandardMaterial({color:0x31505b,emissive:0x2c4d51,emissiveIntensity:.35,roughness:.3});const d=box(.035,.21,.36,-27.0,6.37,side*.52,displayMat);d.rotation.z=-.4;}
+/* Radome seam, antennae and APU exhaust. */
+line(Array.from({length:129},(_,i)=>bodyPoint(-29.35,i/128*TAU,.009)),0x92a4a5,.42);
+for(const [x,length,height]of[[-16,.62,.40],[5.8,.72,.34],[17,.58,.32]]){const y=bodyCY(x)+bodyRY(x);const g=geometry([x-.4,y-.05,0,x+.4,y-.05,0,x+.10,y+height,0],[0,1,2]);const a=mesh(g,mat.wing);a.material.side=THREE.DoubleSide;}
+ellipsoid(1.2,.20,.46,3.5,8.55,0,mat.porcelain);
+const apu=mesh(new THREE.CylinderGeometry(.10,.15,.30,24,1,true),mat.warmMetal);apu.rotation.z=PI/2;apu.position.set(31.29,6.38,0);
+/* ── 02 / Main wings: swept loft and independent mechanical surfaces ── */
+const wingStations=[[2.40,-7.30,13.10,4.10],[6,-4.70,9.80,4.37],[10.6,-1.60,7.00,4.72],[17,2.65,4.30,5.22],[23,6.85,2.65,5.74],[26.8,9.58,1.70,6.19],[28.8,11.60,1.00,6.49],[30.05,13.15,.25,6.68]];
+const wLE=interpolator(wingStations,1),wChord=interpolator(wingStations,2),wY=interpolator(wingStations,3);
+function foil(t,ratio=.11){return 5*ratio*(.2969*Math.sqrt(Math.max(t,0))-.126*t-.3516*t*t+.2843*t*t*t-.1036*t*t*t*t);}
+function wingPoint(s,t,side,layer=1){const c=wChord(s),inc=mix(1.7,-1.4,smooth(3,30.05,s))*DEG;const y=wY(s)+.018*c*Math.sin(PI*t)+(0.28-t)*c*Math.sin(inc)+layer*c*foil(t,mix(.12,.085,smooth(3,28,s)));return v(wLE(s)+c*t,y,side*s);}
+const flapRanges=[[3.30,10.35],[10.65,20.05]],slatRanges=[[3.15,6.90],[7.05,8.83],[9.60,10.40],[10.55,14.60],[14.75,18.90],[19.05,23],[23.15,26.60]],spoilerRanges=[[3.60,5.80],[5.95,8.15],[8.30,10.20],[10.85,13.35],[13.50,16.35],[16.50,19.70]];
+const inRanges=(s,rs)=>rs.some(r=>s>r[0]&&s<r[1]);
+function samples(bounds,step){const out=[];const sorted=[...new Set(bounds)].sort((a,b)=>a-b);for(let j=0;j<sorted.length-1;j++){const n=Math.ceil((sorted[j+1]-sorted[j])/step);for(let k=0;k<n;k++)out.push(mix(sorted[j],sorted[j+1],k/n));}out.push(sorted.at(-1));return out;}
+/* Closed upper/lower airfoil patch. Shared normals make continuous camber. */
+function loftPatch(pointFn,s0,s1,t0,t1,side,ns=16,nt=16,thin=false){const p=[],uv=[],ix=[],n=(ns+1)*(nt+1);for(let face=0;face<2;face++)for(let i=0;i<=ns;i++)for(let j=0;j<=nt;j++){const s=mix(s0,s1,i/ns),t=mix(t0,t1,j/nt),q=pointFn(s,t,side,face===0?1:-1);if(thin&&face===1){const top=pointFn(s,t,side,1);q.copy(top);q.y-=.045;}p.push(...q.toArray());uv.push(j/nt,i/ns);}function tri(a,b,c,reverse=false){if(reverse)ix.push(a,c,b);else ix.push(a,b,c);}for(let face=0;face<2;face++)for(let i=0;i<ns;i++)for(let j=0;j<nt;j++){let a=face*n+i*(nt+1)+j,b=a+nt+1,rev=(side<0)!==(face===1);tri(a,b,a+1,rev);tri(a+1,b,b+1,rev);}function cap(a,b,reverse){tri(a,b,a+n,reverse);tri(b,b+n,a+n,reverse);}for(let i=0;i<ns;i++){cap(i*(nt+1),(i+1)*(nt+1),side>0);cap(i*(nt+1)+nt,(i+1)*(nt+1)+nt,side<0);}for(let j=0;j<nt;j++){cap(j,j+1,side<0);cap(ns*(nt+1)+j,ns*(nt+1)+j+1,side>0);}return geometry(p,ix,uv);}
+function fixedWing(side){const sb=[2.4,30.05,...wingStations.map(x=>x[0]),...flapRanges.flat(),...slatRanges.flat(),...spoilerRanges.flat()];const ss=samples(sb,.48),ts=samples([0,.12,.58,.72,.73,1],.032),p=[],uv=[],ix=[],row=ts.length,n=ss.length*row;
+ for(let face=0;face<2;face++)for(const s of ss)for(const t of ts){p.push(...wingPoint(s,t,side,face===0?1:-1).toArray());uv.push(t,s/30.05);}
+ const removed=(s,t)=>inRanges(s,slatRanges)&&t<.12 || inRanges(s,flapRanges)&&t>.73;
+ function tri(a,b,c,rev){ix.push(a,rev?c:b,rev?b:c);}
+ for(let face=0;face<2;face++)for(let i=0;i<ss.length-1;i++)for(let j=0;j<row-1;j++){const s=(ss[i]+ss[i+1])/2,t=(ts[j]+ts[j+1])/2;if(removed(s,t))continue;if(face===0&&inRanges(s,spoilerRanges)&&t>.58&&t<.72)continue;let a=face*n+i*row+j,b=a+row,rev=(side<0)!==(face===1);tri(a,b,a+1,rev);tri(a+1,b,b+1,rev);}
+ /* Close every side of a leading/trailing cut, not just the outer silhouette. */
+ for(let i=0;i<ss.length-1;i++)for(let j=0;j<row;j++){const s=(ss[i]+ss[i+1])/2,t=ts[j],before=j?removed(s,(ts[j-1]+t)/2):true,after=j<row-1?removed(s,(ts[j+1]+t)/2):true;if(before===after)continue;const a=i*row+j,b=a+row;tri(a,b,a+n,side>0?before:after);tri(b,b+n,a+n,side>0?before:after);}
+ const o=mesh(geometry(p,ix,uv),mat.wing,aircraft,'Fixed wing box');return o;
+}
+function movingSurface(kind,range,t0,t1,side,{thin=false,hinge=t0}={}){const [s0,s1]=range,p0=wingPoint(s0,hinge,side,thin?1:0),p1=wingPoint(s1,hinge,side,thin?1:0),axis=p1.clone().sub(p0).normalize();const pivot=new THREE.Group();pivot.name=kind+' '+(side>0?'R':'L');pivot.position.copy(p0);pivot.userData.dynamicRoot=true;aircraft.add(pivot);const g=loftPatch(wingPoint,s0+.012,s1-.012,t0+.001,t1-.001,side,Math.ceil((s1-s0)*3),kind==='slat'?12:15,thin);g.translate(-p0.x,-p0.y,-p0.z);mesh(g,kind==='slat'?mat.wing:mat.porcelain,pivot,kind+' airfoil');const data={kind,pivot,home:p0,axis,side,range};dynamic.push(data);
+ if(kind==='slat'){const lip=loftPatch(wingPoint,s0+.025,s1-.025,.003,.020,side,Math.ceil((s1-s0)*2),4);lip.translate(-p0.x,-p0.y+.009,-p0.z);mesh(lip,mat.titanium,pivot,'Anti-ice leading edge');}
+ if(kind==='spoiler'){const a=wingPoint(s0+.025,t0,side,1),b=wingPoint(s1-.025,t0,side,1);a.sub(p0);b.sub(p0);rod(a,b,.024,mat.alloy,pivot);}
+ return data;
+}
+const wingMeshes=[];
+for(const side of[-1,1]){
+ wingMeshes.push(fixedWing(side));
+ const fl=flapRanges.map(r=>movingSurface('flap',r,.73,1,side));
+ slatRanges.forEach(r=>movingSurface('slat',r,0,.12,side,{hinge:.12}));
+ spoilerRanges.forEach(r=>{
+  movingSurface('spoiler',r,.58,.719,side,{thin:true});
+  /* A shallow equipment recess prevents a see-through wing when raised. */
+  const recessFn=(s,t,side,layer)=>{const q=wingPoint(s,t,side,1);q.y-=layer>0?.10:.14;return q;};mesh(loftPatch(recessFn,r[0],r[1],.58,.72,side,4,3),mat.duct);
+ });
+ /* Four flap-track fairings and articulated guides per side. */
+ for(const s of[4.7,8.7,13.1,17.7]){const q=wingPoint(s,.83,side,-1);const fairing=ellipsoid(1.40,.235,.225,q.x+.44,q.y-.19,q.z,mat.wingLower);fairing.rotation.y=-side*.08;const d=fl.find(a=>s>=a.range[0]&&s<=a.range[1]);const fixed=wingPoint(s,.62,side,-1);fixed.y-=.14;const local=wingPoint(s,.82,side,-1).sub(d.home);local.y-=.12;const guide=movingRod(.045,mat.chrome);trackLinks.push({fixed,local,pivot:d.pivot,rod:guide});}
+ /* Inspection seams and outboard aileron outline; no fake whole-wing rotation. */
+ for(const [s0,s1,t]of[[20.2,25.9,.73],[26.7,28.6,.70]])line(Array.from({length:30},(_,i)=>{const q=wingPoint(mix(s0,s1,i/29),t,side,1);q.y+=.01;return q;}),0x75898a,.55);
+ for(const s of[20.2,25.9,27.9])line(Array.from({length:16},(_,i)=>{const q=wingPoint(s,mix(.73,.998,i/15),side,1);q.y+=.01;return q;}),0x7f9293,.45);
+ /* Walkway, narrow and flush, follows the wing rather than a flat decal. */
+ const walk=[];for(let i=0;i<=40;i++){const q=wingPoint(mix(3.05,16.5,i/40),.49,side,1);q.y+=.012;walk.push(q);}line(walk,0x7e9292,.35);
+ for(let i=0;i<5;i++){const s=24+i*1.08,q=wingPoint(s,.998,side,0);rod(q,q.clone().add(v(.24,0,0)),.009,mat.duct);}
+}
+/* Wing-body fairing, split around the main wheel-bay volume. */
+for(const side of[-1,1]){const fair=ellipsoid(8.4,.57,.95,-.6,3.85,side*2.65,mat.porcelain);fair.rotation.y=-side*.04;}
+/* ── 03 / Empennage: swept fin, separate all-moving tailplane ── */
+const tailStations=[[1.6,20.25,7.70,6.52],[4,22.08,5.68,6.85],[7.5,25.1,3.20,7.32],[10.15,27.85,1.40,7.70]];
+const tLE=interpolator(tailStations,1),tC=interpolator(tailStations,2),tY=interpolator(tailStations,3);
+function tailPoint(s,t,side,layer){const c=tC(s);return v(tLE(s)+c*t,tY(s)+layer*c*foil(t,.09),side*s);}
+const tailPivot=new THREE.Group();tailPivot.name='All-moving horizontal stabilizer';tailPivot.position.set(24.15,6.5,0);tailPivot.userData.dynamicRoot=true;aircraft.add(tailPivot);
+for(const side of[-1,1]){const g=loftPatch(tailPoint,1.6,10.15,0,1,side,34,32);g.translate(-24.15,-6.5,0);mesh(g,mat.wing,tailPivot);const seam=Array.from({length:36},(_,i)=>{const q=tailPoint(mix(1.85,10.07,i/35),.715,side,1);q.y+=.012;return q.sub(tailPivot.position);});line(seam,0x6f8587,.55,tailPivot);const lip=loftPatch(tailPoint,2.1,10.07,.002,.025,side,30,4);lip.translate(-24.15,-6.493,0);mesh(lip,mat.titanium,tailPivot);}
+const finStations=[[7.25,18.4,12.0],[8.6,20.1,10.2],[11.5,22.10,8.30],[15.7,25.42,4.90],[17.0,26.70,3.00]],fLE=interpolator(finStations,1),fC=interpolator(finStations,2);
+const finPaint=document.createElement('canvas');finPaint.width=1024;finPaint.height=1024;const fc=finPaint.getContext('2d');fc.fillStyle='#103c50';fc.fillRect(0,0,1024,1024);fc.fillStyle='#337f97';fc.beginPath();fc.moveTo(60,1024);fc.bezierCurveTo(485,490,678,530,1040,45);fc.lineTo(1050,370);fc.bezierCurveTo(703,615,529,770,380,1024);fc.fill();fc.fillStyle='#7dbaca';fc.beginPath();fc.moveTo(340,1024);fc.bezierCurveTo(550,644,840,575,1050,380);fc.lineTo(1050,415);fc.bezierCurveTo(790,640,617,680,450,1024);fc.fill();fc.save();fc.translate(710,384);fc.rotate(-.03);fc.fillStyle='#e6f0ec';fc.textAlign='center';fc.font='italic 145px Arial';fc.fillText('787',0,0);fc.restore();const finMap=canvasTexture(finPaint);const finMat=mat.navy.clone();finMat.map=finMap;finMat.name='Dreamliner tail livery';
+function finGeometry(){const p=[],uv=[],ix=[],ny=48,nt=36;for(const side of[-1,1]){const off=p.length/3;for(let i=0;i<=ny;i++){const y=mix(7.25,17,i/ny),c=fC(y);for(let j=0;j<=nt;j++){const t=j/nt,x=fLE(y)+t*c,z=side*(c*foil(t,.09)+.013);p.push(x,y,z);let u=(x-18.4)/12;uv.push(side<0?1.38-u:u,(y-7.25)/9.75);}}for(let i=0;i<ny;i++)for(let j=0;j<nt;j++){const a=off+i*(nt+1)+j,b=a+nt+1;if(side>0)ix.push(a,a+1,b,a+1,b+1,b);else ix.push(a,b,a+1,a+1,b,b+1);}}
+ /* Close the fin tip and its thin leading/trailing edges. */
+ const count=(ny+1)*(nt+1),row=nt+1;
+ for(let j=0;j<nt;j++){const a=ny*row+j,b=a+1,c=a+count,d=c+1;ix.push(a,c,b,b,c,d);}
+ for(let i=0;i<ny;i++)for(const j of[0,nt]){const a=i*row+j,b=a+row,c=a+count,d=b+count;if(j===0)ix.push(a,c,b,b,c,d);else ix.push(a,b,c,b,d,c);}
+ return geometry(p,ix,uv);}
+mesh(finGeometry(),finMat,aircraft,'Swept vertical stabilizer');
+for(const side of[-1,1])line(Array.from({length:40},(_,i)=>{const y=mix(8.75,16.92,i/39),c=fC(y),t=.72;return v(fLE(y)+c*t,y,side*(c*foil(t,.09)+.025));}),0x8fbdc6,.54);
+/* ── 04 / GEnx-inspired turbofans: stationary nacelle, independent rotor ── */
+function latheX(profile,segments=96,modify=null){const p=[],uv=[],idx=[];for(let i=0;i<profile.length;i++)for(let j=0;j<=segments;j++){const a=j/segments*TAU;let [x,r]=profile[i];if(modify)[x,r]=modify(x,r,a,i);p.push(x,r*Math.cos(a),r*Math.sin(a));uv.push(j/segments,i/(profile.length-1));}for(let i=0;i<profile.length-1;i++)for(let j=0;j<segments;j++){const a=i*(segments+1)+j,b=a+segments+1;idx.push(a,a+1,b,a+1,b+1,b);}return geometry(p,idx,uv);}
+function ringX(x,r,rTube,m,parent){const o=mesh(new THREE.TorusGeometry(r,rTube,8,96),m,parent);o.rotation.y=PI/2;o.position.x=x;return o;}
+function bladeGeometry(count,r0,r1,x0,edgeOnly=false,stator=false){const p=[],uv=[],idx=[],nr=16,nc=edgeOnly?2:7;for(let k=0;k<count;k++){const off=p.length/3;for(let i=0;i<=nr;i++){const t=i/nr,r=mix(r0,r1,t);for(let j=0;j<=nc;j++){const u=edgeOnly?mix(.02,.075,j/nc):j/nc;const angle=k/count*TAU+(stator?-.2:.10)+(stator?-.12:.42)*Math.pow(t,1.6)+(u-.5)*(stator?.17:.34)*(1-.12*t);const x=x0+(u-.5)*(.22-.10*t)+.07*Math.sin(PI*u)+.09*t;p.push(x,r*Math.cos(angle),r*Math.sin(angle));uv.push(u,t);}}for(let i=0;i<nr;i++)for(let j=0;j<nc;j++){let a=off+i*(nc+1)+j,b=a+nc+1;idx.push(a,a+1,b,a+1,b+1,b);}}return geometry(p,idx,uv);}
+const engineGroups=[];
+for(const side of[-1,1]){
+ const e=new THREE.Group();e.position.set(-4.80,2.80,side*9.20);e.name='Stationary nacelle '+side;aircraft.add(e);engineGroups.push(e);
+ const outerProfile=[[-2.34,1.705],[-2.05,1.739],[-1.65,1.755],[-1.05,1.745],[-.35,1.691],[.30,1.602],[.91,1.482],[1.23,1.410]];
+ mesh(latheX(outerProfile,112),mat.porcelain,e,'Fixed fan cowling');
+ const lipProfile=[[-1.95,1.435],[-2.24,1.433],[-2.48,1.434],[-2.65,1.451],[-2.744,1.497],[-2.766,1.530],[-2.732,1.580],[-2.635,1.632],[-2.48,1.678],[-2.34,1.705]];
+ mesh(latheX(lipProfile,112),mat.titanium,e,'Thick rolled intake lip');
+ /* The fan-case liner is genuinely concave and extends behind the rotor. */
+ mesh(latheX([[1.35,1.305],[.65,1.41],[-.25,1.49],[-1.2,1.474],[-1.95,1.435]],112),mat.duct,e,'Acoustic liner / bypass duct');
+ ringX(-1.98,1.425,.014,mat.alloy,e);
+ const serration=(x,r,a,i)=>{const tooth=1-Math.abs(((a/TAU*16)%1)*2-1);const end=i===1||i===2;return[x+(end?.42*tooth:0),r-(end?.035*tooth:0)];};
+ mesh(latheX([[.96,1.474],[1.40,1.348],[1.40,1.299],[.98,1.419]],128,serration),mat.wingLower,e,'Sixteen chevron trailing-edge teeth');
+ const edgePoints=Array.from({length:129},(_,j)=>{const a=j/128*TAU,w=1-Math.abs(((a/TAU*16)%1)*2-1);return v(1.40+.42*w,(1.349-.035*w)*Math.cos(a),(1.349-.035*w)*Math.sin(a));});line(edgePoints,0x768b8f,.8,e);
+ /* Aft core, hot nozzle, inner nozzle wall and plug form separate layers. */
+ mesh(latheX([[-1.3,.49],[-.55,.67],[.45,.77],[1.5,.80],[2.12,.72],[2.64,.605],[2.84,.565],[2.85,.515],[2.35,.515]],80),mat.warmMetal,e,'Core nozzle');
+ mesh(latheX([[1.85,.455],[2.15,.452],[2.55,.39],[2.94,.285],[3.27,.155],[3.51,.025]],72),mat.alloy,e,'Exhaust plug');
+ ringX(2.78,.55,.021,mat.titanium,e);ringX(1.57,.797,.022,mat.alloy,e);
+ mesh(bladeGeometry(26,.46,1.405,-.98,false,true),mat.alloy,e,'Fixed outlet guide vanes');
+ for(let k=0;k<8;k++){const a=k/8*TAU;const q1=v(.92,.77*Math.cos(a),.77*Math.sin(a)),q2=v(1.08,1.33*Math.cos(a),1.33*Math.sin(a));rod(q1,q2,.043,mat.alloy,e);}
+ const rotor=new THREE.Group();rotor.name='Fan rotor only';rotor.userData.dynamicRoot=true;e.add(rotor);
+ mesh(bladeGeometry(18,.385,1.399,-1.955),mat.fan,rotor,'18 swept composite blades');mesh(bladeGeometry(18,.390,1.394,-1.963,true),mat.titanium,rotor,'Metallic blade leading edges');
+ const coneProfile=[[-2.635,.018],[-2.59,.091],[-2.47,.219],[-2.29,.335],[-2.08,.396],[-1.88,.424]];mesh(latheX(coneProfile,80),mat.fan,rotor,'Rotating spinner');const coneRadius=interpolator(coneProfile,1);const spiral=[];for(let i=0;i<=90;i++){const t=i/90,x=mix(-2.61,-2.01,t),r=coneRadius(x)+.009,a=t*TAU*1.35;spiral.push(v(x,r*Math.cos(a),r*Math.sin(a)));}curveTube(spiral,.012,mat.white,rotor,90);fans.push(rotor);
+ /* Access and thrust-reverser seams remain fixed while the fan spins. */
+ for(const [x,r]of[[-.42,1.701],[.30,1.608]])ringX(x,r,.008,mat.alloy,e);
+ for(const a of[PI*.34,PI*1.34]){const ps=outerProfile.slice(1,-1).map(([x,r])=>v(x,(r+.007)*Math.cos(a),(r+.007)*Math.sin(a)));line(ps,0x819397,.55,e);}
+ /* Small nacelle strakes, in the upper inboard quadrant. */
+ const a=side>0?TAU-.55:.55;const strake=geometry([-1.7,1.62*Math.cos(a),1.62*Math.sin(a),-.3,1.65*Math.cos(a),1.65*Math.sin(a),-.58,2.00*Math.cos(a),2.00*Math.sin(a)],[0,1,2]);if(!galleryPreview)mesh(strake,mat.wing,e,'Nacelle strake');
+ const logo=document.createElement('canvas');logo.width=512;logo.height=128;const lc=logo.getContext('2d');lc.fillStyle='#416677';lc.textAlign='center';lc.textBaseline='middle';lc.font='italic 70px Arial';lc.fillText('GEnx',256,65);const lm=new THREE.MeshBasicMaterial({map:canvasTexture(logo),transparent:true,depthWrite:false,side:THREE.DoubleSide});
+ for(const si of[-1,1]){const label=mesh(new THREE.PlaneGeometry(.83,.208),lm,e);label.position.set(-.88,.09,si*1.754);label.rotation.y=si<0?PI:0;label.castShadow=false;label.receiveShadow=false;}
+ /* Pylon emerges through the upper nacelle into the wing box. */
+ const outline=new THREE.Shape();outline.moveTo(-5.78,4.16);outline.lineTo(-4.42,4.86);outline.lineTo(-2.79,4.98);outline.lineTo(.64,4.81);outline.lineTo(-1.90,4.02);outline.lineTo(-4.62,4.00);outline.closePath();const pg=new THREE.ExtrudeGeometry(outline,{depth:.54,bevelEnabled:true,bevelSize:.045,bevelThickness:.05,bevelSegments:2,steps:1});const py=mesh(pg,mat.wing,aircraft,'Engine pylon');py.position.z=side*9.20-.27;
+}
+/* ── 05 / Landing gear: ten tires, true pivots, folded stays, sequenced doors ── */
+const wheelGeometryCache=new Map();
+function wheel(r,w,parent,x,y,z){let gs=wheelGeometryCache.get(r);if(!gs){const section=[[-w*.36,r*.47],[-w*.49,r*.65],[-w*.50,r*.81],[-w*.40,r*.956],[-w*.24,r],[w*.24,r],[w*.40,r*.956],[w*.50,r*.81],[w*.49,r*.65],[w*.36,r*.47],[-w*.36,r*.47]];const tire=latheX(section,56);tire.rotateY(PI/2);gs={tire,hub:new THREE.CylinderGeometry(r*.475,r*.475,w*.92,32)};gs.hub.rotateX(PI/2);wheelGeometryCache.set(r,gs);}const group=new THREE.Group();group.position.set(x,y,z);parent.add(group);mesh(gs.tire,mat.rubber,group,'Tire');mesh(gs.hub,mat.alloy,group,'Wheel hub');
+ for(const zz of[-w*.17,0,w*.17]){const g=mesh(new THREE.TorusGeometry(r-.003,.007,4,56),mat.tread,group);g.position.z=zz;}
+ for(const side of[-1,1]){const rr=mesh(new THREE.TorusGeometry(r*.455,.026,7,36),mat.titanium,group);rr.position.z=side*w*.46;const cap=mesh(new THREE.CylinderGeometry(r*.17,r*.17,.035,20),mat.chrome,group);cap.rotation.x=PI/2;cap.position.z=side*w*.48;for(let k=0;k<8;k++){const a=k/8*TAU;const bolt=ellipsoid(.030,.030,.014,Math.cos(a)*r*.32,Math.sin(a)*r*.32,side*w*.486,mat.chrome,group,8);}}
+ return group;
+}
+/* Well interiors have a roof and ribs, with no opaque floor behind the opening. */
+box(4.48,.09,4.67,5.05,5.02,0,mat.cavity);
+for(const x of[2.73,7.38])box(.08,1.86,4.6,x,4.09,0,mat.duct);
+for(const x of[3.3,4.25,5.9,6.8])box(.055,.20,4.05,x,4.89,0,mat.alloy);
+box(4.0,.085,1.36,-24.15,4.24,0,mat.cavity);
+for(const z of[-.69,.69])box(3.99,1.00,.06,-24.15,3.70,z,mat.duct);
+function bellyDoor(x0,x1,side,angleOuter,angleInner,kind){const thetaOuter=PI-side*angleOuter,thetaInner=PI-side*angleInner,pivotPos=bodyPoint((x0+x1)/2,thetaOuter,.021),g=new THREE.Group();g.name=kind+' door '+side;g.userData.dynamicRoot=true;g.position.copy(pivotPos);aircraft.add(g);const p=[],uv=[],ix=[],nx=12,ny=8;for(let i=0;i<=nx;i++)for(let j=0;j<=ny;j++){const pt=bodyPoint(mix(x0,x1,i/nx),mix(thetaOuter,thetaInner,j/ny),.014).sub(pivotPos);p.push(...pt.toArray());uv.push(i/nx,j/ny);}for(let i=0;i<nx;i++)for(let j=0;j<ny;j++){let a=i*(ny+1)+j,b=a+ny+1;ix.push(a,a+1,b,a+1,b+1,b);}const dm=mat.navy.clone();dm.side=THREE.DoubleSide;dm.name='Wheel bay door';mesh(geometry(p,ix,uv),dm,g);const a=v(x0-pivotPos.x,0,0),b=v(x1-pivotPos.x,0,0);rod(a,b,.024,mat.alloy,g);return {group:g,side,kind};}
+const gearDoors=[];
+for(const side of[-1,1]){
+ gearDoors.push(bellyDoor(2.82,7.28,side,.938,.014,'main'));
+ gearDoors.push(bellyDoor(-26.10,-23.63,side,.25,.008,'nose'));
+ gearDoors.push(bellyDoor(-23.60,-22.20,side,.25,.066,'nose-aft'));
+ const pivot=new THREE.Group();pivot.name='Main gear '+(side>0?'R':'L')+' / inboard folding trunnion';pivot.position.set(5.05,3.94,side*4.55);pivot.userData.dynamicRoot=true;aircraft.add(pivot);
+ ellipsoid(.39,.30,.35,5.05,4.06,side*4.55,mat.wingLower);
+ rod(v(0,.02,0),v(0,-1.67,0),.192,mat.wingLower,pivot,.25,20);
+ rod(v(0,-1.32,0),v(0,-2.88,0),.111,mat.chrome,pivot,.12,20);
+ for(const y of[-.40,-1.46,-2.69])rod(v(-.01,y-.08,0),v(-.01,y+.08,0),.223,mat.alloy,pivot,.223,18);
+ rod(v(0,-2.52,0),v(0,-3.25,0),.148,mat.alloy,pivot,.17,16);
+ /* Scissor torque links, brake lines and lower steering collar. */
+ rod(v(.13,-1.47,0),v(.41,-2.02,0),.057,mat.wingLower,pivot);
+ rod(v(.41,-2.02,0),v(.14,-2.58,0),.057,mat.wingLower,pivot);
+ for(const y of[-1.47,-2.02,-2.58])rod(v(.15,y,-.12),v(.15,y,.12),.065,mat.chrome,pivot);
+ curveTube([v(-.22,-.20,side*.10),v(-.23,-1.3,side*.10),v(-.20,-2.2,side*.13),v(-.34,-2.8,side*.13)],.021,mat.duct,pivot,18);
+ const bogie=new THREE.Group();bogie.position.set(0,-3.25,0);bogie.name='Four-wheel tilting bogie';bogie.userData.dynamicRoot=true;pivot.add(bogie);
+ rod(v(-1.00,0,0),v(1.00,0,0),.155,mat.wingLower,bogie,.155,14);
+ for(const x of[-.76,.76]){rod(v(x,0,-.76),v(x,0,.76),.115,mat.chrome,bogie);for(const z of[-.49,.49])wheel(.69,.405,bogie,x,0,z);}
+ rod(v(.08,.24,0),v(.62,.10,0),.065,mat.chrome,bogie);
+ const braceA=movingRod(.082,mat.wingLower),braceB=movingRod(.071,mat.chrome);
+ gears.push({type:'main',side,pivot,bogie,anchor:v(5.05,3.95,side*2.24),attach:v(0,-1.96,0),braceA,braceB,length:1.75});
+ batchStatic(bogie);batchStatic(pivot);
+}
+{
+ const pivot=new THREE.Group();pivot.position.set(-22.85,3.22,0);pivot.userData.dynamicRoot=true;pivot.name='Nose gear / forward-folding trunnion';aircraft.add(pivot);
+ rod(v(0,0,0),v(0,-1.41,0),.15,mat.wingLower,pivot,.185,18);
+ rod(v(0,-1.15,0),v(0,-2.37,0),.087,mat.chrome,pivot,.096,18);
+ rod(v(0,-1.34,0),v(0,-1.17,0),.182,mat.alloy,pivot,.182,16);
+ for(const side of[-1,1]){rod(v(0,-2.20,side*.10),v(0,-2.69,side*.20),.075,mat.wingLower,pivot);wheel(.53,.29,pivot,0,-2.69,side*.31);}
+ rod(v(0,-2.69,-.48),v(0,-2.69,.48),.092,mat.chrome,pivot);
+ rod(v(.08,-1.42,0),v(.31,-1.83,0),.037,mat.wingLower,pivot);rod(v(.31,-1.83,0),v(.075,-2.21,0),.037,mat.wingLower,pivot);
+ curveTube([v(-.15,-.22,.07),v(-.17,-1.38,.09),v(-.21,-2.28,.12)],.018,mat.duct,pivot,16);
+ const lampMat=new THREE.MeshStandardMaterial({color:0xe1eadc,emissive:0xd9e5ca,emissiveIntensity:.2,metalness:.15,roughness:.2});const taxiLamp=ellipsoid(.08,.10,.10,-.18,-1.68,.14,lampMat,pivot,16);
+ const braceA=movingRod(.065,mat.wingLower),braceB=movingRod(.055,mat.chrome);
+ gears.push({type:'nose',side:0,pivot,anchor:v(-21.55,3.02,0),attach:v(0,-1.45,0),braceA,braceB,length:1.70});batchStatic(pivot);
+}
+function applyGear(fraction){/* 0 = down and locked; 1 = stowed. Reverse follows the same path. */
+ const fold=smooth(.17,.82,fraction),doorsOpen=smooth(0,.15,fraction)*(1-smooth(.84,1,fraction));
+ for(const g of gears){if(g.type==='main'){g.pivot.rotation.x=g.side*94*DEG*fold;g.bogie.rotation.z=-8*DEG*Math.sin(PI*fold);}else g.pivot.rotation.z=-94*DEG*fold;}
+ for(const d of gearDoors){const parked=d.kind==='nose-aft'?.36:0;const open=Math.max(doorsOpen,parked*(1-smooth(.7,1,fraction)));d.group.rotation.x=-d.side*82*DEG*open;}
+ aircraft.updateMatrixWorld(true);
+ for(const g of gears){const end=g.pivot.localToWorld(g.attach.clone()),start=g.anchor,dir=end.clone().sub(start),dist=dir.length(),mid=start.clone().add(end).multiplyScalar(.5);let perpendicular;if(g.type==='main')perpendicular=v(1,0,0);else{dir.normalize();perpendicular=v(dir.y,-dir.x,0).normalize();}const h=Math.sqrt(Math.max(.015,g.length*g.length-dist*dist/4));const elbow=mid.addScaledVector(perpendicular,h);fitRod(g.braceA,start,elbow);fitRod(g.braceB,elbow,end);}
+}
+/* ── 06 / Procedural studio lighting and apron; zero external textures ── */
+const hemisphere=new THREE.HemisphereLight(0xe3f1f3,0x697d66,2.0);scene.add(hemisphere);
+const sun=new THREE.DirectionalLight(0xfff1d8,3.0);sun.position.set(-33,55,31);sun.target.position.set(0,3,0);scene.add(sun,sun.target);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-47,right:47,top:42,bottom:-42,near:1,far:140});sun.shadow.bias=-.00018;sun.shadow.normalBias=.035;sun.shadow.radius=2.5;
+const fill=new THREE.DirectionalLight(0xc3e5f4,1.25);fill.position.set(18,21,-42);scene.add(fill);
+const frontFill=new THREE.DirectionalLight(0xe6ede5,.60);frontFill.position.set(-50,5,4);scene.add(frontFill);
+/* Image-based lighting is captured from an analytic room made only of meshes. */
+const envScene=new THREE.Scene();envScene.background=new THREE.Color(0x849699);
+const envRoom=new THREE.Mesh(new THREE.BoxGeometry(130,90,130),new THREE.MeshBasicMaterial({color:0x93a2a2,side:THREE.BackSide}));envRoom.position.y=20;envScene.add(envRoom);
+function envPanel(w,h,pos,rotation,color){const m=new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide});const o=new THREE.Mesh(new THREE.PlaneGeometry(w,h),m);o.position.copy(pos);o.rotation.set(...rotation);envScene.add(o);return o;}
+envPanel(54,28,v(-22,31,8),[0,PI/2,-.35],new THREE.Color().setRGB(4.2,4.3,4.0));
+envPanel(35,25,v(20,32,-12),[0,-PI/2,.2],new THREE.Color().setRGB(2.3,3.0,3.5));
+envPanel(60,20,v(0,40,0),[-PI/2,0,0],new THREE.Color().setRGB(3.8,4.0,3.8));
+envPanel(45,19,v(0,6,40),[0,0,0],new THREE.Color().setRGB(.8,1.0,1.0));
+envPanel(120,120,v(0,-8,0),[-PI/2,0,0],new THREE.Color(0x526560));
+const pmrem=new THREE.PMREMGenerator(renderer);const envTarget=pmrem.fromScene(envScene,.055,.1,170);scene.environment=envTarget.texture;scene.environmentIntensity=.65;pmrem.dispose();envScene.traverse(o=>{if(o.isMesh){o.geometry.dispose();o.material.dispose();}});
+/* Subtle deterministic concrete grain, tiled in world space. */
+const concrete=document.createElement('canvas');concrete.width=256;concrete.height=256;const cc=concrete.getContext('2d'),image=cc.createImageData(256,256);let seed=7879;for(let i=0;i<image.data.length;i+=4){seed=(seed*1664525+1013904223)>>>0;const n=(seed>>>24)/255,base=206+(n-.5)*9;image.data[i]=base;image.data[i+1]=base+4;image.data[i+2]=base-1;image.data[i+3]=255;}cc.putImageData(image,0,0);const concreteMap=canvasTexture(concrete);concreteMap.wrapS=concreteMap.wrapT=THREE.RepeatWrapping;concreteMap.repeat.set(110,110);
+const groundMat=new THREE.MeshStandardMaterial({color:0xdbdfd5,map:concreteMap,roughness:.89,metalness:.035});const ground=new THREE.Mesh(new THREE.PlaneGeometry(1600,1600),groundMat);ground.rotation.x=-PI/2;ground.receiveShadow=true;scene.add(ground);
+const apron=new THREE.Group();scene.add(apron);
+if(galleryPreview){ground.visible=false;apron.visible=false;}
+const grid=new THREE.GridHelper(160,16,0x80948a,0x8f9f95);grid.position.y=.003;grid.material.transparent=true;grid.material.opacity=.15;apron.add(grid);
+const circle=[];for(let i=0;i<=240;i++){const a=i/240*TAU;circle.push(v(Math.cos(a)*39.2,.018,Math.sin(a)*39.2));}line(circle,0xeff3e3,.45,apron);
+const markingMat=new THREE.MeshBasicMaterial({color:0xe9eddb,transparent:true,opacity:.65});
+function floorLine(a,b,width=.045,m=markingMat){const mid=a.clone().add(b).multiplyScalar(.5),len=a.distanceTo(b);const o=mesh(new THREE.PlaneGeometry(len,width),m,apron);o.rotation.set(-PI/2,0,-Math.atan2(b.z-a.z,b.x-a.x));o.position.copy(mid);o.castShadow=false;o.receiveShadow=false;return o;}
+for(const x of[-36,36])for(const z of[-33,33]){floorLine(v(x,.019,z),v(x-Math.sign(x)*3,.019,z),.075);floorLine(v(x,.019,z),v(x,.019,z-Math.sign(z)*3),.075);}
+const guideMat=new THREE.MeshBasicMaterial({color:0xb7ad7b,transparent:true,opacity:.64});floorLine(v(-40,.024,0),v(-28,.024,0),.105,guideMat);floorLine(v(-28,.024,-1.3),v(-28,.024,1.3),.09,guideMat);
+const shadowCanvas=document.createElement('canvas');shadowCanvas.width=128;shadowCanvas.height=128;const sc=shadowCanvas.getContext('2d'),gradient=sc.createRadialGradient(64,64,3,64,64,64);gradient.addColorStop(0,'rgba(18,37,35,.70)');gradient.addColorStop(.38,'rgba(18,37,35,.36)');gradient.addColorStop(1,'rgba(18,37,35,0)');sc.fillStyle=gradient;sc.fillRect(0,0,128,128);const shadowTex=canvasTexture(shadowCanvas);
+function ambientShadow(x,z,sx,sz,opacity){const m=new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,opacity,depthWrite:false});const o=new THREE.Mesh(new THREE.PlaneGeometry(sx,sz),m);o.rotation.x=-PI/2;o.position.set(x,.028,z);scene.add(o);return o;}
+ambientShadow(0,0,59,12,.26);ambientShadow(2,0,26,59,.11);const contactShadows=[];
+for(const side of[-1,1]){for(const x of[4.29,5.81])for(const z of[side*4.55-.49,side*4.55+.49])contactShadows.push(ambientShadow(x,z,1.75,1.0,.58));contactShadows.push(ambientShadow(-22.85,side*.31,1.40,.67,.56));}
+/* Navigation lenses and small procedural glow sprites. */
+const glowCanvas=document.createElement('canvas');glowCanvas.width=64;glowCanvas.height=64;const gc=glowCanvas.getContext('2d'),gg=gc.createRadialGradient(32,32,0,32,32,32);gg.addColorStop(0,'rgba(255,255,255,1)');gg.addColorStop(.14,'rgba(255,255,255,.8)');gg.addColorStop(.40,'rgba(255,255,255,.12)');gg.addColorStop(1,'rgba(255,255,255,0)');gc.fillStyle=gg;gc.fillRect(0,0,64,64);const glowTex=canvasTexture(glowCanvas);
+function navLamp(point,color,type='steady',scale=.40){const material=new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:3,roughness:.20,metalness:.12});const lens=ellipsoid(.059,.050,.058,...point.toArray(),material);lens.userData.noBatch=true;const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color,transparent:true,opacity:.65,depthWrite:false,blending:THREE.AdditiveBlending}));glow.position.copy(point);glow.scale.set(scale,scale,1);aircraft.add(glow);lightObjects.push({lens,glow,type});}
+for(const side of[-1,1]){const tip=wingPoint(29.82,.50,side,1);tip.y+=.045;navLamp(tip,side>0?0x8beac3:0xfa6557,'steady',.43);const aft=wingPoint(29.48,.92,side,1);navLamp(aft,0xeefff3,'strobe',.55);}
+navLamp(v(3.2,8.62,0),0xf7644a,'beacon',.58);navLamp(v(4.1,2.59,0),0xf7644a,'beacon',.40);navLamp(v(30.01,16.42,0),0xe9f6e8,'steady',.33);
+/* ── 07 / Dimension overlays, explicitly excluded from camera model bounds ── */
+const dimensions=new THREE.Group();dimensions.name='Dimensions / metres';scene.add(dimensions);dimensions.visible=false;
+function textSprite(text,w=7){const c=document.createElement('canvas');c.width=1024;c.height=128;const ctx=c.getContext('2d');ctx.clearRect(0,0,1024,128);ctx.fillStyle='#416f67';ctx.font='500 48px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,512,64);const o=new THREE.Sprite(new THREE.SpriteMaterial({map:canvasTexture(c),transparent:true,depthWrite:false,opacity:.88}));o.scale.set(w,w/8,1);dimensions.add(o);return o;}
+function measure(a,b,label,position,width=7){line([a,b],0x538c81,.65,dimensions);const dir=b.clone().sub(a).normalize();let cross=v(0,1,0).cross(dir).normalize();if(cross.length()<.1)cross=v(0,0,1);for(const p of[a,b])line([p.clone().addScaledVector(cross,-.55).addScaledVector(dir,-.18),p.clone().addScaledVector(cross,.55).addScaledVector(dir,.18)],0x538c81,.85,dimensions);textSprite(label,width).position.copy(position);}
+measure(v(16.8,.06,-30.05),v(16.8,.06,30.05),'60.1 m  /  WINGSPAN',v(17.8,.25,0),9);
+for(const side of[-1,1])line([v(13.32,6.68,side*30.05),v(13.32,.06,side*30.05),v(17.6,.06,side*30.05)],0x68958b,.36,dimensions);
+measure(v(-31.4,.06,-34),v(31.4,.06,-34),'62.8 m  /  LENGTH',v(0,.3,-35.5),8);
+for(const x of[-31.4,31.4])line([v(x,.06,-1),v(x,.06,-35)],0x68958b,.30,dimensions);
+measure(v(33.4,0,0),v(33.4,17,0),'17.0 m',v(35.3,9,0),4);
+line([v(26.7,17,0),v(34,17,0)],0x68958b,.4,dimensions);
+/* Card-scale extraction omits slender linkage rods that alias into stray lines. */
+if(galleryPreview){for(const link of trackLinks)link.rod.visible=false;const noseGear=gears.find(g=>g.type==='nose');noseGear.braceB.visible=false;}
+/* All static batches are merged once. Motion pivots remain independent. */
+for(const d of dynamic)batchStatic(d.pivot);for(const f of fans){batchStatic(f);f.traverse(o=>{if(o.isMesh)o.castShadow=false;});}batchStatic(tailPivot);batchStatic(aircraft);
+renderer.shadowMap.autoUpdate=false;renderer.shadowMap.needsUpdate=true;
+renderer.transmissionResolutionScale=.65;
+/* ── 08 / Cameras: fit actual silhouette samples, never a cropped default ── */
+const framePoints=[];
+for(const s of bodyStations)for(const a of[0,PI/2,PI,PI*1.5])framePoints.push(bodyPoint(s[0],a));
+for(const side of[-1,1]){for(const s of wingStations)for(const t of[0,.3,1])framePoints.push(wingPoint(s[0],t,side,1));for(const s of tailStations)for(const t of[0,1])framePoints.push(tailPoint(s[0],t,side,1));framePoints.push(v(5.05,0,side*5.25),v(-7.57,1.02,side*10.95));}
+framePoints.push(v(26.70,17,0),v(29.70,17,0),v(-22.85,0,.46));
+let cameraTween=null,currentView='hero',labelsVisible=false,lightsEnabled=true;
+const viewDefinitions={hero:{dir:v(-1.55,.48,.68),target:v(0,5.0,0),label:'PERSPECTIVE / 自由观察'},front:{dir:v(-1,.024,0),target:v(0,6.9,0),label:'FRONT / 正面 · 比例检查'},side:{dir:v(0,.012,1),target:v(0,7.15,0),label:'PROFILE / 侧面 · 62.8 m'},top:{dir:v(0,1,.001),target:v(0,0,0),label:'PLAN / 俯视 · 60.1 m'},engine:{dir:v(-1,.12,.48),target:v(-5.8,2.9,9.2),distance:10.4,label:'DETAIL / GEnx · 风扇与涵道'},gear:{dir:v(-.62,.27,.83),target:v(5.05,2.05,4.55),distance:12.5,label:'DETAIL / 起落架 · 收放与折叠'}};
+function fittedDistance(dir,target,margin=1.13){dir=dir.clone().normalize();const right=v(0,1,0).cross(dir).normalize(),up=dir.clone().cross(right).normalize(),tanV=Math.tan(camera.fov*DEG/2),tanH=tanV*camera.aspect;let dist=1;const ps=dimensions.visible?[...framePoints,v(-31.4,0,-36),v(35.5,17,-34),v(18,0,32)]:framePoints;for(const p of ps){const q=p.clone().sub(target),z=q.dot(dir);dist=Math.max(dist,z+Math.abs(q.dot(right))/tanH*margin,z+Math.abs(q.dot(up))/tanV*margin*1.22);}return dist;}
+function cameraMove(target,dir,distance,instant=false){controls.autoRotate=false;$('autorotate').classList.remove('active');$('autorotate').setAttribute('aria-pressed','false');dir=dir.clone().normalize();if(instant){cameraTween=null;controls.target.copy(target);camera.position.copy(target).addScaledVector(dir,distance);camera.lookAt(target);controls.update();return;}const offset=camera.position.clone().sub(controls.target),startDir=offset.clone().normalize();cameraTween={fromTarget:controls.target.clone(),toTarget:target.clone(),fromDir:startDir,rotation:new Quat().setFromUnitVectors(startDir,dir),fromDistance:offset.length(),toDistance:distance,start:performance.now(),duration:1000};}
+function setView(name,instant=false){const def=viewDefinitions[name]||viewDefinitions.hero;currentView=name;document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));$('view-tag').textContent=def.label;cameraMove(def.target,def.dir,def.distance||fittedDistance(def.dir,def.target),instant);}
+function updateCamera(now){if(cameraTween){const c=cameraTween,t=clamp((now-c.start)/c.duration),e=t*t*(3-2*t),q=new Quat().slerp(c.rotation,e),dir=c.fromDir.clone().applyQuaternion(q);controls.target.copy(c.fromTarget).lerp(c.toTarget,e);camera.position.copy(controls.target).addScaledVector(dir,mix(c.fromDistance,c.toDistance,e));if(t>=1)cameraTween=null;}controls.update();if(camera.position.y<.24){camera.position.y=.24;camera.lookAt(controls.target);}}
+controls.addEventListener('start',()=>{cameraTween=null;currentView='free';$('view-tag').textContent='ORBIT / 自由旋转';document.querySelectorAll('[data-view]').forEach(b=>b.classList.remove('active'));});
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(currentView in viewDefinitions&&!viewDefinitions[currentView].distance)setView(currentView,true);}
+new ResizeObserver(resize).observe(stage);
+/* ── 09 / Controls and state. Sliders command targets; readouts show actuals. ── */
+const state={gear:0,flaps:0,slats:0,spoilers:0,trim:0,rpm:0};
+const target={gear:0,flaps:0,slats:0,spoilers:0,trim:0,rpm:0};
+let fanOn=false,config='park',lastUITick=0,toastTimer;
+function toast(text){$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2500);}
+function custom(){config='custom';$('config-chip').textContent='CUSTOM';document.querySelectorAll('[data-config]').forEach(b=>b.classList.remove('active'));}
+function sliderPaint(el){const f=(Number(el.value)-Number(el.min))/(Number(el.max)-Number(el.min))*100;el.style.setProperty('--fill',f+'%');el.setAttribute('aria-valuetext',el.value+(el.id==='slats'?'%':'°'));}
+for(const id of['flaps','slats','spoilers','trim']){$(id).addEventListener('input',e=>{custom();target[id]=Number(e.target.value);sliderPaint(e.target);});sliderPaint($(id));}
+function setGear(up,manual=true){target.gear=up?1:0;if(manual)custom();$('gear-up').classList.toggle('active',up);$('gear-down').classList.toggle('active',!up);$('gear-up').setAttribute('aria-pressed',String(up));$('gear-down').setAttribute('aria-pressed',String(!up));}
+function setFan(on,manual=true){fanOn=on;target.rpm=on?1050:0;if(manual)custom();$('fan-toggle').classList.toggle('active',on);$('fan-toggle').setAttribute('aria-pressed',String(on));$('fan-toggle').querySelector('span').textContent=on?'停止':'启动';}
+const configurations={park:{flaps:0,slats:0,spoilers:0,trim:0,up:false,on:false,chip:'PARKED'},takeoff:{flaps:15,slats:70,spoilers:0,trim:1.4,up:false,on:true,chip:'TAKEOFF'},landing:{flaps:30,slats:100,spoilers:0,trim:1.0,up:false,on:true,chip:'LANDING'},cruise:{flaps:0,slats:0,spoilers:0,trim:.3,up:true,on:true,chip:'CRUISE'}};
+function setConfiguration(name){const c=configurations[name];if(!c)return;config=name;for(const key of['flaps','slats','spoilers','trim']){target[key]=c[key];$(key).value=c[key];sliderPaint($(key));}setGear(c.up,false);setFan(c.on,false);$('config-chip').textContent=c.chip;document.querySelectorAll('[data-config]').forEach(b=>b.classList.toggle('active',b.dataset.config===name));if(c.up)toast('机构展示保持机体固定，不模拟飞行动力学。');}
+$('gear-up').onclick=()=>setGear(true);$('gear-down').onclick=()=>setGear(false);$('fan-toggle').onclick=()=>setFan(!fanOn);
+document.querySelectorAll('[data-config]').forEach(b=>b.onclick=()=>setConfiguration(b.dataset.config));document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));
+$('reset-view').onclick=()=>setView('hero');$('autorotate').onclick=()=>{cameraTween=null;controls.autoRotate=!controls.autoRotate;$('autorotate').classList.toggle('active',controls.autoRotate);$('autorotate').setAttribute('aria-pressed',String(controls.autoRotate));};
+$('lights-toggle').onclick=()=>{lightsEnabled=!lightsEnabled;$('lights-toggle').classList.toggle('active',lightsEnabled);$('lights-toggle').setAttribute('aria-pressed',String(lightsEnabled));};
+$('dimensions-toggle').onclick=()=>{dimensions.visible=!dimensions.visible;$('dimensions-toggle').classList.toggle('active',dimensions.visible);$('dimensions-toggle').setAttribute('aria-pressed',String(dimensions.visible));if(currentView in viewDefinitions&&!viewDefinitions[currentView].distance)setView(currentView);};
+$('info-button').onclick=()=>$('info').showModal();$('info').querySelector('.close').onclick=()=>$('info').close();$('info').addEventListener('click',e=>{if(e.target===$('info'))$('info').close();});
+$('mobile-toggle').onclick=()=>{const open=$('panel').classList.toggle('open');$('mobile-toggle').setAttribute('aria-expanded',String(open));};
+window.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea')||e.ctrlKey||e.altKey||e.metaKey||$('info').open)return;const key=e.key.toLowerCase();if(key==='r')setView('hero');else if(key==='g')setGear(target.gear<.5);else if(key==='f')setFan(!fanOn);else if('123456'.includes(key)&&key.length===1)setView(['hero','front','side','top','engine','gear'][Number(key)-1]);});
+const raycaster=new THREE.Raycaster(),pointer=new V2();renderer.domElement.addEventListener('dblclick',e=>{const r=renderer.domElement.getBoundingClientRect();pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);raycaster.setFromCamera(pointer,camera);const hit=raycaster.intersectObject(aircraft,true).find(h=>h.object.isMesh&&!h.object.isSprite);if(hit){const dir=camera.position.clone().sub(controls.target).normalize();cameraMove(hit.point,dir,11);currentView='free';document.querySelectorAll('[data-view]').forEach(b=>b.classList.remove('active'));$('view-tag').textContent='INSPECT / 局部细节';}});
+/* HTML labels have no image or font dependency; positions follow their pivots. */
+const hotspotSpecs=[{label:'风扇与涵道',en:'GEnx',point:()=>v(-6.8,3.25,9.2),view:'engine'},{label:'连续后掠翼尖',en:'RAKED TIP',point:()=>wingPoint(28.3,.58,1,1),view:'top'},{label:'四轮主起落架',en:'MAIN GEAR',point:()=>gears[1].pivot.localToWorld(v(0,-1.65,0)),view:'gear'},{label:'可调水平安定面',en:'TRIM',point:()=>tailPivot.localToWorld(v(2.2,1.0,6.8)),view:'side'}];
+const hotspots=hotspotSpecs.map(spec=>{const el=document.createElement('button');el.className='hotspot';el.innerHTML=spec.label+' <small>'+spec.en+'</small>';el.style.display='none';el.onclick=()=>setView(spec.view);stage.append(el);return{el,spec};});
+$('labels-toggle').onclick=()=>{labelsVisible=!labelsVisible;$('labels-toggle').classList.toggle('active',labelsVisible);$('labels-toggle').setAttribute('aria-pressed',String(labelsVisible));};
+function updateHotspots(){for(const {el,spec}of hotspots){if(!labelsVisible){el.style.display='none';continue;}const p=spec.point().project(camera),x=(p.x*.5+.5)*stage.clientWidth,y=(-p.y*.5+.5)*stage.clientHeight;const visible=p.z>-1&&p.z<1&&x>15&&x<stage.clientWidth-125&&y>90&&y<stage.clientHeight-180;el.style.display=visible?'flex':'none';if(visible){el.style.left=x+'px';el.style.top=y+'px';}}}
+/* Each movable surface rotates about its OWN swept hinge, in aircraft space. */
+function updateMechanics(dt,force=false){let shadowDirty=force;for(const key of['flaps','slats','spoilers','trim']){const old=state[key];state[key]=damp(old,target[key],4,dt);if(Math.abs(state[key]-target[key])<.003)state[key]=target[key];if(Math.abs(old-state[key])>.001)shadowDirty=true;}
+ const previousGear=state.gear;const step=dt/4.5;state.gear+=clamp(target.gear-state.gear,-step,step);if(Math.abs(state.gear-target.gear)<1e-5)state.gear=target.gear;
+ if(force||Math.abs(state.gear-previousGear)>1e-7){applyGear(state.gear);shadowDirty=true;}
+ for(const d of dynamic){let angle=0;d.pivot.position.copy(d.home);if(d.kind==='flap'){const f=state.flaps/30;angle=-d.side*state.flaps*DEG;d.pivot.position.add(v(1.05*f,-.21*f,d.side*.075*f));}else if(d.kind==='slat'){const f=state.slats/100;angle=d.side*18*DEG*f;d.pivot.position.add(v(-.47*f,-.105*f,d.side*.018*f));}else if(d.kind==='spoiler')angle=d.side*state.spoilers*DEG;d.pivot.quaternion.setFromAxisAngle(d.axis,angle);}
+ tailPivot.rotation.z=-state.trim*DEG;aircraft.updateMatrixWorld(true);
+ for(const link of trackLinks)fitRod(link.rod,link.fixed,link.pivot.localToWorld(link.local.clone()));
+ state.rpm=damp(state.rpm,target.rpm,fanOn?.65:.80,dt);if(!fanOn&&state.rpm<.35)state.rpm=0;const delta=state.rpm*TAU/60*dt;for(const rotor of fans)rotor.rotation.x=(rotor.rotation.x-delta)%TAU;
+ for(const s of contactShadows)s.material.opacity=.57*(1-smooth(.15,.44,state.gear));
+ if(shadowDirty)renderer.shadowMap.needsUpdate=true;
+}
+function updateUI(now){if(now-lastUITick<110)return;lastUITick=now;for(const key of['flaps','slats','spoilers','trim']){const moving=Math.abs(state[key]-target[key])>.08;const digits=key==='trim'?1:0;const value=state[key].toFixed(digits);$(key+'-out').textContent=(key==='trim'&&state.trim>.04?'+':'')+value+(key==='slats'?'%':'°');$(key+'-out').title='目标：'+target[key];$(key+'-out').style.color=moving?'#e6c98f':'';}
+ const moving=Math.abs(state.gear-target.gear)>1e-4;const down=state.gear<.0001;const gs=$('gear-status');gs.textContent=moving?'TRANSIT · '+Math.round((target.gear>0?state.gear:1-state.gear)*100)+'%':down?'DOWN · 锁定':'UP · 已收纳';gs.classList.toggle('moving',moving);$('gear-indicators').classList.toggle('moving',moving);$('gear-indicators').classList.toggle('up',!moving&&!down);$('rpm').textContent=String(Math.round(state.rpm)).padStart(4,'0');$('rpm-bar').style.width=state.rpm/1050*100+'%';$('fan-state').textContent=fanOn?(state.rpm>1040?'RUNNING':'SPOOL UP'):(state.rpm>0?'COAST DOWN':'OFF');$('scene-status').textContent=state.gear>.05?'MECHANISM STUDY · 静态收放演示':'PROCEDURAL AIRFRAME · 01';}
+let qualityMode='auto',pixelRatio=Math.min(devicePixelRatio,mobile?1.4:1.7),lastQualityChange=0,fpsSmooth=60;
+function setPixelRatio(ratio){pixelRatio=ratio;renderer.setPixelRatio(ratio);renderer.setSize(stage.clientWidth,stage.clientHeight,false);renderer.shadowMap.needsUpdate=true;}
+$('quality').onchange=()=>{qualityMode=$('quality').value;if(qualityMode==='high'){setPixelRatio(Math.min(devicePixelRatio,2));renderer.transmissionResolutionScale=1;}else if(qualityMode==='low'){setPixelRatio(Math.min(devicePixelRatio,1));renderer.transmissionResolutionScale=.5;}else{setPixelRatio(Math.min(devicePixelRatio,mobile?1.4:1.7));renderer.transmissionResolutionScale=.65;}lastQualityChange=performance.now();};
+renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();fail(new Error('WebGL 上下文丢失，请关闭其他高负载页面后重新加载。'));});
+/* Inspectable diagnostics are deliberately exposed, not required to run. */
+window.__AIRFRAME__={THREE,scene,camera,controls,renderer,aircraft,state,target,dynamic,fans,gears,gearDoors,engineGroups,setView,setConfiguration,applyGear,updateMechanics,framePoints,getDiagnostics(){let meshes=0,triangles=0;aircraft.traverse(o=>{if(o.isMesh){meshes++;triangles+=(o.geometry.index?o.geometry.index.count:o.geometry.getAttribute('position').count)/3*(o.isInstancedMesh?o.count:1);}});return{revision:THREE.REVISION,meshes,triangles,drawCalls:renderer.info.render.calls,pixelRatio,fps:fpsSmooth,dimensions:{length:62.8,span:60.1,height:17},state:{...state},target:{...target}};}};
+resize();setView('hero',true);updateMechanics(0,true);updateUI(performance.now());
+renderer.render(scene,camera);
+clearTimeout(loadingTimer);$('loading').classList.add('hide');setTimeout(()=>$('loading').style.display='none',650);
+let previous=performance.now(),fpsStart=previous,fpsFrames=0,lastPerfTick=previous,animationId;
+document.addEventListener('visibilitychange',()=>{previous=performance.now();fpsStart=previous;fpsFrames=0;});
+function frame(now){animationId=requestAnimationFrame(frame);if(document.hidden)return;const elapsed=(now-previous)/1000;previous=now;const dt=clamp(elapsed,0,.066);updateMechanics(dt);updateCamera(now);
+ const seconds=now/1000;for(const l of lightObjects){let brightness=1;if(l.type==='strobe'){const phase=seconds%1.45;brightness=phase<.055||phase>.15&&phase<.205?1:.025;}else if(l.type==='beacon'){const phase=seconds%1.25;brightness=phase<.11?1:.07;}l.lens.material.emissiveIntensity=lightsEnabled?brightness*3:.02;l.glow.visible=lightsEnabled&&brightness>.15;l.glow.material.opacity=brightness*.64;}
+ updateHotspots();updateUI(now);renderer.render(scene,camera);fpsFrames++;
+ if(now-fpsStart>800){fpsSmooth=fpsFrames*1000/(now-fpsStart);fpsStart=now;fpsFrames=0;$('performance').textContent=Math.round(fpsSmooth)+' FPS / WEBGL 2';}
+ if(qualityMode==='auto'&&now-lastQualityChange>6500&&now-lastPerfTick>6500){lastPerfTick=now;if(fpsSmooth<29&&pixelRatio>.90){setPixelRatio(Math.max(.90,pixelRatio-.15));lastQualityChange=now;}}
+}
+animationId=requestAnimationFrame(frame);
+} catch(error) { fail(error); }
+</script>
+</body>
+</html>

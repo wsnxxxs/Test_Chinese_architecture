@@ -1,0 +1,16 @@
+{
+  "name": "boeing-787-astra-pro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AIRFRAME STUDIO — a procedural Boeing 787-9 interactive study",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

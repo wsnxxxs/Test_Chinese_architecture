@@ -1,0 +1,26 @@
+{
+  "title": "腾势 Z Racing · 交互式三维展示",
+  "summary": "参考图片与给定尺寸展示腾势 Z 2026 款 Racing 赛道版外观；原始生成提示词尚未随交付提供。",
+  "prompt": "PROMPT.md",
+  "date": "2026-09-27",
+  "order": 5,
+  "tags": ["Three.js", "汽车", "产品展示", "多视角交互"],
+  "conditions": [
+    {
+      "id": "first",
+      "label": "首屏",
+      "note": "1440×900，打开页面后以默认前侧视角截图。",
+      "viewport": [1440, 900]
+    },
+    {
+      "id": "mobile",
+      "label": "手机界面预览",
+      "note": "390×844 竖屏，打开页面后不做任何操作。",
+      "viewport": [390, 844],
+      "mobile": true
+    }
+  ],
+  "facts": [{"id": "stack", "label": "技术栈"}],
+  "factsNote": "技术栈来自作品依赖，构建体积由脚本实测。截图用于展示实际效果，不代表全部视角、配置和性能均已验证。",
+  "results": []
+}

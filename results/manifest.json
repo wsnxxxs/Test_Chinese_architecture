@@ -758,6 +758,16 @@
     "captureNote": "手机默认视角放大场景并裁掉部分底座，列车、小镇与控制面板可见；保留原作取景。"
   },
   {
+    "task": "boeing-787",
+    "id": "astra-pro",
+    "model": "GPT-6 Astra Pro",
+    "modelId": "astra-pro",
+    "title": "787–9 Dreamliner · Airframe Studio",
+    "description": "程序化构建的 Boeing 787-9 三维结构展厅，提供六种视角、飞机构型预设和起落架、翼面、安定面及风扇联动控制。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T03:28:58+10:00"
+  },
+  {
     "task": "mechanical-keyboard",
     "id": "gpt-6-luna-max-arena",
     "model": "GPT-6 Luna Max",
@@ -780,5 +790,15 @@
     "description": "消费电子风格的 68 键机械键盘配置页，支持九种外观搭配、分层拆解、按键与音效体验。",
     "cover": "docs/cover.jpg",
     "addedAt": "2026-09-27T03:27:04+10:00"
+  },
+  {
+    "task": "denza-z",
+    "id": "astra-pro",
+    "model": "GPT-6 Astra Pro",
+    "modelId": "astra-pro",
+    "title": "DENZA Z · Racing Studio",
+    "description": "腾势 Z 2026 款 Racing 赛道版程序化三维外观展厅，提供多视角、三种车身颜色、车灯、尺寸标注、影棚明暗与自动环绕控制。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T04:12:33+10:00"
   }
 ]

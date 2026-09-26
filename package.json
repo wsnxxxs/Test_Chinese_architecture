@@ -5,7 +5,9 @@
   "workspaces": [
     "results/*",
     "results/miniature-railway-town/*",
-    "results/mechanical-keyboard/*"
+    "results/mechanical-keyboard/*",
+    "results/boeing-787/*",
+    "results/denza-z/*"
   ],
   "scripts": {
     "dev": "npm run build && vite preview --host 0.0.0.0 --port 5173",

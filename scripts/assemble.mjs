@@ -83,6 +83,7 @@ function enableSandtable(target) {
   walk(target, (path) => {
     if (!['.js', '.html'].includes(extname(path))) return;
     const source = readFileSync(path, 'utf8');
+    if (source.includes('window.__galleryCaptureScene?.(')) captures++;
     let patched = source.replace(/this\.isScene\s*=\s*(?:!0|true)\b/g, (match) => {
       captures++;
       return `${match},window.__galleryCaptureScene?.(this)`;

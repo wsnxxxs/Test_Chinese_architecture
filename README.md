@@ -4,13 +4,15 @@
 
 **[打开在线画廊](https://wsnxxxs.github.io/same-prompt-gallery/)** · [作品清单](results/manifest.json) · [模型注册表](gallery.json)
 
-截至 2026-09-27，收录 **3 道题目、77 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
+截至 2026-09-27，收录 **5 道题目、79 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
 
 | 题目 | 作品数 | 提示词 | 在线题目页 |
 | --- | ---: | --- | --- |
 | 体素中国古典建筑群 | 36 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
 | 桌面微缩铁路小镇 | 25 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
 | 机械键盘 · 交互式产品配置器 | 16 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
+| Boeing 787 · 交互式三维展示 | 1 | [提示词待补充](tasks/boeing-787/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/boeing-787) |
+| 腾势 Z Racing · 交互式三维展示 | 1 | [提示词待补充](tasks/denza-z/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/denza-z) |
 
 ## 目录
 
@@ -62,7 +64,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 首页按题目浏览，模型索引按厂商查看作品。题目页支持厂商筛选、「作品 / 截图对照 / 提示词」切换，以及按加入时间、厂商或模型名称排序。
 
-作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 75 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
+作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 79 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
 
 选中两件作品可并排对比。在线预览支持用方向键或顶栏按钮切换作品；中式建筑题目另有三维沙盘和原作展厅。站点默认跟随系统切换暖白与墨色主题。[品牌标识来源](site/assets/brands/README.md)记录模型标识的来源与下载地址。
 
@@ -183,9 +185,25 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | MiMo V2.6 Pro | LUMEN 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/mimo-v2.6-pro) | [项目说明](results/mechanical-keyboard/mimo-v2.6-pro/README.md) |
 | Step 5 Preview High | AXIA K65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/step-5-preview-high) | [项目说明](results/mechanical-keyboard/step-5-preview-high/README.md) |
 
+### Boeing 787 · 交互式三维展示
+
+1 份作品。原始生成提示词未随交付提供，题目页保留待补充说明；作品为程序化视觉近似，不是 Boeing 官方模型、工业 CAD、飞行模拟或维修培训工具。
+
+| 模型 | 作品 | 在线预览 | 源码与说明 |
+| --- | --- | --- | --- |
+| GPT-6 Astra Pro | 787–9 Dreamliner · Airframe Studio | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/boeing-787/astra-pro) | [项目说明](results/boeing-787/astra-pro/README.md) |
+
+### 腾势 Z Racing · 交互式三维展示
+
+1 份作品。原始生成提示词和参考图未随交付提供，题目页保留待补充说明；作品为程序化视觉近似，不是腾势官方模型、工业 CAD 或工程验证模型。
+
+| 模型 | 作品 | 在线预览 | 源码与说明 |
+| --- | --- | --- | --- |
+| GPT-6 Astra Pro | DENZA Z · Racing Studio | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/denza-z/astra-pro) | [项目说明](results/denza-z/astra-pro/README.md) |
+
 ## 截图与收录范围
 
-全部 77 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
+全部 79 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
 
 截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
 
@@ -201,11 +219,15 @@ tasks/
   chinese-architecture/              建筑题提示词、元数据与截图
   miniature-railway-town/             铁路题提示词、元数据与截图
   mechanical-keyboard/               键盘题提示词、元数据与截图
+  boeing-787/                         Boeing 787 题目说明、元数据与截图
+  denza-z/                            腾势 Z Racing 题目说明、元数据与截图
 results/
-  manifest.json                      77 份作品的元数据
+  manifest.json                      79 份作品的元数据
   <模型标识>/                         建筑题的 36 个项目
   miniature-railway-town/<模型标识>/   铁路题的 25 个项目
   mechanical-keyboard/<模型标识>/     键盘题的 16 个项目
+  boeing-787/<模型标识>/              Boeing 787 题目的 1 个项目
+  denza-z/<模型标识>/                 腾势 Z Racing 题目的 1 个项目
 site/                                画廊、在线预览、对比与展示界面
 scripts/
   assemble.mjs                       汇总站点并生成 dist/data.json

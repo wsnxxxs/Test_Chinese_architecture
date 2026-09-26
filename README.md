@@ -4,13 +4,13 @@
 
 **[打开在线画廊](https://wsnxxxs.github.io/same-prompt-gallery/)** · [作品清单](results/manifest.json) · [模型注册表](gallery.json)
 
-截至 2026-09-26，收录 **3 道题目、72 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
+截至 2026-09-27，收录 **3 道题目、77 份作品、32 个模型**。同一模型的不同推理档位分别收录为作品，模型数量按模型注册表统计。
 
 | 题目 | 作品数 | 提示词 | 在线题目页 |
 | --- | ---: | --- | --- |
 | 体素中国古典建筑群 | 36 | [查看提示词](tasks/chinese-architecture/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture) |
-| 桌面微缩铁路小镇 | 23 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
-| 机械键盘 · 交互式产品配置器 | 13 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
+| 桌面微缩铁路小镇 | 25 | [查看提示词](tasks/miniature-railway-town/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town) |
+| 机械键盘 · 交互式产品配置器 | 16 | [查看提示词](tasks/mechanical-keyboard/PROMPT.md) | [浏览作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard) |
 
 ## 目录
 
@@ -62,7 +62,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 首页按题目浏览，模型索引按厂商查看作品。题目页支持厂商筛选、「作品 / 截图对照 / 提示词」切换，以及按加入时间、厂商或模型名称排序。
 
-作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 72 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
+作品卡片可切换截图和小模型；选择会保存在本机，小模型支持鼠标轻转，静止时暂停绘制。全部 75 份作品都有预生成模型包。加载策略和模型包格式见[卡片模型加载优化](docs/preview-loading.md)。
 
 选中两件作品可并排对比。在线预览支持用方向键或顶栏按钮切换作品；中式建筑题目另有三维沙盘和原作展厅。站点默认跟随系统切换暖白与墨色主题。[品牌标识来源](site/assets/brands/README.md)记录模型标识的来源与下载地址。
 
@@ -130,7 +130,7 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 
 ### 桌面微缩铁路小镇
 
-23 份作品，涉及 20 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
+25 份作品，涉及 22 个模型。展示闭合铁路、小镇、河流桥梁与列车运行，支持在线运行、并排对比和手机截图预览。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -157,10 +157,12 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | DeepSeek V4.1 Flash High | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4.1-flash-high) | [项目说明](results/miniature-railway-town/deepseek-v4.1-flash-high/README.md) |
 | Claude Sonnet 5.5 High | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/sonnet-5.5-high) | [项目说明](results/miniature-railway-town/sonnet-5.5-high/README.md) |
 | Step 5 Preview | Millford · 微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/step-5-preview) | [项目说明](results/miniature-railway-town/step-5-preview/README.md) |
+| GLM 5.3 | 枫屿镇 · 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/glm-5.3) | [项目说明](results/miniature-railway-town/glm-5.3/README.md) |
+| DeepSeek V4 Pro High | 桌面微缩铁路小镇 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/miniature-railway-town/deepseek-v4-pro-high) | [项目说明](results/miniature-railway-town/deepseek-v4-pro-high/README.md) |
 
 ### 机械键盘 · 交互式产品配置器
 
-13 份作品，涉及 12 个模型。各模型独立实现产品展示与配置，提供在线运行、并排对比和桌面、手机截图。
+16 份作品，涉及 13 个模型。各模型独立实现产品展示与配置，提供在线运行、并排对比和桌面、手机截图。
 
 | 模型 | 作品 | 在线预览 | 源码与说明 |
 | --- | --- | --- | --- |
@@ -169,6 +171,8 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | GPT-5.6 Terra Max | AERIS 65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-5.6-terra-max) | [项目说明](results/mechanical-keyboard/gpt-5.6-terra-max/README.md) |
 | GPT-6 Astra High | Form 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-astra-high) | [项目说明](results/mechanical-keyboard/gpt-6-astra-high/README.md) |
 | GPT-6 Luna Max | FORMA 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-luna-max) | [项目说明](results/mechanical-keyboard/gpt-6-luna-max/README.md) |
+| GPT-6 Luna Max · Arena | NOVA 68 键盘工作室 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-luna-max-arena) | [项目说明](results/mechanical-keyboard/gpt-6-luna-max-arena/README.md) |
+| GPT-6 Astra Max · Arena | Forma 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-astra-max-arena) | [项目说明](results/mechanical-keyboard/gpt-6-astra-max-arena/README.md) |
 | GPT-6 Sol High | ORBIT 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-sol-high) | [项目说明](results/mechanical-keyboard/gpt-6-sol-high/README.md) |
 | GPT-6 Sol Max | LOOM 68 · Keyboard Studio | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-sol-max) | [项目说明](results/mechanical-keyboard/gpt-6-sol-max/README.md) |
 | GPT-6 Astra Pro | FORM 68 / 物构 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/astra-pro) | [项目说明](results/mechanical-keyboard/astra-pro/README.md) |
@@ -177,10 +181,11 @@ npm run build --workspace=keyboard-gpt-6-sol-max
 | GLM 5.3 Flash | AXIS 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/glm-5.3-flash) | [项目说明](results/mechanical-keyboard/glm-5.3-flash/README.md) |
 | MiMo V2.6 Flash | ORBIT 65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/mimo-v2.6-flash) | [项目说明](results/mechanical-keyboard/mimo-v2.6-flash/README.md) |
 | MiMo V2.6 Pro | LUMEN 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/mimo-v2.6-pro) | [项目说明](results/mechanical-keyboard/mimo-v2.6-pro/README.md) |
+| Step 5 Preview High | AXIA K65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/step-5-preview-high) | [项目说明](results/mechanical-keyboard/step-5-preview-high/README.md) |
 
 ## 截图与收录范围
 
-全部 72 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
+全部 77 份作品均有独立的 1440 × 900 桌面默认首屏和 390 × 844 手机界面截图。具体截图条件见各题目的 `task.json` 和页面标注。
 
 截图与构建检查用于展示实际效果、确认画廊集成，不代表提示词中的全部功能或交互均已验证。技术栈来自项目依赖，源码与构建体积由汇总脚本统计。
 
@@ -197,10 +202,10 @@ tasks/
   miniature-railway-town/             铁路题提示词、元数据与截图
   mechanical-keyboard/               键盘题提示词、元数据与截图
 results/
-  manifest.json                      70 份作品的元数据
+  manifest.json                      77 份作品的元数据
   <模型标识>/                         建筑题的 36 个项目
-  miniature-railway-town/<模型标识>/   铁路题的 21 个项目
-  mechanical-keyboard/<模型标识>/     键盘题的 13 个项目
+  miniature-railway-town/<模型标识>/   铁路题的 25 个项目
+  mechanical-keyboard/<模型标识>/     键盘题的 16 个项目
 site/                                画廊、在线预览、对比与展示界面
 scripts/
   assemble.mjs                       汇总站点并生成 dist/data.json

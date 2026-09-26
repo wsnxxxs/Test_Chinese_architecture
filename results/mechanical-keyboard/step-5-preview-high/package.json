@@ -1,0 +1,18 @@
+{
+  "name": "gallery-mechanical-keyboard-step-5-preview-high",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AXIA K65 机械键盘交互式 3D 产品展示与配置页面 (Three.js + Vite)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.11"
+  }
+}

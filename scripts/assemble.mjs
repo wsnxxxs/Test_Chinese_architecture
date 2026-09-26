@@ -168,6 +168,7 @@ function assembleResult(entry, taskConfig) {
     addedAt: entry.addedAt ?? null,
     model,
     effort: original?.effort ?? entry.effort ?? '',
+    sourceLabel: original?.sourceLabel ?? entry.sourceLabel ?? '',
     title: original?.title ?? entry.title,
     summary: original?.summary ?? entry.description,
     scene: `${resultPath}/`,

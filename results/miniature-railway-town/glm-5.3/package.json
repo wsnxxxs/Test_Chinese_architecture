@@ -1,0 +1,18 @@
+{
+  "name": "gallery-miniature-railway-town-glm-5.3",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "枫屿镇 · 桌面微缩铁路小镇沙盘（Three.js）",
+  "scripts": {
+    "dev": "vite --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --strictPort"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "vite": "5.4.21"
+  }
+}

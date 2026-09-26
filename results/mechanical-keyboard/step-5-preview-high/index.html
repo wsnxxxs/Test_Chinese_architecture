@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content="AXIA K65 客制化机械键盘 · 交互式 3D 产品展示与配置" />
+    <title>AXIA K65 · 客制化机械键盘 — 交互式配置</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='8' width='28' height='17' rx='4' fill='%232b2f36'/%3E%3Crect x='6' y='12' width='4' height='4' rx='1' fill='%23e9ebef'/%3E%3Crect x='13' y='12' width='4' height='4' rx='1' fill='%23e9ebef'/%3E%3Crect x='20' y='12' width='4' height='4' rx='1' fill='%23e9ebef'/%3E%3Crect x='9' y='19' width='14' height='3' rx='1.5' fill='%23d4692c'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-name">AXIA</span>
+          <span class="brand-sub">LABS</span>
+        </div>
+        <nav class="topnav" aria-label="页面导航">
+          <a href="#overview" class="active">概览</a>
+          <a href="#configure">配置</a>
+          <a href="#experience">体验</a>
+          <a href="#about">关于</a>
+        </nav>
+        <div class="topbar-right">
+          <button id="btnSoundTop" class="icon-btn" type="button" aria-pressed="false" title="按键音">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6.5a8 8 0 0 1 0 11"/></svg>
+          </button>
+          <span class="save-state" id="saveState">默认配置（未保存）</span>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="stage" id="overview">
+          <canvas id="scene"></canvas>
+          <div class="stage-vignette" aria-hidden="true"></div>
+
+          <header class="product">
+            <span class="product-tag">2026 新品 · 客制化系列</span>
+            <h1>AXIA <em>K65</em></h1>
+            <p class="product-intro">紧凑机身里的全尺寸手感：Gasket 硅胶套减震结构、双色注塑 PBT 键帽与三模连接。选择外壳配色与键帽主题，实时预览属于你的那一把。</p>
+            <ul class="product-chips">
+              <li>65% 布局</li>
+              <li>Gasket 结构</li>
+              <li>三模连接</li>
+              <li>PBT 键帽</li>
+            </ul>
+            <p class="combo-line">当前搭配：<strong class="combo">云雾白 × 曜石黑</strong></p>
+          </header>
+
+          <p class="stage-hint">拖拽旋转 · 滚轮 / 双指缩放 · 双击复位视角</p>
+
+          <div class="stage-tools" role="toolbar" aria-label="视图操作">
+            <button id="btnExplode" class="tool-btn" type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>
+              <span class="tool-label">拆解视图</span>
+            </button>
+            <button id="btnResetView" class="tool-btn" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+              <span class="tool-label">复位视角</span>
+            </button>
+            <button id="btnMode" class="tool-btn" type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2.5"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>
+              <span class="tool-label">体验模式</span>
+            </button>
+          </div>
+
+          <aside class="explode-legend" id="explodeLegend" hidden>
+            <strong>拆解视图</strong>
+            <span><i class="dot dot-cap"></i>键帽层</span>
+            <span><i class="dot dot-plate"></i>定位板 + 轴体</span>
+            <span><i class="dot dot-case"></i>底壳 + PCB</span>
+          </aside>
+
+          <p class="fatal" id="fatal" hidden></p>
+        </section>
+
+        <aside class="panel" id="configure">
+          <section class="card">
+            <h2>外壳配色</h2>
+            <div class="swatches" id="caseSwatches"></div>
+          </section>
+
+          <section class="card">
+            <h2>键帽主题</h2>
+            <div class="swatches" id="capSwatches"></div>
+          </section>
+
+          <section class="card" id="experience">
+            <h2>结构与体验</h2>
+            <div class="switch-row">
+              <div>
+                <span class="switch-label">拆解视图</span>
+                <span class="switch-hint">在键帽 / 定位板 / 底壳之间展开</span>
+              </div>
+              <button class="switch" id="swExplode" type="button" role="switch" aria-checked="false"><span class="knob"></span></button>
+            </div>
+            <div class="switch-row">
+              <div>
+                <span class="switch-label">体验模式</span>
+                <span class="switch-hint">按下 A—Z 或空格，键帽同步下压回弹</span>
+              </div>
+              <button class="switch" id="swExperience" type="button" role="switch" aria-checked="false"><span class="knob"></span></button>
+            </div>
+            <div class="switch-row">
+              <div>
+                <span class="switch-label">按键音</span>
+                <span class="switch-hint">合成“咔嗒”声，无需外部素材</span>
+              </div>
+              <button class="switch" id="swSound" type="button" role="switch" aria-checked="false"><span class="knob"></span></button>
+            </div>
+            <label class="try-field" for="tryInput">
+              <span class="try-label">试试输入</span>
+              <input id="tryInput" type="text" placeholder="聚焦此处输入，按键不会被 3D 键盘劫持" autocomplete="off" />
+            </label>
+            <div class="live-row">
+              <div class="live-track" id="liveTrack" aria-live="polite"></div>
+              <span class="hit-count">敲击 <strong id="hitCount">0</strong> 次</span>
+            </div>
+          </section>
+
+          <section class="card" id="about">
+            <h2>配置摘要</h2>
+            <dl class="summary" id="summary"></dl>
+            <div class="panel-actions">
+              <button id="btnSave" class="btn" type="button">保存配置</button>
+              <button id="btnDefault" class="btn ghost" type="button">恢复默认</button>
+            </div>
+            <p class="card-note">配置自动保存在本浏览器（localStorage 命名空间 axia.k65），刷新后自动恢复；“恢复默认”只清除本页自己的配置。</p>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" hidden role="status"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

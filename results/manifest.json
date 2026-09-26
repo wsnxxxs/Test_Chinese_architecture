@@ -722,5 +722,63 @@
     "description": "Millford 木质铁路沙盘包含闭合环线、跨河桥梁、车站街区和三节蒸汽列车，提供运行、调速与昼夜控制。",
     "cover": "docs/cover.jpg",
     "addedAt": "2026-09-26T21:15:59+10:00"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "step-5-preview-high",
+    "model": "Step 5 Preview High",
+    "modelId": "step-5-preview",
+    "effort": "High",
+    "title": "AXIA K65",
+    "description": "67 键紧凑机械键盘展示页，提供外壳与键帽配色、分层拆解、按键体验和本地配置保存。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T03:21:19+10:00"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "glm-5.3",
+    "model": "GLM 5.3",
+    "modelId": "glm-5.3",
+    "title": "枫屿镇 · 桌面微缩铁路小镇",
+    "description": "实木沙盘中的闭合窄轨铁路连接车站与街区，三节蒸汽列车跨河运行，支持暂停、调速、复位与昼夜切换。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T03:21:19+10:00",
+    "captureNote": "手机默认视角放大沙盘并裁掉部分底座，场景主体与控制面板可见；保留原作自适应取景。"
+  },
+  {
+    "task": "miniature-railway-town",
+    "id": "deepseek-v4-pro-high",
+    "model": "DeepSeek V4 Pro High",
+    "modelId": "deepseek-v4-pro",
+    "effort": "High",
+    "title": "桌面微缩铁路小镇",
+    "description": "木质底座上的闭合铁路环绕河流、桥梁与小镇，三节列车沿轨运行，支持暂停、调速、复位和昼夜切换。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T03:21:19+10:00",
+    "captureNote": "手机默认视角放大场景并裁掉部分底座，列车、小镇与控制面板可见；保留原作取景。"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-6-luna-max-arena",
+    "model": "GPT-6 Luna Max",
+    "modelId": "gpt-6-luna",
+    "effort": "Max",
+    "sourceLabel": "Arena",
+    "title": "NOVA 68 键盘工作室",
+    "description": "原创 68 键机械键盘展示页，提供外壳与键帽主题、分层拆解、按键体验和本地配置。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T03:27:04+10:00"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-6-astra-max-arena",
+    "model": "GPT-6 Astra Max",
+    "modelId": "gpt-6-astra",
+    "effort": "Max",
+    "sourceLabel": "Arena",
+    "title": "Forma 68",
+    "description": "消费电子风格的 68 键机械键盘配置页，支持九种外观搭配、分层拆解、按键与音效体验。",
+    "cover": "docs/cover.jpg",
+    "addedAt": "2026-09-27T03:27:04+10:00"
   }
 ]

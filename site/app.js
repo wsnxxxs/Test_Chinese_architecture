@@ -20,6 +20,7 @@ const pad = (n) => String(n).padStart(2, '0');
 const modelOf = (r) => MODELS.get(r.model) ?? { name: r.model, vendor: '' };
 const vendorOf = (r) => modelOf(r).vendor || '其他';
 const label = (r) => (r.effort ? `${modelOf(r).name} · ${r.effort}` : modelOf(r).name);
+const resultBadges = (r) => `${r.effort ? `<span class="badge">${esc(r.effort)}</span>` : ''}${r.sourceLabel ? `<span class="badge source-badge">${esc(r.sourceLabel)}</span>` : ''}`;
 const byName = (a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' });
 const sortModes = { added: '加入时间（最新在前）', vendor: '模型厂商（A–Z）', name: '模型名字（A–Z）' };
 let resultSort = Object.hasOwn(sortModes, store.get('result-sort')) ? store.get('result-sort') : 'added';
@@ -189,7 +190,7 @@ function renderHome() {
       return `<li class="dir-model">${mark}
         <div class="dir-model-body">
           <h4>${esc(m.name)}${m.vendorNote ? `<span class="note">${esc(m.vendorNote)}</span>` : ''}</h4>
-          ${mine.length ? `<ul class="dir-works">${mine.map(({ t, r }) => `<li><a href="${viewHref(t, r.id)}" title="${esc(t.title)}">${esc(r.title)}${r.effort ? `<span class="badge">${esc(r.effort)}</span>` : ''}</a></li>`).join('')}</ul>` : '<p class="muted">暂无作品</p>'}
+          ${mine.length ? `<ul class="dir-works">${mine.map(({ t, r }) => `<li><a href="${viewHref(t, r.id)}" title="${esc(t.title)}">${esc(r.title)}${resultBadges(r)}</a></li>`).join('')}</ul>` : '<p class="muted">暂无作品</p>'}
         </div>
       </li>`;
     }).join('');
@@ -291,7 +292,7 @@ function renderTask(t) {
         ${t.results.length > 1 ? `<button class="pick" data-pick="${esc(r.id)}" aria-pressed="false" aria-label="加入对比：${esc(r.title)}"><span class="pick-box">${icon('plus')}${icon('check')}</span><span class="pick-text">对比</span></button>` : ''}
       </div>
       <div class="result-body">
-        <p class="result-model">${brandMark(m, 'brand-mark sm')}<b>${esc(m.name)}</b>${r.effort ? `<span class="badge">${esc(r.effort)}</span>` : ''}</p>
+        <p class="result-model">${brandMark(m, 'brand-mark sm')}<b>${esc(m.name)}</b>${resultBadges(r)}</p>
         <h3><a href="${viewHref(t, r.id)}">${esc(r.title)}</a></h3>
         <p class="summary">${esc(r.summary)}</p>
         <div class="result-foot">

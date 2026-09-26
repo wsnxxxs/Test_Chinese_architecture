@@ -124,6 +124,6 @@ src/scene/lighting.js          时段光照、天空、夜灯
 - 未提供逐字生成提示词记录，按铁路题归档。保留核心源码、配置、原 README 与已有许可说明；仓库使用根锁文件，不收录重复锁文件、构建产物和依赖。
 - 原 Vite 配置已采用 base: './'，不改动原作布局、画质或交互。
 - 仓库运行：npm install；npm run build --workspace=gallery-miniature-railway-town-deepseek-v4.1-flash-high。桌面目录可独立 npm install、npm run build。
-- 原 README 中的交互、性能和真机验证记录属于交付者说明，不代表本次复验。本次验证范围与收录记录见仓库 docs/deepseek-high-intake.md；不声称全部交互已验证。
+- 原 README 中的交互、性能和真机验证记录属于交付者说明，不代表本次复验。本次验证范围与收录记录见仓库 docs/archive/2026-09-26-deepseek-high-intake.md；不声称全部交互已验证。
 
 - 本次核验：桌面/手机默认首屏、卡片展示与一项夜晚切换；画面正常，手机沙盘主体较小但底座与控件完整可见。未复验全部交互、性能或真机触控。

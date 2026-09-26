@@ -15,12 +15,12 @@ const statusDetail = document.querySelector('#status-detail');
 const statusDot = document.querySelector('#status-dot');
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(39, 1, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
 const controls = new OrbitControls(camera, renderer.domElement);
 const clock = new THREE.Clock();
 
-const initialCameraPosition = new THREE.Vector3(16.8, 17.6, 20.2);
+const initialCameraPosition = new THREE.Vector3(21.5, 22.5, 25.8);
 const initialTarget = new THREE.Vector3(0, 1.4, 0);
 const worldUp = new THREE.Vector3(0, 1, 0);
 const forwardAxis = new THREE.Vector3(0, 0, 1);
@@ -71,7 +71,7 @@ container.appendChild(renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.065;
 controls.minDistance = 13;
-controls.maxDistance = 34;
+controls.maxDistance = 48;
 controls.minPolarAngle = 0.38;
 controls.maxPolarAngle = Math.PI / 2.08;
 controls.target.copy(initialTarget);
@@ -81,6 +81,9 @@ controls.update();
 const materials = {
   baseWood: new THREE.MeshStandardMaterial({ color: colors.woodDark, roughness: 0.78 }),
   baseEdge: new THREE.MeshStandardMaterial({ color: colors.wood, roughness: 0.7 }),
+  wood: new THREE.MeshStandardMaterial({ color: colors.wood, roughness: 0.88 }),
+  woodDark: new THREE.MeshStandardMaterial({ color: colors.woodDark, roughness: 0.9 }),
+  woodLight: new THREE.MeshStandardMaterial({ color: colors.woodLight, roughness: 0.86 }),
   grass: new THREE.MeshStandardMaterial({ color: colors.grass, roughness: 1 }),
   grassLight: new THREE.MeshStandardMaterial({ color: colors.grassLight, roughness: 1, flatShading: true }),
   grassDark: new THREE.MeshStandardMaterial({ color: colors.grassDark, roughness: 1, flatShading: true }),
@@ -104,6 +107,7 @@ const materials = {
   bridgeDark: new THREE.MeshStandardMaterial({ color: 0x3d2e29, roughness: 0.9 }),
   stone: new THREE.MeshStandardMaterial({ color: 0x83796e, roughness: 1, flatShading: true }),
   white: new THREE.MeshStandardMaterial({ color: colors.paper, roughness: 0.82 }),
+  cream: new THREE.MeshStandardMaterial({ color: colors.cream, roughness: 0.84 }),
   wallCream: new THREE.MeshStandardMaterial({ color: colors.cream, roughness: 0.9 }),
   wallBrick: new THREE.MeshStandardMaterial({ color: colors.brick, roughness: 0.9 }),
   wallTeal: new THREE.MeshStandardMaterial({ color: colors.teal, roughness: 0.87 }),
@@ -161,7 +165,7 @@ moon.position.set(-7, 14, -12);
 scene.add(moon);
 
 scene.background = new THREE.Color(0xecc18f);
-scene.fog = new THREE.Fog(0xecc18f, 30, 47);
+scene.fog = new THREE.Fog(0xecc18f, 40, 78);
 
 function setShadow(mesh, cast = true, receive = true) {
   mesh.castShadow = cast;
@@ -319,8 +323,8 @@ const riverBankPoints = riverPoints.map(([x, z], index) => {
   const scale = index < 6 ? 1.08 : 0.93;
   return [x * scale, z * scale];
 });
-groundPolygon(riverBankPoints, 1.205, new THREE.MeshStandardMaterial({ color: 0xb89a6d, roughness: 1 }));
-const river = groundPolygon(riverPoints, 1.225, materials.water);
+groundPolygon(riverBankPoints, 1.278, new THREE.MeshStandardMaterial({ color: 0xb89a6d, roughness: 1 }));
+const river = groundPolygon(riverPoints, 1.286, materials.water);
 river.renderOrder = 2;
 
 const rippleMaterial = new THREE.MeshBasicMaterial({ color: 0xc4e1cf, transparent: true, opacity: 0.48 });
@@ -330,7 +334,7 @@ const rippleMaterial = new THREE.MeshBasicMaterial({ color: 0xc4e1cf, transparen
   [[4.45, 4.12], 0.72, 0.18],
   [[7.05, 6.94], 0.58, -0.12],
 ].forEach(([[x, z], length, rotation]) => {
-  const ripple = addBox(scene, [length, 0.012, 0.045], [x, 1.238, z], rippleMaterial, { cast: false, receive: false });
+  const ripple = addBox(scene, [length, 0.012, 0.045], [x, 1.302, z], rippleMaterial, { cast: false, receive: false });
   ripple.rotation.y = rotation;
 });
 
@@ -341,7 +345,7 @@ groundPolygon([
   [0.0, 0.25],
   [-0.6, 2.1],
   [-2.75, 2.0],
-], 1.242, materials.roadEdge);
+], 1.292, materials.roadEdge);
 
 function road(points, width = 0.75) {
   const left = [];
@@ -355,7 +359,7 @@ function road(points, width = 0.75) {
     left.push([current.x + normal.x, current.y + normal.y]);
     right.unshift([current.x - normal.x, current.y - normal.y]);
   });
-  groundPolygon([...left, ...right], 1.25, materials.road);
+  groundPolygon([...left, ...right], 1.3, materials.road);
 }
 
 road([[-4.1, 7.45], [-3.85, 5.5], [-2.8, 3.6], [-2.45, 1.25]], 0.72);

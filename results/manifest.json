@@ -293,14 +293,8 @@
     "modelId": "gpt-5.6-luna",
     "effort": "Max",
     "title": "Evergreen Junction",
-    "description": "原始结果当前存在渲染异常：控制界面可显示，但沙盘未渲染。保留源码与实际首屏供对比。",
+    "description": "木质展示底座上铺设闭合环线与两座跨河桥，搭配车站、街道和傍晚灯光。",
     "cover": "docs/cover.jpg",
-    "captureNote": "浏览器实测出现 Cannot read properties of undefined (reading 'visible')，桌面与手机截图均为原始结果的实际界面。",
-    "guide": {
-      "tips": [
-        "当前原始结果未成功渲染沙盘，页面可显示控制界面。源码保持原样，异常已记录。"
-      ]
-    },
     "addedAt": "2026-09-26T10:29:01+10:00"
   },
   {

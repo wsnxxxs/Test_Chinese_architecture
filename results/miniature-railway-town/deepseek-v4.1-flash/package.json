@@ -1,0 +1,19 @@
+{
+  "name": "railway-deepseek-v4.1-flash",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Three.js desktop miniature railway town diorama",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=./",
+    "preview": "vite preview --port 4173 --strictPort"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^23.11.1",
+    "vite": "^7.1.0"
+  }
+}

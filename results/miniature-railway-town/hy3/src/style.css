@@ -1,0 +1,111 @@
+:root {
+  --bg: #0d0d0f;
+  --panel: rgba(20, 20, 24, 0.72);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #e8e6e3;
+  --accent: #d9a066;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Geist", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+}
+
+#app canvas {
+  display: block;
+}
+
+#title {
+  position: fixed;
+  top: 18px;
+  left: 22px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  user-select: none;
+}
+
+#hint {
+  position: fixed;
+  bottom: 16px;
+  left: 22px;
+  font-size: 12px;
+  color: rgba(232, 230, 227, 0.55);
+  user-select: none;
+}
+
+#panel {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  user-select: none;
+}
+
+#panel button {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+#panel button:hover {
+  background: rgba(217, 160, 102, 0.16);
+  border-color: rgba(217, 160, 102, 0.4);
+}
+
+#panel button:active {
+  transform: translateY(1px);
+}
+
+.slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 150px;
+}
+
+.slider-wrap label {
+  font-size: 11px;
+  color: rgba(232, 230, 227, 0.7);
+  letter-spacing: 0.04em;
+}
+
+.slider-wrap input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}

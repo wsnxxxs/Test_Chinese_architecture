@@ -2,7 +2,10 @@
   "name": "same-prompt-gallery",
   "private": true,
   "type": "module",
-  "workspaces": ["results/*"],
+  "workspaces": [
+    "results/*",
+    "results/miniature-railway-town/*"
+  ],
   "scripts": {
     "dev": "npm run build && vite preview --host 0.0.0.0 --port 5173",
     "dev:opus": "npm run dev --workspace=opus-5.5-high",

@@ -5,13 +5,20 @@ import { gzipSync } from 'node:zlib';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
-const TASK_DIR = join(ROOT, 'tasks', 'chinese-architecture');
 const entries = JSON.parse(readFileSync(join(ROOT, 'results', 'manifest.json'), 'utf8'));
 const galleryConfig = JSON.parse(readFileSync(join(ROOT, 'gallery.json'), 'utf8'));
-const taskConfig = JSON.parse(readFileSync(join(TASK_DIR, 'task.json'), 'utf8'));
-const originalResults = new Map(taskConfig.results.map((result) => [result.id, result]));
+const taskConfigs = readdirSync(join(ROOT, 'tasks')).map((id) => ({
+  ...JSON.parse(readFileSync(join(ROOT, 'tasks', id, 'task.json'), 'utf8')),
+  id,
+})).sort((a, b) => a.date.localeCompare(b.date));
 const modelIds = new Set(galleryConfig.models.map((model) => model.id));
 const ids = new Set();
+const taskIdOf = (entry) => entry.task ?? 'chinese-architecture';
+for (const entry of entries) {
+  if (!taskConfigs.some((task) => task.id === taskIdOf(entry))) {
+    throw new Error(`Unknown task for ${entry.id}: ${taskIdOf(entry)}`);
+  }
+}
 
 function walk(dir, callback, skipped = new Set()) {
   for (const name of readdirSync(dir)) {
@@ -64,20 +71,24 @@ function images(source, cover) {
 rmSync(DIST, { recursive: true, force: true });
 cpSync(join(ROOT, 'site'), DIST, { recursive: true });
 
-const results = entries.map((entry) => {
-  if (!/^[a-z0-9]+(?:[.-][a-z0-9]+)*$/.test(entry.id) || ids.has(entry.id)) {
+function assembleResult(entry, taskConfig) {
+  const taskId = taskConfig.id;
+  const taskDir = join(ROOT, 'tasks', taskId);
+  const key = `${taskId}/${entry.id}`;
+  if (!/^[a-z0-9]+(?:[.-][a-z0-9]+)*$/.test(entry.id) || ids.has(key)) {
     throw new Error(`Invalid or duplicate result id: ${entry.id}`);
   }
-  ids.add(entry.id);
+  ids.add(key);
 
-  const original = originalResults.get(entry.id);
+  const original = taskConfig.results?.find((result) => result.id === entry.id);
   const model = original?.model ?? entry.modelId ?? entry.id;
   if (!modelIds.has(model)) throw new Error(`Unknown model for ${entry.id}: ${model}`);
 
-  const source = join(ROOT, 'results', entry.id);
+  const resultPath = entry.task ? `results/${taskId}/${entry.id}` : `results/${entry.id}`;
+  const source = join(ROOT, resultPath);
   const built = join(source, 'dist');
   if (!existsSync(built)) throw new Error(`Missing build output: ${built}`);
-  const target = join(DIST, 'results', entry.id);
+  const target = join(DIST, resultPath);
   cpSync(built, target, { recursive: true });
 
   const picturePaths = images(source, entry.cover);
@@ -87,18 +98,17 @@ const results = entries.map((entry) => {
     cpSync(join(source, path), destination);
   }
 
-  const captures = {};
+  const captures = { first: `${resultPath}/${entry.cover}` };
   for (const condition of taskConfig.conditions) {
-    const file = join(TASK_DIR, 'captures', entry.id, `${condition.id}.jpg`);
+    const file = join(taskDir, 'captures', entry.id, `${condition.id}.jpg`);
     if (!existsSync(file)) continue;
-    const destination = join(DIST, 'chinese-architecture', '_captures', entry.id, `${condition.id}.jpg`);
+    const destination = join(DIST, taskId, '_captures', entry.id, `${condition.id}.jpg`);
     mkdirSync(dirname(destination), { recursive: true });
     cpSync(file, destination);
-    captures[condition.id] = `chinese-architecture/_captures/${entry.id}/${condition.id}.jpg`;
+    captures[condition.id] = `${taskId}/_captures/${entry.id}/${condition.id}.jpg`;
   }
-  captures.first ??= `results/${entry.id}/${entry.cover}`;
 
-  const alias = join(DIST, 'chinese-architecture', entry.id, 'index.html');
+  const alias = join(DIST, taskId, entry.id, 'index.html');
   const redirect = `${relative(dirname(alias), target).split('\\').join('/')}/`;
   mkdirSync(dirname(alias), { recursive: true });
   writeFileSync(alias, `<!doctype html><meta charset="utf-8"><title>已迁移</title>` +
@@ -108,26 +118,26 @@ const results = entries.map((entry) => {
   const packageJson = JSON.parse(readFileSync(join(source, 'package.json'), 'utf8'));
   const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
   const stack = ['Three.js', dependencies.react ? 'React' : null, dependencies.vite ? 'Vite' : '原生页面'].filter(Boolean).join(' · ');
-  const repoPath = `${galleryConfig.repo}/tree/${galleryConfig.branch}/results/${entry.id}`;
+  const repoPath = `${galleryConfig.repo}/tree/${galleryConfig.branch}/${resultPath}`;
   return {
     id: entry.id,
     model,
     effort: original?.effort ?? entry.effort ?? '',
     title: original?.title ?? entry.title,
     summary: original?.summary ?? entry.description,
-    scene: `results/${entry.id}/`,
+    scene: `${resultPath}/`,
     source: repoPath,
-    readme: existsSync(join(source, 'README.md')) ? `${galleryConfig.repo}/blob/${galleryConfig.branch}/results/${entry.id}/README.md` : null,
+    readme: existsSync(join(source, 'README.md')) ? `${galleryConfig.repo}/blob/${galleryConfig.branch}/${resultPath}/README.md` : null,
     facts: original?.facts ?? { stack },
     stats: { ...sourceStats(source), ...buildStats(built) },
     gallery: original
-      ? original.gallery.map((item) => ({ src: `results/${entry.id}/${item.src}`, caption: item.caption }))
-      : picturePaths.map((path) => ({ src: `results/${entry.id}/${path}`, caption: path === entry.cover ? '作品预览' : path.split('/').at(-1) })),
+      ? original.gallery.map((item) => ({ src: `${resultPath}/${item.src}`, caption: item.caption }))
+      : picturePaths.map((path) => ({ src: `${resultPath}/${path}`, caption: path === entry.cover ? '作品预览' : path.split('/').at(-1) })),
     captures,
-    captureNote: original?.capture?.note ?? '',
-    guide: original?.guide ?? {},
+    captureNote: original?.capture?.note ?? entry.captureNote ?? '',
+    guide: original?.guide ?? entry.guide ?? {},
   };
-});
+}
 
 const data = {
   title: galleryConfig.title,
@@ -135,22 +145,22 @@ const data = {
   description: galleryConfig.description,
   repo: galleryConfig.repo,
   models: galleryConfig.models,
-  tasks: [{
-    id: 'chinese-architecture',
+  tasks: taskConfigs.map((taskConfig) => ({
+    id: taskConfig.id,
     title: taskConfig.title,
     summary: taskConfig.summary,
     date: taskConfig.date,
     tags: taskConfig.tags,
-    prompt: readFileSync(join(TASK_DIR, taskConfig.prompt), 'utf8'),
-    promptUrl: `${galleryConfig.repo}/blob/${galleryConfig.branch}/tasks/chinese-architecture/${taskConfig.prompt}`,
+    prompt: readFileSync(join(ROOT, 'tasks', taskConfig.id, taskConfig.prompt), 'utf8'),
+    promptUrl: `${galleryConfig.repo}/blob/${galleryConfig.branch}/tasks/${taskConfig.id}/${taskConfig.prompt}`,
     conditions: taskConfig.conditions.map(({ id, label, note, mobile }) => ({ id, label, note, mobile: !!mobile })),
     facts: taskConfig.facts,
     factsNote: taskConfig.factsNote,
-    results,
-  }],
+    results: entries.filter((entry) => taskIdOf(entry) === taskConfig.id).map((entry) => assembleResult(entry, taskConfig)),
+  })),
 };
 
 writeFileSync(join(DIST, 'data.json'), JSON.stringify(data));
 writeFileSync(join(DIST, 'results.json'), JSON.stringify(entries, null, 2));
 writeFileSync(join(DIST, '.nojekyll'), '');
-console.log(`Assembled ${results.length} result(s) in dist/`);
+console.log(`Assembled ${entries.length} result(s) across ${data.tasks.length} task(s) in dist/`);

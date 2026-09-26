@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>微缩铁路小镇 · Miniature Railway Town</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <div id="title">微缩铁路小镇</div>
+
+    <div id="panel">
+      <button id="playBtn">暂停</button>
+      <button id="resetBtn">复位</button>
+      <div class="slider-wrap">
+        <label>速度&nbsp;<span id="speedLabel">1.00x</span></label>
+        <input id="speed" type="range" min="0.25" max="3" step="0.05" value="1" />
+      </div>
+      <button id="nightBtn">切换到夜晚</button>
+    </div>
+
+    <div id="hint">拖拽旋转 · 滚轮缩放 · 火车沿闭合线路运行，到站停留约 2 秒</div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

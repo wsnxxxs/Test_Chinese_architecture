@@ -1,0 +1,23 @@
+{
+  "name": "railway-astra-pro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "柳溪铁路镇：Three.js 手工质感桌面微缩铁路沙盘",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build --base=./",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "vite": "6.3.5"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

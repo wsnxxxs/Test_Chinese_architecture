@@ -1,6 +1,6 @@
 // 同题异答 — single-page gallery. Routes (hash based, so it works on any static host):
 //   #/                        home: every task and every model
-//   #/<task>                  task: results, uniform screenshots, facts table, prompt
+//   #/<task>                  task: results, screenshots, prompt
 //   #/<task>/<result>         viewer: the live page in a frame with a guide drawer
 //   #/<task>/<a>/vs/<b>       viewer, two results side by side
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -16,8 +16,6 @@ const root = $('#app');
 let DATA;
 let MODELS;
 
-const size = (n) => (n >= 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)} MB` : `${Math.round(n / 1024)} KB`);
-const num = (n) => Number(n).toLocaleString('zh-CN');
 const pad = (n) => String(n).padStart(2, '0');
 const modelOf = (r) => MODELS.get(r.model) ?? { name: r.model, vendor: '' };
 const vendorOf = (r) => modelOf(r).vendor || '其他';
@@ -184,7 +182,7 @@ function renderHome() {
       </div>
     </section>
     <section class="block wrap" aria-labelledby="h-tasks">
-      <div class="block-head"><h2 id="h-tasks">题目</h2><p>按发布时间排列 · 每道题都可浏览作品、对照截图与参数</p></div>
+      <div class="block-head"><h2 id="h-tasks">题目</h2><p>按发布时间排列 · 每道题都可浏览作品与对照截图</p></div>
       <div class="task-list">${taskCards || '<p class="muted">还没有题目。</p>'}</div>
     </section>
     <section class="block wrap" aria-labelledby="h-models">
@@ -199,7 +197,7 @@ function renderHome() {
 
 // ---- task -----------------------------------------------------------------------------
 const taskState = { task: null, cond: null, vendor: '', picks: [] };
-const panels = ['results', 'shots', 'facts', 'prompt'];
+const panels = ['results', 'shots', 'prompt'];
 function activatePanel(name, updateHash = true) {
   const target = panels.includes(name) && $(`[data-panel="${name}"]`) ? name : 'results';
   $$('[data-panel]').forEach((el) => { el.hidden = el.dataset.panel !== target; });
@@ -222,20 +220,6 @@ function shotGrid(t) {
       <figcaption><b>${esc(r.title)}</b><span>${esc(label(r))}</span><a href="${viewHref(t, r.id)}">在线预览</a></figcaption>
     </figure>`;
   }).join('')}</div>`;
-}
-
-function factsTable(t) {
-  const rows = [
-    ...t.facts.map((f) => [f.label, t.results.map((r) => esc(r.facts[f.id] ?? '—'))]),
-    ['源码', t.results.map((r) => (r.stats.files ? `${num(r.stats.lines)} 行 <small>${r.stats.files} 个文件</small>` : '—'))],
-    ['构建产物', t.results.map((r) => (r.stats.bytes ? `${size(r.stats.gzip)} <small>gzip · 原始 ${size(r.stats.bytes)}</small>` : '—'))],
-    ['作者截图', t.results.map((r) => (r.gallery.length ? `<button class="link" data-gallery="${esc(r.id)}">${r.gallery.length} 张</button>` : '—'))],
-    ['链接', t.results.map((r) => `<a href="${viewHref(t, r.id)}">预览</a> · <a href="${esc(r.source)}" target="_blank" rel="noopener">源码</a>${r.readme ? ` · <a href="${esc(r.readme)}" target="_blank" rel="noopener">说明</a>` : ''}`)],
-  ];
-  return `<div class="table-wrap" tabindex="0" role="region" aria-label="参数对照表，可横向滚动"><table class="facts">
-    <thead><tr><th scope="col"><span class="sr">项目</span></th>${t.results.map((r) => `<th scope="col"><b>${esc(r.title)}</b><small>${esc(label(r))}</small></th>`).join('')}</tr></thead>
-    <tbody>${rows.map(([name, cells]) => `<tr><th scope="row">${esc(name)}</th>${cells.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
-  </table></div>`;
 }
 
 function renderTask(t) {
@@ -282,7 +266,6 @@ function renderTask(t) {
     <nav class="subnav" aria-label="本页"><div class="wrap subnav-in">
       <button data-go="results" aria-pressed="true">作品<span class="count">${t.results.length}</span></button>
       ${t.conditions.length ? '<button data-go="shots" aria-pressed="false">截图对照</button>' : ''}
-      <button data-go="facts" aria-pressed="false">参数</button>
       <button data-go="prompt" aria-pressed="false">提示词</button>
     </div></nav>
 
@@ -305,11 +288,6 @@ function renderTask(t) {
       ${captureNotes.length ? `<p class="fine">${captureNotes.join('<br />')}</p>` : ''}
       <p class="fine">自动截图可能使用软件渲染；实际光影与帧率请以在线预览为准。</p>
     </section>` : ''}
-
-    <section id="facts" data-panel="facts" class="block wrap" hidden>
-      <div class="block-head"><h2>参数</h2><p>${esc(t.factsNote)}</p></div>
-      ${factsTable(t)}
-    </section>
 
     <section id="prompt" data-panel="prompt" class="block wrap" hidden>
       <div class="block-head"><h2>提示词</h2><p>所有作品使用的原始提示词。</p></div>

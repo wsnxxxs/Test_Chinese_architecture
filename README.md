@@ -4,7 +4,7 @@
 
 站点采用暖白纸色与墨色两套主题，仅以一抹朱砂色作点缀；默认跟随系统的浅色 / 深色设置，也可用顶栏的日月按钮手动切换，选择会保存在浏览器中。标识由一条完整的横线（同）与一条断开的横线（异）组成，末段为朱砂色，文件为 `site/assets/logo.svg`。
 
-首页按题目浏览，模型索引按厂商分行排列，列出每个模型的作品，可以收起。题目页可按厂商筛选作品，并通过“作品 / 截图对照 / 参数 / 提示词”切换内容；在作品卡片上点“对比”选中两件作品，底部对比栏即可打开并排对比。在线预览时可用 ← / → 或顶栏按钮切换作品，也可打开并排对比，操作指南按需展开。
+首页按题目浏览，模型索引按厂商分行排列，列出每个模型的作品，可以收起。题目页可按厂商筛选作品，并通过“作品 / 截图对照 / 提示词”切换内容；截图对照提供首屏与手机界面预览。在作品卡片上点“对比”选中两件作品，底部对比栏即可打开并排对比。在线预览时可用 ← / → 或顶栏按钮切换作品，也可打开并排对比，操作指南按需展开。
 
 模型品牌标识保存在 `site/assets/brands/`，来源及下载地址见[标识来源](site/assets/brands/README.md)。新增模型时，可在 `gallery.json` 中复用对应品牌的本地标识。
 
@@ -35,7 +35,7 @@
 | Gemini 3.7 Flash | 华夏九重天 · 3D 体素中国古典建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.7-flash) | [项目说明](results/gemini-3.7-flash/README.md) |
 | Gemini 3.8 Flash | 紫禁晨暮 · 中式殿阁体素群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gemini-3.8-flash) | [项目说明](results/gemini-3.8-flash/README.md) |
 | MiniMax M3 | 体素中式院落 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/minimax-m3) | [项目说明](results/minimax-m3/README.md) |
-| Space-bunny（暂归 MiniMax） | 云麓宫 · 体素汉风建筑群 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/space-bunny) | [项目说明](results/space-bunny/README.md) |
+| Space-bunny（暂归 MiniMax） | 体素宫城 · Voxel Palace | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/space-bunny) | [项目说明](results/space-bunny/README.md) |
 | GPT-6 Sol Max | 云阙宫 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-max) | [项目说明](results/gpt-6-sol-max/README.md) |
 | GPT-6 Sol High | 云阙 · 体素古建 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-sol-high) | [项目说明](results/gpt-6-sol-high/README.md) |
 | GPT-6 Luna Max | 云岚宫阙 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-luna-max) | [项目说明](results/gpt-6-luna-max/README.md) |
@@ -45,7 +45,7 @@
 | GPT-6 Astra High | 方寸之间 · 云栖古寺 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/gpt-6-astra-high) | [项目说明](results/gpt-6-astra-high/README.md) |
 | GPT-6 Astra Pro | 云阙 · 方寸山河 | [打开场景](https://wsnxxxs.github.io/same-prompt-gallery/#/chinese-architecture/astra-pro) | [项目说明](results/astra-pro/README.md) |
 
-共 30 个结果，28 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份新增结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。原有 4 个作品保留统一条件截图；新增作品先展示项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
+共 30 个结果，28 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。所有作品均提供手机界面截图；原有 4 个作品保留统一首屏截图，其余作品的首屏使用项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
 
 ## 运行
 

@@ -5,11 +5,8 @@
   "date": "2026-09-25",
   "tags": ["Three.js", "WebGL", "3D 场景", "体素"],
   "conditions": [
-    { "id": "first", "label": "首屏 / 作品预览", "note": "原有 4 个作品使用 1440×900 自动截图；新增作品展示各项目随附预览图。" },
-    { "id": "mobile", "label": "手机首屏", "note": "390×844 竖屏，打开页面后不做任何操作", "viewport": [390, 844], "mobile": true },
-    { "id": "dawn", "label": "清晨", "note": "切换到各页面自带的清晨 / 黎明光照" },
-    { "id": "dusk", "label": "黄昏", "note": "切换到各页面自带的黄昏 / 夕照 / 暮色光照" },
-    { "id": "night", "label": "夜晚", "note": "切换到各页面自带的夜晚光照" }
+    { "id": "first", "label": "首屏", "note": "原有 4 个作品使用 1440×900 自动截图；其余作品展示各项目随附预览图。" },
+    { "id": "mobile", "label": "手机界面预览", "note": "390×844 竖屏，打开页面后不做任何操作；所有作品均提供截图。", "viewport": [390, 844], "mobile": true }
   ],
   "facts": [
     { "id": "buildings", "label": "建筑" },

@@ -1,0 +1,145 @@
+{
+  "tag": "dpr1",
+  "dpr": 1,
+  "viewport": [
+    1600,
+    900
+  ],
+  "browser": "Chrome/154.0.8037.57",
+  "readyMs": 1210,
+  "boot": {
+    "fps": 162.9,
+    "voxels": 211071,
+    "quads": 434806,
+    "calls": 7,
+    "triangles": 1580626,
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002860) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "dpr": 1,
+    "buildMs": 415.3000000715256,
+    "meshMs": 501.2999999523163,
+    "totalMs": 919.8000000715256,
+    "width": 1600,
+    "height": 900,
+    "innerWidth": 1600,
+    "innerHeight": 900,
+    "camera": [
+      194.52,
+      215,
+      221.87
+    ],
+    "target": [
+      0,
+      40,
+      -26
+    ],
+    "preset": "dawn",
+    "autoRotate": true,
+    "post": true,
+    "glow": 2.3
+  },
+  "fps": 165,
+  "stats": {
+    "fps": 165,
+    "voxels": 211071,
+    "quads": 434806,
+    "calls": 7,
+    "triangles": 1580626,
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002860) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "dpr": 1,
+    "buildMs": 415.3000000715256,
+    "meshMs": 501.2999999523163,
+    "totalMs": 919.8000000715256,
+    "width": 1600,
+    "height": 900,
+    "innerWidth": 1600,
+    "innerHeight": 900,
+    "camera": [
+      59.17,
+      215,
+      283.48
+    ],
+    "target": [
+      0,
+      40,
+      -26
+    ],
+    "preset": "dawn",
+    "autoRotate": true,
+    "post": true,
+    "glow": 2.3
+  },
+  "buildings": [
+    {
+      "n": "mountain-gate",
+      "x": 0,
+      "z": 90,
+      "h": 54
+    },
+    {
+      "n": "main-hall",
+      "x": 0,
+      "z": -34,
+      "h": 60
+    },
+    {
+      "n": "pagoda",
+      "x": 0,
+      "z": -128,
+      "h": 111
+    },
+    {
+      "n": "bell-tower",
+      "x": 66,
+      "z": 68,
+      "h": 51
+    },
+    {
+      "n": "drum-tower",
+      "x": -66,
+      "z": 68,
+      "h": 51
+    },
+    {
+      "n": "side-hall-e",
+      "x": 62,
+      "z": 20,
+      "h": 39
+    },
+    {
+      "n": "side-hall-w",
+      "x": -62,
+      "z": 20,
+      "h": 39
+    },
+    {
+      "n": "rear-hall-e",
+      "x": 48,
+      "z": -90,
+      "h": 31
+    },
+    {
+      "n": "rear-hall-w",
+      "x": -48,
+      "z": -90,
+      "h": 31
+    },
+    {
+      "n": "corridor-e",
+      "x": 50,
+      "z": -33,
+      "h": 20
+    },
+    {
+      "n": "corridor-w",
+      "x": -50,
+      "z": -33,
+      "h": 20
+    }
+  ],
+  "shot_dawn": "verify\\dpr1-dawn.png",
+  "shot_noon": "verify\\dpr1-noon.png",
+  "shot_dusk": "verify\\dpr1-dusk.png",
+  "shot_page": "verify\\dpr1-page.png",
+  "consoleErrors": [],
+  "exceptions": []
+}

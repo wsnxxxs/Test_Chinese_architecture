@@ -1,19 +1,19 @@
 {
-  "name": "yunlu-voxel-palace",
+  "name": "voxel-temple-complex",
   "private": true,
   "version": "1.0.0",
+  "description": "Voxel-style Chinese classical architecture complex built with Three.js",
   "type": "module",
-  "description": "Three.js 体素风格中国古典建筑群 —— 云麓宫（主殿 / 配殿 / 山门 / 钟鼓楼 / 宝塔 / 角楼）",
   "scripts": {
-    "dev": "vite --port 5273 --strictPort",
+    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 4273 --strictPort",
-    "verify": "node scripts/verify-fps.mjs"
+    "preview": "vite preview",
+    "verify": "node scripts/verify.mjs"
   },
   "dependencies": {
-    "three": "^0.160.0"
+    "three": "^0.186.1"
   },
   "devDependencies": {
-    "vite": "^6.0.0"
+    "vite": "^8.3.1"
   }
 }

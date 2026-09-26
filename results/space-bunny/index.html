@@ -1,62 +1,150 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>云麓宫 · 体素汉风建筑群</title>
-<link rel="stylesheet" href="./src/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>体素宫城 · 中国古典建筑群</title>
+  <style>
+    :root {
+      --ink: #f2ead9;
+      --dim: #b9ae98;
+      --gold: #d9b45a;
+      --glass: rgba(16, 18, 24, 0.62);
+      --edge: rgba(217, 180, 90, 0.28);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      overflow: hidden; background: #0b0e14;
+      font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", system-ui, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    #scene { display: block; width: 100vw; height: 100vh; }
+
+    .panel {
+      position: fixed;
+      background: var(--glass);
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      border: 1px solid var(--edge);
+      border-radius: 12px;
+      box-shadow: 0 10px 34px rgba(0, 0, 0, 0.42);
+    }
+
+    #title { top: 20px; left: 20px; padding: 14px 20px 13px; }
+    #title h1 {
+      margin: 0; font-size: 20px; letter-spacing: 5px; font-weight: 600;
+      font-family: "Songti SC", "SimSun", "Noto Serif SC", serif;
+      color: var(--gold);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+    #title p { margin: 6px 0 0; font-size: 11px; letter-spacing: 1.6px; color: var(--dim); }
+
+    #stats { left: 20px; bottom: 20px; padding: 12px 16px; min-width: 286px; }
+    #stats .row {
+      display: flex; justify-content: space-between; gap: 16px;
+      font-size: 11.5px; line-height: 1.95; letter-spacing: 0.4px;
+    }
+    #stats .k { color: var(--dim); }
+    #stats .v { color: var(--ink); font-variant-numeric: tabular-nums; }
+    #stats .v.gpu {
+      font-size: 10px; color: var(--dim); max-width: 178px; text-align: right;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    #stats hr { border: 0; border-top: 1px solid rgba(217, 180, 90, 0.16); margin: 8px 0; }
+
+    #ctrl { top: 20px; right: 20px; padding: 14px 16px; width: 216px; }
+    #ctrl h2 {
+      margin: 0 0 10px; font-size: 11px; letter-spacing: 2.4px; color: var(--dim);
+      font-weight: 500; text-transform: uppercase;
+    }
+    .seg { display: flex; gap: 6px; margin-bottom: 10px; }
+    .seg button {
+      flex: 1; padding: 7px 0; font-size: 12.5px; letter-spacing: 2px; cursor: pointer;
+      background: rgba(255, 255, 255, 0.05); color: var(--dim);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+      font-family: inherit; transition: all 0.18s ease;
+    }
+    .seg button:hover { background: rgba(255, 255, 255, 0.11); color: var(--ink); }
+    .seg button.on {
+      background: linear-gradient(180deg, rgba(217, 180, 90, 0.26), rgba(217, 180, 90, 0.12));
+      border-color: rgba(217, 180, 90, 0.6); color: var(--gold);
+    }
+    .wide {
+      width: 100%; padding: 8px 0; margin-top: 6px; font-size: 12px; letter-spacing: 1.4px;
+      cursor: pointer; background: rgba(255, 255, 255, 0.05); color: var(--dim);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+      font-family: inherit; transition: all 0.18s ease;
+    }
+    .wide:hover { background: rgba(255, 255, 255, 0.11); color: var(--ink); }
+    .wide.on { border-color: rgba(217, 180, 90, 0.45); color: var(--gold); }
+    #hint { margin: 11px 0 0; font-size: 10.5px; line-height: 1.7; color: #7e7566; letter-spacing: 0.3px; }
+
+    #loading {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      background: radial-gradient(circle at 50% 46%, #1b2130 0%, #0a0d13 72%);
+      z-index: 50;
+    }
+    #loading .seal {
+      width: 62px; height: 62px; border: 2px solid var(--gold); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 26px;
+      font-family: "Songti SC", "SimSun", serif;
+      box-shadow: 0 0 26px rgba(217, 180, 90, 0.24);
+      animation: breathe 2.4s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.55; transform: scale(0.97); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+    #loading p { margin: 0; font-size: 12.5px; letter-spacing: 4px; color: var(--dim); }
+
+    @media (max-width: 720px) {
+      #stats { display: none; }
+      #title h1 { font-size: 16px; letter-spacing: 3px; }
+      #ctrl { width: 172px; padding: 11px 12px; }
+    }
+  </style>
 </head>
 <body>
-  <div id="app"></div>
+  <canvas id="scene"></canvas>
 
-  <!-- 载入遮罩：打开即自动进入场景，无需任何操作 -->
-  <div id="loading">
-    <div class="loading-inner">
-      <div class="loading-title">云麓宫</div>
-      <div class="loading-sub">正在叠石筑基 · 营造殿宇…</div>
-      <div class="loading-bar"><i></i></div>
-    </div>
+  <div id="title" class="panel">
+    <h1>体素宫城</h1>
+    <p>VOXEL PALACE · 重檐庑殿 / 歇山 / 攒尖 / 楼阁式塔</p>
   </div>
 
-  <!-- 标题 -->
-  <header class="hud hud-title">
-    <h1>云麓宫</h1>
-    <p>体素汉风建筑群 · Three.js</p>
-  </header>
+  <div id="stats" class="panel">
+    <div class="row"><span class="k">帧率</span><span class="v" id="s-fps">--</span></div>
+    <div class="row"><span class="k">体素总数</span><span class="v" id="s-voxel">--</span></div>
+    <div class="row"><span class="k">可见面数</span><span class="v" id="s-face">--</span></div>
+    <div class="row"><span class="k">Draw Call / 三角</span><span class="v" id="s-call">--</span></div>
+    <hr />
+    <div class="row"><span class="k">渲染尺寸</span><span class="v" id="s-size">--</span></div>
+    <div class="row"><span class="k">场景生成</span><span class="v" id="s-boot">--</span></div>
+    <div class="row"><span class="k">GPU</span><span class="v gpu" id="s-gpu">--</span></div>
+  </div>
 
-  <!-- 控制面板 -->
-  <section class="hud hud-panel">
-    <div class="panel-group">
-      <span class="panel-label">时辰</span>
-      <div class="btn-row" id="time-row">
-        <button class="btn" data-time="morning">晨</button>
-        <button class="btn" data-time="dusk">暮</button>
-        <button class="btn" data-time="night">夜</button>
-      </div>
+  <div id="ctrl" class="panel">
+    <h2>光照 · <span id="preset-name">晨曦</span></h2>
+    <div class="seg">
+      <button data-preset="dawn" class="on">晨曦</button>
+      <button data-preset="noon">正午</button>
+      <button data-preset="dusk">暮色</button>
     </div>
-    <div class="panel-group">
-      <span class="panel-label">机位</span>
-      <div class="btn-row" id="view-row">
-        <button class="btn" data-view="overview">全景</button>
-        <button class="btn" data-view="gate">山门</button>
-        <button class="btn" data-view="hall">主殿</button>
-        <button class="btn" data-view="aerial">鸟瞰</button>
-      </div>
-    </div>
-  </section>
+    <button id="btn-rotate" class="wide on">自动巡航：开</button>
+    <button id="btn-reset" class="wide">重置视角</button>
+    <p id="hint">左键拖拽环视 · 滚轮缩放 · 右键平移</p>
+  </div>
 
-  <!-- 操作提示 -->
-  <footer class="hud hud-hint">
-    <span>左键拖拽 · 旋转</span><i></i><span>滚轮 · 推拉</span><i></i><span>右键拖拽 · 平移</span><i></i><span>数字键 1/2/3 切换时辰</span>
-  </footer>
+  <div id="loading">
+    <div class="seal">宫</div>
+    <p>正在生成体素宫城</p>
+  </div>
 
-  <!-- 性能信息 -->
-  <aside class="hud hud-stats" id="stats">
-    <span id="stat-fps">-- FPS</span><i></i><span id="stat-voxel">体素 --</span><i></i><span id="stat-draw">Draw --</span>
-  </aside>
-
-  <div class="vignette"></div>
-
-  <script type="module" src="./src/main.js"></script>
+  <noscript>本场景需要启用 JavaScript 与 WebGL。</noscript>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>

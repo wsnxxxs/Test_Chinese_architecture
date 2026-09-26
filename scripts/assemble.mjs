@@ -88,18 +88,15 @@ const results = entries.map((entry) => {
   }
 
   const captures = {};
-  if (original) {
-    for (const condition of taskConfig.conditions) {
-      const file = join(TASK_DIR, 'captures', entry.id, `${condition.id}.jpg`);
-      if (!existsSync(file)) continue;
-      const destination = join(DIST, 'chinese-architecture', '_captures', entry.id, `${condition.id}.jpg`);
-      mkdirSync(dirname(destination), { recursive: true });
-      cpSync(file, destination);
-      captures[condition.id] = `chinese-architecture/_captures/${entry.id}/${condition.id}.jpg`;
-    }
-  } else {
-    captures.first = `results/${entry.id}/${entry.cover}`;
+  for (const condition of taskConfig.conditions) {
+    const file = join(TASK_DIR, 'captures', entry.id, `${condition.id}.jpg`);
+    if (!existsSync(file)) continue;
+    const destination = join(DIST, 'chinese-architecture', '_captures', entry.id, `${condition.id}.jpg`);
+    mkdirSync(dirname(destination), { recursive: true });
+    cpSync(file, destination);
+    captures[condition.id] = `chinese-architecture/_captures/${entry.id}/${condition.id}.jpg`;
   }
+  captures.first ??= `results/${entry.id}/${entry.cover}`;
 
   const alias = join(DIST, 'chinese-architecture', entry.id, 'index.html');
   const redirect = `${relative(dirname(alias), target).split('\\').join('/')}/`;

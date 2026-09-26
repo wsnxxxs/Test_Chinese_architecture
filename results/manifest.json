@@ -128,9 +128,9 @@
   {
     "id": "space-bunny",
     "model": "Space-bunny",
-    "title": "云麓宫 · 体素汉风建筑群",
-    "description": "中轴对称的体素宫城，包含主殿、配殿、山门、钟鼓楼、宝塔与护城河，支持晨、暮、夜三种光照。",
-    "cover": "verify-shots/01-overview-morning.png"
+    "title": "体素宫城 · Voxel Palace",
+    "description": "中轴对称的体素宫城，包含主殿、山门、宝塔、钟鼓楼、配殿与御河，支持晨曦、正午和暮色光照。",
+    "cover": "verify/dpr1-dawn.png"
   },
   {
     "id": "gpt-6-sol-max",

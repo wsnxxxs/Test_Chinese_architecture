@@ -391,22 +391,6 @@ a.brand-mark:hover { border-color: var(--ink-2); transform: translateY(-1px); }
 .shot figcaption span { grid-row: 2; color: var(--muted); font-size: 12.5px; }
 .shot figcaption a { grid-row: 1; grid-column: 2; font-size: 12.5px; white-space: nowrap; }
 
-/* facts */
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
-.facts { width: max-content; min-width: 100%; border-collapse: collapse; font-size: 13.5px; }
-.facts thead th:not(:first-child), .facts tbody td { min-width: 200px; max-width: 250px; }
-.facts th, .facts td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
-.facts tbody tr:last-child > * { border-bottom: 0; }
-.facts thead th { background: var(--surface-2); font-weight: 400; }
-.facts thead th:first-child { background: var(--surface-2); }
-.facts thead b { display: block; font-size: 14px; font-weight: 600; }
-.facts thead small, .facts td small { display: block; color: var(--muted); font-size: 12px; }
-.facts tbody th { width: 110px; color: var(--muted); font-weight: 500; white-space: nowrap; }
-.facts th:first-child { position: sticky; left: 0; width: 110px; min-width: 110px; background: inherit; z-index: 1; box-shadow: 1px 0 0 var(--line); }
-.facts tbody th:first-child { background: var(--surface); }
-.facts td { color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.facts tbody tr:hover td { background: color-mix(in srgb, var(--surface-2) 50%, transparent); }
-
 /* prompt */
 .prompt { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
 .prompt-bar {

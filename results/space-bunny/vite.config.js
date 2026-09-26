@@ -1,15 +1,21 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // 相对路径打包，dist 可放在任意子目录下直接静态托管
   base: './',
   server: {
-    host: '127.0.0.1'
+    port: 5199,
+    strictPort: true,
+    host: '127.0.0.1',
+  },
+  preview: {
+    port: 5288,
+    strictPort: true,
+    host: '127.0.0.1',
   },
   build: {
     target: 'es2020',
     outDir: 'dist',
-    assetsDir: 'assets',
-    chunkSizeWarningLimit: 1200
-  }
+    assetsInlineLimit: 0,
+    chunkSizeWarningLimit: 1200,
+  },
 });

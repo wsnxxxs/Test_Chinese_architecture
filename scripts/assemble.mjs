@@ -87,6 +87,9 @@ function enableSandtable(target) {
       captures++;
       return `${match},window.__galleryCaptureScene?.(this)`;
     });
+    // Extraction needs CPU geometry only. Do not render a second full scene,
+    // upload its voxel buffers or run shadow passes in the hidden loader.
+    patched = patched.replace(/this\.render\s*=\s*function\s*\([^)]*\)\s*\{/g, (match) => `${match}if(window.__galleryCaptureScene)return;`);
     // Sonnet frees CPU voxel buffers after GPU upload. Keep them for this
     // temporary export only; normal standalone previews retain that optimization.
     if (target.endsWith('sonnet-5.5-max')) patched = patched.replace(/this\.array\s*=\s*null/g, '(window.__galleryCaptureScene||(this.array=null))');

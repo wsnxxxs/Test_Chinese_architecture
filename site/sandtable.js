@@ -1,14 +1,43 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { batchArchitecture } from './sandtable-batching.js';
+import { createArchitectureLod } from './sandtable-lod.js';
 
 const $ = (selector, root) => root.querySelector(selector);
 const escape = (value) => String(value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+function copyAttribute(attribute) {
+  // The iframe has its own TypedArray constructors. WebGL checks against the
+  // main window's constructors, so recreate the buffer in this realm.
+  const types = { Float32Array, Float64Array, Int8Array, Uint8Array, Uint8ClampedArray, Int16Array, Uint16Array, Int32Array, Uint32Array };
+  const source = attribute.isInterleavedBufferAttribute ? attribute.data.array : attribute.array;
+  const array = new types[source.constructor.name](source);
+  if (attribute.isInterleavedBufferAttribute) {
+    const data = new THREE.InterleavedBuffer(array, attribute.data.stride);
+    return new THREE.InterleavedBufferAttribute(data, attribute.itemSize, attribute.offset, attribute.normalized);
+  }
+  return new THREE.BufferAttribute(array, attribute.itemSize, attribute.normalized);
+}
+
+function copyGeometry(source) {
+  const geometry = new THREE.BufferGeometry();
+  for (const [name, attribute] of Object.entries(source.attributes)) geometry.setAttribute(name, copyAttribute(attribute));
+  if (source.index) geometry.setIndex(copyAttribute(source.index));
+  geometry.groups = source.groups.map(group => ({ ...group }));
+  geometry.setDrawRange(source.drawRange.start, source.drawRange.count);
+  return geometry;
+}
+
 // Export the original meshes, including instance matrices and vertex colours.
 // A shared exhibition light replaces each author's sky, fog and postprocessing.
 async function importArchitecture(scenes, id) {
+  let sliceStart = performance.now();
+  async function yieldImport() {
+    if (performance.now() - sliceStart < 8) return;
+    await new Promise(resolve => setTimeout(resolve, 0));
+    sliceStart = performance.now();
+  }
   const candidates = scenes.map((scene) => {
     let count = 0;
     scene.traverseVisible((o) => { if (o.isMesh && !o.material?.isShaderMaterial) count += o.isInstancedMesh ? o.count : 1; });
@@ -58,41 +87,55 @@ async function importArchitecture(scenes, id) {
   if (bounds.isEmpty()) throw new Error('未找到可展示的建筑');
   const span = bounds.getSize(new THREE.Vector3());
   const footprint = Math.max(span.x, span.z);
-  const meta = { geometries: {}, materials: {}, textures: {}, images: {}, shapes: {}, skeletons: {}, animations: {}, nodes: {} };
+  const meta = { textures: {}, images: {} }, materialJson = new Map(), geometries = new Map();
+  const materialIds = new Map(), materialSignatures = new Map();
   const children = [];
   for (const { mesh, size, bounds: meshBounds } of meshes) {
     if (compoundBounds && !meshBounds.intersectsBox(bounds)) continue;
     if (!compoundBounds && Math.max(size.x, size.z) > footprint * 1.25) continue;
-    const object = mesh.toJSON(meta).object;
-    // Parametric geometry.toJSON drops baked translations and vertex edits.
-    // Export its actual buffers so roofs and merged voxel geometry stay intact.
-    if (mesh.geometry.parameters && meta.geometries[mesh.geometry.uuid]?.type !== 'BufferGeometry') {
-      const geometry = new THREE.BufferGeometry();
-      geometry.uuid = mesh.geometry.uuid;
-      geometry.attributes = mesh.geometry.attributes;
-      geometry.index = mesh.geometry.index;
-      geometry.groups = mesh.geometry.groups;
-      meta.geometries[geometry.uuid] = geometry.toJSON();
+    if (!geometries.has(mesh.geometry.uuid)) geometries.set(mesh.geometry.uuid, copyGeometry(mesh.geometry));
+    for (const material of (Array.isArray(mesh.material) ? mesh.material : [mesh.material])) {
+      if (materialIds.has(material.uuid)) continue;
+      const json = material.toJSON(meta);
+      delete json.envMap;
+      const signature = JSON.stringify({ ...json, uuid: undefined, metadata: undefined, name: undefined });
+      if (!materialSignatures.has(signature)) {
+        materialSignatures.set(signature, material.uuid);
+        materialJson.set(material.uuid, json);
+      }
+      materialIds.set(material.uuid, materialSignatures.get(signature));
     }
-    object.matrix = mesh.matrixWorld.toArray();
-    delete object.children;
-    children.push(object);
-    if (children.length % 128 === 0) await new Promise(resolve => setTimeout(resolve, 0));
+    children.push(mesh);
+    if (children.length % 32 === 0) await yieldImport();
   }
-  const json = { metadata: { version: 4.7, type: 'Object' }, object: { uuid: THREE.MathUtils.generateUUID(), type: 'Group', children } };
-  for (const [key, value] of Object.entries(meta)) {
-    json[key] = Object.values(value).map((item) => { const copy = { ...item }; delete copy.metadata; return copy; });
+  const loader = new THREE.ObjectLoader();
+  const images = await loader.parseImagesAsync(Object.values(meta.images));
+  const textures = loader.parseTextures(Object.values(meta.textures), images);
+  const materials = loader.parseMaterials([...materialJson.values()], textures);
+  const group = new THREE.Group();
+  for (const sourceMesh of children) {
+    const geometry = geometries.get(sourceMesh.geometry.uuid);
+    const material = Array.isArray(sourceMesh.material) ? sourceMesh.material.map(m => materials[materialIds.get(m.uuid)]) : materials[materialIds.get(sourceMesh.material.uuid)];
+    const mesh = sourceMesh.isInstancedMesh ? new THREE.InstancedMesh(geometry, material, sourceMesh.count) : new THREE.Mesh(geometry, material);
+    if (sourceMesh.isInstancedMesh) {
+      mesh.instanceMatrix.array.set(sourceMesh.instanceMatrix.array.subarray(0, sourceMesh.count * 16));
+      mesh.instanceMatrix.needsUpdate = true;
+      if (sourceMesh.instanceColor) mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(sourceMesh.instanceColor.array.subarray(0, sourceMesh.count * 3)), 3);
+    }
+    mesh.matrix.copy(sourceMesh.matrixWorld);
+    mesh.matrix.decompose(mesh.position, mesh.quaternion, mesh.scale);
+    mesh.renderOrder = sourceMesh.renderOrder;
+    group.add(mesh);
+    if (group.children.length % 32 === 0) await yieldImport();
   }
-  // GPU-generated environment maps cannot be serialized across renderers.
-  for (const material of json.materials) delete material.envMap;
-  const group = await new THREE.ObjectLoader().parseAsync(json);
   const center = bounds.getCenter(new THREE.Vector3());
   const scale = 88 / footprint;
   group.scale.setScalar(scale);
   group.position.set(-center.x * scale, -bounds.min.y * scale + 2.1, -center.z * scale);
   const batches = await batchArchitecture(group);
-  console.debug(`Sandtable ${id}: ${batches.before} → ${batches.after} mesh submissions`);
-  return { group, height: span.y * scale };
+  const detail = await createArchitectureLod(group, scale);
+  console.debug(`Sandtable ${id}: ${batches.before} → ${batches.after} mesh submissions; ${batches.trianglesBefore} → ${detail.detailed} triangles; overview ${detail.overview} triangles`);
+  return { group, lods: detail.lods, height: span.y * scale };
 }
 
 function disposeObject(object) {
@@ -215,11 +258,12 @@ export function createSandtable(root, task, { label, vendorOf, cover, header, in
   const entries = new Map(), abort = new AbortController();
   const signal = abort.signal;
   let destroyed = false, loading = null, tween = null, focused = null, topView = false, frameId = 0;
+  let interacting = false, quality = 1, lastFrame = 0, slowFrames = 0, measuredFrames = 0;
   function requestRender() {
     if (!destroyed && !frameId) frameId = requestAnimationFrame(render);
   }
   let renderer;
-  try { renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' }); }
+  try { renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' }); }
   catch { $('.sand-error', el).hidden = false; $('.sand-error', el).textContent = '无法启动三维沙盘，请启用浏览器硬件加速后重试。'; return { destroy() { document.body.classList.remove('is-viewer'); } }; }
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -236,7 +280,8 @@ export function createSandtable(root, task, { label, vendorOf, cover, header, in
   controls.minDistance = 8; controls.maxDistance = 1300;
   controls.maxPolarAngle = Math.PI * 0.485;
   controls.screenSpacePanning = false;
-  controls.addEventListener('start', () => { tween = null; });
+  controls.addEventListener('start', () => { tween = null; interacting = true; lastFrame = slowFrames = measuredFrames = 0; });
+  controls.addEventListener('end', () => { interacting = false; });
   controls.addEventListener('change', requestRender);
   const landscape = createLandscape(scene);
   const table = new THREE.Mesh(new THREE.BoxGeometry(1, 3, 1), new THREE.MeshStandardMaterial({ color: '#eeeadd', roughness: 0.9 }));
@@ -438,6 +483,8 @@ export function createSandtable(root, task, { label, vendorOf, cover, header, in
   const resize = new ResizeObserver(() => {
     const { width, height } = host.getBoundingClientRect();
     if (!width || !height) return;
+    quality = Math.min(1, Math.sqrt(1200000 / (width * height)));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, quality));
     renderer.setSize(width, height); camera.aspect = width / height; camera.updateProjectionMatrix(); requestRender();
   });
   resize.observe(host);
@@ -455,7 +502,24 @@ export function createSandtable(root, task, { label, vendorOf, cover, header, in
       controls.target.lerpVectors(tween.targetFrom, tween.target, eased);
       if (progress === 1) tween = null;
     }
-    const moving = controls.update(); renderer.render(scene, camera);
+    // Lower the pixel workload only when sustained interaction misses frames.
+    // Keep the chosen quality while idle, avoiding repeated buffer reallocations.
+    if (interacting && lastFrame) {
+      measuredFrames++;
+      if (now - lastFrame > 25) slowFrames++;
+      if (measuredFrames === 20) {
+        if (slowFrames > 10 && quality > 0.55) {
+          quality = Math.max(0.55, quality * 0.8);
+          renderer.setPixelRatio(Math.min(devicePixelRatio, quality));
+        }
+        slowFrames = measuredFrames = 0;
+      }
+    }
+    lastFrame = interacting ? now : 0;
+    const moving = controls.update();
+    const detailDistance = renderer.domElement.height * 0.5 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.25);
+    for (const entry of entries.values()) for (const lod of entry.lods ?? []) lod.levels[1].distance = detailDistance;
+    renderer.render(scene, camera);
     const width = host.clientWidth, height = host.clientHeight;
     for (const entry of entries.values()) {
       projected.copy(entry.position); projected.y += 3; projected.z += 54; projected.project(camera);

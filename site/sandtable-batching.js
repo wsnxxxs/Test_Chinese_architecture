@@ -1,10 +1,15 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { surfaceVoxels } from './sandtable-voxels.js';
+
+const triangles = group => group.children.reduce((sum, mesh) => sum + ((mesh.geometry?.index?.count ?? mesh.geometry?.attributes.position.count ?? 0) / 3) * (mesh.isInstancedMesh ? mesh.count : 1), 0);
 
 // Static, opaque parts with the same material can share a draw call without
 // discarding triangles, colours or textures. Keep original instances intact.
 export async function batchArchitecture(group) {
   const before = group.children.length;
+  const trianglesBefore = triangles(group);
+  await surfaceVoxels(group);
   const buckets = new Map(), retired = new Set();
   for (const mesh of group.children) {
     const geometry = mesh.geometry, material = mesh.material;
@@ -47,5 +52,5 @@ export async function batchArchitecture(group) {
     object.matrixAutoUpdate = false;
     if (object.isMesh) { object.castShadow = false; object.receiveShadow = false; }
   });
-  return { before, after: group.children.length };
+  return { before, after: group.children.length, trianglesBefore, trianglesAfter: triangles(group) };
 }

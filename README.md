@@ -1,6 +1,6 @@
 # 同题异答 · 模型前端效果对比
 
-“同题异答”展示不同模型针对同一份任务提示词生成的前端作品，目前收录[体素中国古典建筑群](tasks/chinese-architecture/PROMPT.md)与[桌面微缩铁路小镇](tasks/miniature-railway-town/PROMPT.md)两道题目。页面以作品截图为主，支持在线运行、并排对比、浏览截图与源码。
+“同题异答”展示不同模型针对同一份任务提示词生成的前端作品，目前收录[体素中国古典建筑群](tasks/chinese-architecture/PROMPT.md)、[桌面微缩铁路小镇](tasks/miniature-railway-town/PROMPT.md)与[机械键盘 · 交互式产品配置器](tasks/mechanical-keyboard/PROMPT.md)三道题目。页面以作品截图为主，支持在线运行、并排对比、浏览截图与源码。
 
 站点采用暖白纸色与墨色两套主题，仅以一抹朱砂色作点缀；默认跟随系统的浅色 / 深色设置，也可用顶栏的日月按钮手动切换，选择会保存在浏览器中。标识由一条完整的横线（同）与一条断开的横线（异）组成，末段为朱砂色，文件为 `site/assets/logo.svg`。
 
@@ -67,6 +67,20 @@
 
 本题共 30 个结果，28 个模型。各作品保留独立实现；部分作品使用原生静态页面，其余结果通过 Vite 构建。Grok、Qwen3.8 Max、Seed 和 Gemini 3.7 Flash 四份结果只有已构建页面，仓库保留其原始静态资源并提供复制构建脚本。所有作品均提供手机界面截图；原有 4 个作品保留统一首屏截图，其余作品的首屏使用项目预览图。Space-bunny 按用户要求暂归 MiniMax，厂商身份尚未确认。
 
+## 机械键盘 · 交互式产品配置器
+
+本题收录 7 份作品，保留各模型独立的产品展示与配置实现。提供在线预览、并排对比、1440×900 默认首屏和 390×844 手机截图。截图与构建检查用于确认画廊集成，不代表全部产品交互要求均已验证。
+
+| 模型 | 作品 | 在线预览 | 源码与说明 |
+| --- | --- | --- | --- |
+| GPT-5.6 Luna Max | Sora Atelier 75 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-5.6-luna-max) | [项目说明](results/mechanical-keyboard/gpt-5.6-luna-max/README.md) |
+| GPT-5.6 Sol Max | KEPLER 65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-5.6-sol-max) | [项目说明](results/mechanical-keyboard/gpt-5.6-sol-max/README.md) |
+| GPT-5.6 Terra Max | AERIS 65 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-5.6-terra-max) | [项目说明](results/mechanical-keyboard/gpt-5.6-terra-max/README.md) |
+| GPT-6 Astra High | Form 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-astra-high) | [项目说明](results/mechanical-keyboard/gpt-6-astra-high/README.md) |
+| GPT-6 Luna Max | FORMA 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-luna-max) | [项目说明](results/mechanical-keyboard/gpt-6-luna-max/README.md) |
+| GPT-6 Sol High | ORBIT 68 | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-sol-high) | [项目说明](results/mechanical-keyboard/gpt-6-sol-high/README.md) |
+| GPT-6 Sol Max | LOOM 68 · Keyboard Studio | [打开作品](https://wsnxxxs.github.io/same-prompt-gallery/#/mechanical-keyboard/gpt-6-sol-max) | [项目说明](results/mechanical-keyboard/gpt-6-sol-max/README.md) |
+
 ## 运行
 
 需要 Node.js ≥ 22.13。以下命令在仓库根目录执行：
@@ -80,7 +94,7 @@ npm run check     # 运行 Opus 作品的体素检查
 npm run dev:opus  # 单独开发 Opus 场景，默认 http://localhost:5173
 ```
 
-也可以进入任一 `results/<模型标识>/` 或 `results/miniature-railway-town/<模型标识>/` 目录，独立运行 `npm install`、`npm run dev` 和 `npm run build`。
+也可以进入任一 `results/<模型标识>/`、`results/miniature-railway-town/<模型标识>/` 或 `results/mechanical-keyboard/<模型标识>/` 目录，独立运行 `npm install`、`npm run dev` 和 `npm run build`。
 
 ## 仓库结构
 
@@ -89,9 +103,11 @@ gallery.json                              站点名称与模型注册表
 tasks/chinese-architecture/task.json     题目信息、原有作品的详细数据与截图条件
 tasks/chinese-architecture/captures/     原有作品的统一条件截图
 tasks/miniature-railway-town/            第二道题目的提示词、元数据与手机截图
-results/manifest.json                    43 个结果的简要目录
+tasks/mechanical-keyboard/              第三道题目的提示词、元数据与统一截图
+results/manifest.json                    50 个结果的简要目录
 results/                                  第一题的 30 个独立前端项目
 results/miniature-railway-town/           第二题的 13 个独立前端项目
+results/mechanical-keyboard/             第三题的 7 个独立前端项目
 site/                                     “同题异答”作品画廊与对比界面
 scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 .github/workflows/                        GitHub Pages 自动发布
@@ -101,7 +117,7 @@ scripts/assemble.mjs                     汇总结果并生成 dist/data.json
 
 1. 在 `results/<模型标识>/` 放入完整、可独立运行的前端项目，提供 `package.json` 的 `build` 脚本和项目 README。标识使用小写字母、数字、点和连字符。
 2. 在 `results/manifest.json` 添加 `id`、`model`、`title`、`description`、`cover`、`addedAt`。`cover` 是项目目录内的相对图片路径，建议放在 `docs/` 下。`addedAt` 使用带时区的 ISO 8601 加入时间（如 `2026-09-26T12:00:00+10:00`），用于作品列表和在线预览排序；已有作品依据首次加入 Git 的记录补齐，同一时间保留目录顺序，缺失时间的作品排在最后。若模型有单独的推理档位，可另填 `modelId`、`effort`。
-3. 新题目先建立 `tasks/<题目标识>/task.json` 和提示词文件，配置标题、日期、标签、截图条件和事实字段；在根 `package.json` 的 `workspaces` 中添加 `results/<题目标识>/*`。结果放在 `results/<题目标识>/<模型标识>/`，并在清单条目中添加 `task`。同一模型可在不同题目下复用标识；工作区的包名必须唯一。未填写 `task` 的原有条目仍归属于第一题，原场景链接保持可用。
+3. 新题目先建立 `tasks/<题目标识>/task.json` 和提示词文件，配置标题、日期、标签、截图条件和事实字段；同日题目可用 `order` 指定先后顺序。在根 `package.json` 的 `workspaces` 中添加 `results/<题目标识>/*`。结果放在 `results/<题目标识>/<模型标识>/`，并在清单条目中添加 `task`。同一模型可在不同题目下复用标识；工作区的包名必须唯一。未填写 `task` 的原有条目仍归属于第一题，原场景链接保持可用。
 4. 在 `gallery.json` 注册新模型，并更新上方表格。运行 `npm install`、`npm run build` 验证。构建会把结果放在 `dist/results/<模型标识>/` 或 `dist/results/<题目标识>/<模型标识>/`，并生成同题异答的数据文件。
 
 各模型结果保留自己的依赖和实现，不需要改成同一种技术结构。提交时请注明模型与推理档位，并将使用的提示词差异写在该结果的 README 中。

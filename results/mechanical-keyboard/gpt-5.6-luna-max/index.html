@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sora Atelier 75 — 一个可配置、可拆解、可交互的原创机械键盘展示。"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Sora Atelier 75 — Interactive Keyboard</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Sora Atelier 75 首页">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>SORA / ATELIER</span>
+        </a>
+        <div class="topbar-meta">
+          <span class="live-dot"></span>
+          <span>CONFIGURATOR 01</span>
+          <span class="topbar-divider"></span>
+          <span>75% / HOT-SWAP</span>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="intro-column" aria-labelledby="product-title">
+          <div class="eyebrow"><span>01</span> PRODUCT STUDY</div>
+          <h1 id="product-title">Sora<br /><em>Atelier 75</em></h1>
+          <p class="intro-copy">
+            一把把桌面留给专注的紧凑机械键盘。旋转、拆解，再为它挑一套属于你的颜色。
+          </p>
+          <div class="product-specs" aria-label="产品规格">
+            <div><strong>75%</strong><span>LAYOUT</span></div>
+            <div><strong>63</strong><span>KEYS</span></div>
+            <div><strong>3.8°</strong><span>ANGLE</span></div>
+          </div>
+
+          <div class="configuration-card" aria-label="键盘配置">
+            <div class="section-heading">
+              <span>配置外观</span>
+              <small id="save-status" aria-live="polite">未保存</small>
+            </div>
+
+            <div class="option-group">
+              <div class="option-label"><span>外壳</span><span id="shell-name">Obsidian</span></div>
+              <div class="swatch-row" id="shell-options" role="radiogroup" aria-label="选择外壳颜色"></div>
+            </div>
+
+            <div class="option-group">
+              <div class="option-label"><span>键帽主题</span><span id="keycap-name">Glacier</span></div>
+              <div class="swatch-row" id="keycap-options" role="radiogroup" aria-label="选择键帽主题"></div>
+            </div>
+
+            <div class="config-summary">
+              <span class="summary-bar" aria-hidden="true"></span>
+              <div>
+                <small>YOUR BUILD</small>
+                <strong id="summary-text">Obsidian shell · Glacier caps</strong>
+              </div>
+              <span class="summary-check" aria-hidden="true">✓</span>
+            </div>
+
+            <div class="config-actions">
+              <button class="primary-button" id="save-config" type="button">
+                <span>保存配置</span><span aria-hidden="true">↗</span>
+              </button>
+              <button class="text-button" id="reset-config" type="button">恢复默认</button>
+            </div>
+          </div>
+
+          <p class="microcopy">配置会保存在此浏览器中。模型支持鼠标拖拽、滚轮缩放与触屏操作。</p>
+        </section>
+
+        <section class="model-column" aria-label="Sora Atelier 75 三维产品展示">
+          <div class="model-stage" id="model-stage">
+            <div class="stage-grid" aria-hidden="true"></div>
+            <div class="stage-orbit orbit-one" aria-hidden="true"></div>
+            <div class="stage-orbit orbit-two" aria-hidden="true"></div>
+            <div class="stage-readout readout-top"><span>LIVE MODEL</span><span id="model-angle">03.8° / 00°</span></div>
+            <div class="stage-readout readout-bottom"><span id="interaction-status">READY TO EXPLORE</span><span class="readout-rule"></span><span>DRAG / ZOOM</span></div>
+            <div id="three-root" class="three-root"></div>
+            <div class="stage-badge"><span class="badge-pulse"></span><span id="assembly-label">ASSEMBLED</span></div>
+          </div>
+
+          <div class="control-dock">
+            <div class="dock-group">
+              <span class="dock-label">视角</span>
+              <button class="icon-button" id="rotate-left" type="button" aria-label="向左旋转">↶</button>
+              <button class="icon-button" id="rotate-right" type="button" aria-label="向右旋转">↷</button>
+              <button class="dock-text-button" id="reset-view" type="button">复位视角</button>
+            </div>
+            <div class="dock-separator"></div>
+            <button class="explode-button" id="explode-toggle" type="button">
+              <span class="explode-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span id="explode-label">拆解结构</span>
+            </button>
+          </div>
+
+          <div class="keyboard-hint">
+            <span class="key-hint">A—Z</span>
+            <span>按下键盘，感受回弹</span>
+            <span class="hint-divider"></span>
+            <span class="key-hint wide">SPACE</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

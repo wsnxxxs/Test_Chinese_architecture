@@ -10,7 +10,7 @@ const galleryConfig = JSON.parse(readFileSync(join(ROOT, 'gallery.json'), 'utf8'
 const taskConfigs = readdirSync(join(ROOT, 'tasks')).map((id) => ({
   ...JSON.parse(readFileSync(join(ROOT, 'tasks', id, 'task.json'), 'utf8')),
   id,
-})).sort((a, b) => a.date.localeCompare(b.date));
+})).sort((a, b) => a.date.localeCompare(b.date) || (a.order ?? 0) - (b.order ?? 0));
 const modelIds = new Set(galleryConfig.models.map((model) => model.id));
 const ids = new Set();
 const taskIdOf = (entry) => entry.task ?? 'chinese-architecture';

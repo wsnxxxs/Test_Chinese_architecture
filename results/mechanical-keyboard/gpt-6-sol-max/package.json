@@ -1,0 +1,19 @@
+{
+  "name": "keyboard-gpt-6-sol-max",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 42868",
+    "build": "vite build --base=./",
+    "preview": "vite preview --host 127.0.0.1 --port 42869"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource/instrument-serif": "5.3.0",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "vite": "8.3.1"
+  }
+}

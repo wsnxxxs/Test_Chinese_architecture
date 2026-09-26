@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AERIS 65 原创机械键盘的交互式产品展示与本地配置器。"
+    />
+    <meta name="theme-color" content="#0a0e14" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>AERIS 65 — Keyboard Configurator</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#top" aria-label="AERIS 65 首页">
+          <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>AERIS<span class="wordmark-light">/65</span></span>
+        </a>
+        <div class="topbar-meta">
+          <span class="availability-dot" aria-hidden="true"></span>
+          <span>交互预览已就绪</span>
+        </div>
+      </header>
+
+      <main class="showcase" id="top">
+        <section class="intro-panel" aria-labelledby="product-title">
+          <p class="eyebrow"><span></span> Modular mechanical instrument</p>
+          <h1 id="product-title">AERIS <em>65</em></h1>
+          <p class="product-copy">
+            一把为专注桌面而生的紧凑型机械键盘。68 枚键帽、低重心金属骨架，以及可由你决定的色彩秩序。
+          </p>
+
+          <div class="spec-rail" aria-label="产品要点">
+            <div>
+              <strong>68</strong>
+              <span>可辨认键帽</span>
+            </div>
+            <div>
+              <strong>65%</strong>
+              <span>紧凑布局</span>
+            </div>
+            <div>
+              <strong>3</strong>
+              <span>可视层级</span>
+            </div>
+          </div>
+
+          <div class="experience-note">
+            <span class="note-icon" aria-hidden="true">⌁</span>
+            <p><strong>体验模式</strong>：点击键帽，或直接按下 A–Z / 空格键。</p>
+          </div>
+        </section>
+
+        <section class="product-stage" aria-label="AERIS 65 三维键盘预览">
+          <div class="stage-atmosphere" aria-hidden="true"></div>
+          <canvas id="keyboardCanvas" aria-label="可旋转缩放的 AERIS 65 三维键盘"></canvas>
+
+          <div class="stage-topline" aria-hidden="true">
+            <span class="stage-chip" id="assemblyState">已组装 · 3 层结构</span>
+            <span class="stage-number">01 / 01</span>
+          </div>
+
+          <div class="stage-bottomline">
+            <span><kbd>拖动</kbd> 旋转</span>
+            <span><kbd>滚轮</kbd> 缩放</span>
+          </div>
+
+          <nav class="view-controls" aria-label="预览视角控制">
+            <button class="icon-button" type="button" data-view="rotate-left" aria-label="向左旋转键盘">↶</button>
+            <button class="icon-button reset-view" type="button" data-view="reset" aria-label="重置视角">◎</button>
+            <button class="icon-button" type="button" data-view="rotate-right" aria-label="向右旋转键盘">↷</button>
+            <span class="view-divider" aria-hidden="true"></span>
+            <button class="icon-button zoom-button" type="button" data-view="zoom-out" aria-label="缩小预览">−</button>
+            <button class="icon-button zoom-button" type="button" data-view="zoom-in" aria-label="放大预览">+</button>
+          </nav>
+        </section>
+
+        <aside class="config-panel" aria-labelledby="config-title">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow"><span></span> Your build</p>
+              <h2 id="config-title">配置工作台</h2>
+            </div>
+            <span class="config-index">A–65</span>
+          </div>
+
+          <section class="config-section" aria-labelledby="shell-label">
+            <div class="section-label-row">
+              <h3 id="shell-label">外壳颜色</h3>
+              <span id="shellValue">曜石黑</span>
+            </div>
+            <div class="choice-grid shell-choices" id="shellChoices" role="group" aria-label="选择外壳颜色">
+              <button class="choice-card" type="button" data-shell="obsidian" aria-pressed="true">
+                <span class="swatch shell-obsidian" aria-hidden="true"></span>
+                <span><strong>曜石黑</strong><small>Obsidian</small></span>
+              </button>
+              <button class="choice-card" type="button" data-shell="alloy" aria-pressed="false">
+                <span class="swatch shell-alloy" aria-hidden="true"></span>
+                <span><strong>合金银</strong><small>Alloy</small></span>
+              </button>
+              <button class="choice-card" type="button" data-shell="ember" aria-pressed="false">
+                <span class="swatch shell-ember" aria-hidden="true"></span>
+                <span><strong>熔岩红</strong><small>Ember</small></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="config-section" aria-labelledby="keycap-label">
+            <div class="section-label-row">
+              <h3 id="keycap-label">键帽主题</h3>
+              <span id="themeValue">云雾浅色</span>
+            </div>
+            <div class="choice-grid theme-choices" id="themeChoices" role="group" aria-label="选择键帽主题">
+              <button class="choice-card" type="button" data-theme="cloud" aria-pressed="true">
+                <span class="swatch theme-cloud" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span><strong>云雾浅色</strong><small>Cloud</small></span>
+              </button>
+              <button class="choice-card" type="button" data-theme="midnight" aria-pressed="false">
+                <span class="swatch theme-midnight" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span><strong>午夜深色</strong><small>Midnight</small></span>
+              </button>
+              <button class="choice-card" type="button" data-theme="orchid" aria-pressed="false">
+                <span class="swatch theme-orchid" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span><strong>兰花点缀</strong><small>Orchid</small></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="config-section setup-name-section" aria-labelledby="setup-name-label">
+            <label id="setup-name-label" for="setupName">配置名称</label>
+            <input id="setupName" type="text" maxlength="28" value="我的 AERIS 65" autocomplete="off" />
+          </section>
+
+          <section class="summary-card" aria-label="当前配置摘要">
+            <div class="summary-title">
+              <span>当前配置</span>
+              <span class="save-indicator" id="saveIndicator">尚未保存</span>
+            </div>
+            <dl>
+              <div><dt>外壳</dt><dd id="summaryShell">曜石黑</dd></div>
+              <div><dt>键帽</dt><dd id="summaryTheme">云雾浅色</dd></div>
+              <div><dt>名称</dt><dd id="summaryName">我的 AERIS 65</dd></div>
+            </dl>
+          </section>
+
+          <div class="action-grid">
+            <button class="button button-primary" id="explodeButton" type="button">
+              <span class="button-symbol" aria-hidden="true">↕</span>
+              <span>拆解结构</span>
+            </button>
+            <button class="button button-secondary" id="saveButton" type="button">保存配置</button>
+          </div>
+          <button class="restore-button" id="restoreButton" type="button">恢复默认（仅清除此页面配置）</button>
+        </aside>
+      </main>
+
+      <p class="sr-only" id="announcer" aria-live="polite"></p>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

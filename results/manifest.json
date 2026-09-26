@@ -392,5 +392,82 @@
     "description": "HO 比例铁路沙盘，蒸汽机车牵引两节车厢沿单线绕行，穿过河上的钢桁梁桥。",
     "cover": "docs/cover.jpg",
     "addedAt": "2026-09-26T10:29:01+10:00"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-5.6-luna-max",
+    "model": "GPT-5.6-Luna Max",
+    "modelId": "gpt-5.6-luna",
+    "effort": "Max",
+    "title": "Sora Atelier 75",
+    "description": "以柔和色彩与工作室风格展示紧凑键盘，提供外壳、键帽主题、分层拆解与按键体验。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:20:09.147Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-5.6-sol-max",
+    "model": "GPT-5.6-Sol Max",
+    "modelId": "gpt-5.6-sol",
+    "effort": "Max",
+    "title": "KEPLER 65",
+    "description": "展示 65% 紧凑键盘的分层结构，支持外壳与键帽主题组合、拆解和本地配置保存。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:20:09.147Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-5.6-terra-max",
+    "model": "GPT-5.6-Terra Max",
+    "modelId": "gpt-5.6-terra",
+    "effort": "Max",
+    "title": "AERIS 65",
+    "description": "以消费电子产品页面呈现原创机械键盘，提供配色配置、视角操作与拆解体验。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:20:09.147Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-6-astra-high",
+    "model": "GPT-6-Astra High",
+    "modelId": "gpt-6-astra",
+    "effort": "High",
+    "title": "Form 68",
+    "description": "以简洁产品页面展示 68 键机械键盘，搭配配色选择、键帽主题与结构拆解控件。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:20:09.147Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-6-luna-max",
+    "model": "GPT-6-Luna Max",
+    "modelId": "gpt-6-luna",
+    "effort": "Max",
+    "title": "FORMA 68",
+    "description": "暖色产品配置页面中的 68 键键盘，支持主题搭配、按键体验与配置摘要。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:20:09.147Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-6-sol-high",
+    "model": "GPT-6-Sol High",
+    "modelId": "gpt-6-sol",
+    "effort": "High",
+    "title": "ORBIT 68",
+    "description": "以产品展示和配置面板呈现紧凑键盘，提供外壳、键帽、拆解与体验模式。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:20:09.147Z"
+  },
+  {
+    "task": "mechanical-keyboard",
+    "id": "gpt-6-sol-max",
+    "model": "GPT-6-Sol Max",
+    "modelId": "gpt-6-sol",
+    "effort": "Max",
+    "title": "LOOM 68 · Keyboard Studio",
+    "description": "鼠尾草绿工作室风格的紧凑键盘展示，搭配配色、分层结构与本地保存配置。",
+    "cover": "docs/cover.png",
+    "addedAt": "2026-09-26T04:20:09.147Z"
   }
 ]

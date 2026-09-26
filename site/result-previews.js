@@ -157,7 +157,7 @@ export function createResultPreviews(root, task) {
     job.importing = true; clearTimeout(job.timeout);
     try {
       const { importArchitecture } = await import('./sandtable.js');
-      await finish(job, await importArchitecture(job.iframe.contentWindow.__galleryScenes, job.entry.result.id, { architecture: task.id === 'chinese-architecture' }));
+      await finish(job, await importArchitecture(job.iframe.contentWindow.__galleryScenes, job.entry.result.id, { architecture: task.id === 'chinese-architecture', railwayPreview: task.id === 'miniature-railway-town' }));
     } catch (error) { await finish(job, null, error); }
   }, { signal });
 

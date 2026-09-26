@@ -33,7 +33,7 @@ function copyGeometry(source) {
 
 // Export the original meshes, including instance matrices and vertex colours.
 // A shared exhibition light replaces each author's sky, fog and postprocessing.
-export async function importArchitecture(scenes, id, { architecture = true } = {}) {
+export async function importArchitecture(scenes, id, { architecture = true, railwayPreview = false } = {}) {
   let sliceStart = performance.now();
   async function yieldImport() {
     if (performance.now() - sliceStart < 8) return;
@@ -56,9 +56,24 @@ export async function importArchitecture(scenes, id, { architecture = true } = {
   source.traverseVisible((mesh) => {
     if (!mesh.isMesh || !mesh.geometry?.attributes?.position) return;
     const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    if (railwayPreview && materials.every(m => !m.visible || m.opacity === 0 || m.isShadowMaterial)) return;
     // Background domes and full-screen postprocessing quads are not architecture.
     if (materials.every((m) => m.side === THREE.BackSide || (architecture && (m.isShaderMaterial || m.fog === false)))) return;
-    const bounds = new THREE.Box3().setFromObject(mesh);
+    let instances;
+    const bounds = new THREE.Box3();
+    if (railwayPreview && mesh.isInstancedMesh) {
+      // Particle pools park unused instances far below the model at tiny scale.
+      // Export active instances only, so those sentinels cannot affect framing.
+      mesh.geometry.computeBoundingBox();
+      instances = [];
+      const matrix = new THREE.Matrix4(), scale = new THREE.Vector3();
+      for (let i = 0; i < mesh.count; i++) {
+        mesh.getMatrixAt(i, matrix); scale.setFromMatrixScale(matrix);
+        if (Math.max(scale.x, scale.y, scale.z) < 0.001) continue;
+        instances.push(i);
+        bounds.union(mesh.geometry.boundingBox.clone().applyMatrix4(matrix).applyMatrix4(mesh.matrixWorld));
+      }
+    } else bounds.setFromObject(mesh);
     const size = bounds.getSize(new THREE.Vector3());
     if (bounds.isEmpty() || !Number.isFinite(size.length())) return;
     // Some originals draw a sun orb beside their directional light.
@@ -67,14 +82,14 @@ export async function importArchitecture(scenes, id, { architecture = true } = {
       const center = bounds.getCenter(new THREE.Vector3());
       if (lightPositions.some((position) => position.distanceTo(center) < Math.max(size.x, size.y, size.z) * 3)) return;
     }
-    meshes.push({ mesh, bounds, size });
+    meshes.push({ mesh, bounds, size, instances });
   });
   // Ignore infinite floors when finding the footprint; keep actual raised terrain.
-  const solid = architecture ? meshes.filter(({ size }) => size.y > Math.max(size.x, size.z) * 0.008) : meshes;
+  const solid = architecture || railwayPreview ? meshes.filter(({ size }) => size.y > Math.max(size.x, size.z) * 0.008) : meshes;
   const widths = solid.map(({ size }) => Math.max(size.x, size.z)).sort((a, b) => a - b);
   const sceneryLimit = (widths[Math.floor((widths.length - 1) * 0.75)] || 1) * 8;
   const bounds = new THREE.Box3();
-  for (const item of solid) if (item.mesh.isInstancedMesh || Math.max(item.size.x, item.size.z) <= sceneryLimit) bounds.union(item.bounds);
+  for (const item of solid) if (railwayPreview || item.mesh.isInstancedMesh || Math.max(item.size.x, item.size.z) <= sceneryLimit) bounds.union(item.bounds);
   // Some results merge distant scenery or clouds into the world. These extents
   // follow each result's site/layout source and keep the complete compound.
   const compoundBounds = architecture && {
@@ -92,7 +107,8 @@ export async function importArchitecture(scenes, id, { architecture = true } = {
   const meta = { textures: {}, images: {} }, materialJson = new Map(), geometries = new Map();
   const materialIds = new Map(), materialSignatures = new Map();
   const children = [];
-  for (const { mesh, size, bounds: meshBounds } of meshes) {
+  const instanceIndices = new Map();
+  for (const { mesh, size, bounds: meshBounds, instances } of meshes) {
     if (compoundBounds && !meshBounds.intersectsBox(bounds)) continue;
     if (!compoundBounds && Math.max(size.x, size.z) > footprint * 1.25) continue;
     if (!geometries.has(mesh.geometry.uuid)) geometries.set(mesh.geometry.uuid, copyGeometry(mesh.geometry));
@@ -108,6 +124,7 @@ export async function importArchitecture(scenes, id, { architecture = true } = {
       materialIds.set(material.uuid, materialSignatures.get(signature));
     }
     children.push(mesh);
+    if (instances) instanceIndices.set(mesh, instances);
     if (children.length % 32 === 0) await yieldImport();
   }
   const loader = new THREE.ObjectLoader();
@@ -118,11 +135,18 @@ export async function importArchitecture(scenes, id, { architecture = true } = {
   for (const sourceMesh of children) {
     const geometry = geometries.get(sourceMesh.geometry.uuid);
     const material = Array.isArray(sourceMesh.material) ? sourceMesh.material.map(m => materials[materialIds.get(m.uuid)]) : materials[materialIds.get(sourceMesh.material.uuid)];
-    const mesh = sourceMesh.isInstancedMesh ? new THREE.InstancedMesh(geometry, material, sourceMesh.count) : new THREE.Mesh(geometry, material);
+    const indices = instanceIndices.get(sourceMesh);
+    const mesh = sourceMesh.isInstancedMesh ? new THREE.InstancedMesh(geometry, material, indices?.length ?? sourceMesh.count) : new THREE.Mesh(geometry, material);
     if (sourceMesh.isInstancedMesh) {
-      mesh.instanceMatrix.array.set(sourceMesh.instanceMatrix.array.subarray(0, sourceMesh.count * 16));
+      if (indices) indices.forEach((index, target) => mesh.instanceMatrix.array.set(sourceMesh.instanceMatrix.array.subarray(index * 16, index * 16 + 16), target * 16));
+      else mesh.instanceMatrix.array.set(sourceMesh.instanceMatrix.array.subarray(0, sourceMesh.count * 16));
       mesh.instanceMatrix.needsUpdate = true;
-      if (sourceMesh.instanceColor) mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(sourceMesh.instanceColor.array.subarray(0, sourceMesh.count * 3)), 3);
+      if (sourceMesh.instanceColor) {
+        const colors = new Float32Array(mesh.count * 3);
+        if (indices) indices.forEach((index, target) => colors.set(sourceMesh.instanceColor.array.subarray(index * 3, index * 3 + 3), target * 3));
+        else colors.set(sourceMesh.instanceColor.array.subarray(0, mesh.count * 3));
+        mesh.instanceColor = new THREE.InstancedBufferAttribute(colors, 3);
+      }
     }
     mesh.matrix.copy(sourceMesh.matrixWorld);
     mesh.matrix.decompose(mesh.position, mesh.quaternion, mesh.scale);
